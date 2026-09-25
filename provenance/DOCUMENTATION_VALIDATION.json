@@ -1,14 +1,14 @@
 {
   "passed": true,
-  "completed_utc": "2026-09-25T16:48:54.381611+00:00",
-  "reader_documents": 9,
-  "local_links_checked": 30,
-  "excel_cells_readback": 455471,
+  "completed_utc": "2026-09-25T17:01:19.902030+00:00",
+  "reader_documents": 10,
+  "local_links_checked": 53,
+  "excel_cells_readback": 455495,
   "workbooks": [
     {
       "file": "750类核心新兴潜在热点分析.xlsx",
-      "sheets": 21,
-      "data_tables": 19
+      "sheets": 22,
+      "data_tables": 20
     },
     {
       "file": "750类热点消融实验与灵敏度分析.xlsx",
@@ -18,5 +18,13 @@
   ],
   "numeric_and_boolean_cells_match_source": true,
   "calculation_inputs_and_result_tables_unchanged": true,
-  "source_and_audit_records_retained": true
+  "source_and_audit_records_retained": true,
+  "algorithm_code_unchanged_except_docstrings": [
+    "src/energy_hotspots/scoring.py",
+    "pipelines/hotspots/multiyear_scoring.py",
+    "pipelines/hotspots/multiyear_build.py",
+    "pipelines/hotspots/potential_unified_metrics.py",
+    "pipelines/hotspots/potential_unified.py"
+  ],
+  "potential_guide_matches_actual_scope_results": true
 }

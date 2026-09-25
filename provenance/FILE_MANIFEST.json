@@ -27,18 +27,18 @@
     },
     {
       "file": "README.md",
-      "bytes": 3718,
-      "sha256": "581d57f2abd93bf183ce463011bc0fc40abd7b435e7ea2c0f0b13afbbd814991"
+      "bytes": 6634,
+      "sha256": "8eb9eaef393feb4cda1e14bfa0e1e13a3c5b79f038764354ef7b1082debe4365"
     },
     {
       "file": "assets/snapshot_20260925/hotspots/750类核心新兴潜在热点分析.xlsx",
-      "bytes": 3056461,
-      "sha256": "234cfb4ef39e83e7d09ba7385f690e71fbedeec5e1049aba75b69f8379473607"
+      "bytes": 3058667,
+      "sha256": "2dd6dfd083d01bd2c5e81af36ab10a56f62dc5ed1c1c81b817028f4312b21b04"
     },
     {
       "file": "assets/snapshot_20260925/hotspots/750类热点消融实验与灵敏度分析.xlsx",
-      "bytes": 496875,
-      "sha256": "feeaa3876c22103bbc1212a85efbe592514be0fa78c2a73e979f9169da3976d8"
+      "bytes": 496954,
+      "sha256": "fbfcf9664197302b1a11628a982383d957a0b93a00646dec629cbafbd080b04c"
     },
     {
       "file": "assets/snapshot_20260925/hotspots/EXPERIMENT_REPORT.md",
@@ -52,13 +52,13 @@
     },
     {
       "file": "assets/snapshot_20260925/hotspots/README.md",
-      "bytes": 846,
-      "sha256": "2733b7db6e11e9d07c2a85839ab3749c4608e45768ad9e57458faeff10d47b8a"
+      "bytes": 1099,
+      "sha256": "e83bde6392cb070acc0783a41c6a38f60bf4f5f0ee3f9bc253009e46ae54ef95"
     },
     {
       "file": "assets/snapshot_20260925/hotspots/REPORT.md",
-      "bytes": 10614,
-      "sha256": "f6219e37b29c77c129013f92ff1e07d7b07885740ef2476bb9254293e5c785db"
+      "bytes": 11822,
+      "sha256": "c2cb2ae7b7b44988e84a568e217d31ae8e194e198a96dea30a1f17cf85cf3426"
     },
     {
       "file": "assets/snapshot_20260925/hotspots/data/FINAL_METHOD.json",
@@ -82,8 +82,8 @@
     },
     {
       "file": "assets/snapshot_20260925/hotspots/data/MULTIYEAR_WORKBOOK_TABLES.json",
-      "bytes": 24577,
-      "sha256": "e511ea128d6f81c722f2d6b8f16998cc4138a2222e3849ef1f92595ca1d421e8"
+      "bytes": 24888,
+      "sha256": "3d6d60b43e8dd4f94291dc6e2cb64d75693732d726945c02224e33b189f245da"
     },
     {
       "file": "assets/snapshot_20260925/hotspots/data/POTENTIAL_UNIFIED_METHOD.json",
@@ -471,6 +471,11 @@
       "sha256": "18dd90b7c0b17981c6ffa8a9371e5f784e1cd402dbc203cc8f75c43122dcadc5"
     },
     {
+      "file": "assets/snapshot_20260925/hotspots/results/potential_reading_guide.csv",
+      "bytes": 967,
+      "sha256": "7700d58c7440527bcfafb0059b3fe2388ee408913cdcc5dfd5aebfff2d60b8d2"
+    },
+    {
       "file": "assets/snapshot_20260925/hotspots/results/potential_unified_applicant_evidence.csv",
       "bytes": 160457,
       "sha256": "796386e672693d7bef630681e4082bd43dcefc5be73a0f57ed59332302ebe5a0"
@@ -546,14 +551,19 @@
       "sha256": "b4f964a8d113dcf25e5d986f9dbbb0e71323dd53f49d7cadd17b417fd0dd1972"
     },
     {
+      "file": "docs/ALGORITHM.md",
+      "bytes": 4574,
+      "sha256": "8d44257711ffdd751ea562a3b8eec2cc1b93796e7bf2f6f30a83a27351bbf738"
+    },
+    {
       "file": "docs/DATA_SCHEMA.md",
       "bytes": 2625,
       "sha256": "e166f07802b67fdffbf5e1716d01268b2fdf7bc560e33ff755eaabf2302304a6"
     },
     {
       "file": "docs/METHOD.md",
-      "bytes": 5460,
-      "sha256": "8985cd75042c8388dbb58797d2e95bfa6502e95fd136cddc2be4dc5133cc8c10"
+      "bytes": 7014,
+      "sha256": "dbd6f9dc7f883aae59fc66f226e83f0e7fdefe13b45704f5f98efb054fb95256"
     },
     {
       "file": "docs/REPRODUCING.md",
@@ -567,13 +577,13 @@
     },
     {
       "file": "pipelines/hotspots/multiyear_build.py",
-      "bytes": 6152,
-      "sha256": "520378238db4c51d49889b81bb96d04ac9a14be44484b24b8461650b97a18505"
+      "bytes": 6251,
+      "sha256": "f9e4801012f146fdcc2e8085f074f5de12d51c6b653e3c42e375cbd044f1ac69"
     },
     {
       "file": "pipelines/hotspots/multiyear_delivery.py",
-      "bytes": 32429,
-      "sha256": "8b6bb9c8f3e4c1e1a0d2f8bf8d82867634af1d42bececf56f9391b3b3d2d9610"
+      "bytes": 34527,
+      "sha256": "d1d249547a6ef1221fd7e42d2e032578ff82fdce2fc3a483c7114e0fb119283b"
     },
     {
       "file": "pipelines/hotspots/multiyear_experiments.py",
@@ -607,8 +617,8 @@
     },
     {
       "file": "pipelines/hotspots/multiyear_scoring.py",
-      "bytes": 8026,
-      "sha256": "bd7e5378bb23c72856a5449f37d3f84a0d39c94ae68176ba615d4373ced8a8fb"
+      "bytes": 8389,
+      "sha256": "dbc089f80a80ec9b20fa80ea5eab15f1fb629a281878fab50ce7a56d29d2d256"
     },
     {
       "file": "pipelines/hotspots/multiyear_validate.py",
@@ -622,8 +632,8 @@
     },
     {
       "file": "pipelines/hotspots/potential_delivery.py",
-      "bytes": 8616,
-      "sha256": "547e38354d8db95805fcccc3f367aeb499455976cd6bd167788d2957ab8300da"
+      "bytes": 11093,
+      "sha256": "44fb6123ab3a5f40d3ac747569b2e7d2313402507c59a3a1433d0e4422ee2c94"
     },
     {
       "file": "pipelines/hotspots/potential_experiments.py",
@@ -637,13 +647,13 @@
     },
     {
       "file": "pipelines/hotspots/potential_unified.py",
-      "bytes": 9403,
-      "sha256": "512d49e668a3670be9a2389413c73f11b9a2b098c80fe19160e5339db1707da6"
+      "bytes": 9516,
+      "sha256": "e163abcdea257ab49ed7aba686d15c6777d1c36a4ded994385496710b12e1ebf"
     },
     {
       "file": "pipelines/hotspots/potential_unified_metrics.py",
-      "bytes": 9039,
-      "sha256": "3203e58ab77ab656d13002671e1af9ba647ae6708c7a938d97c00d3e01074b69"
+      "bytes": 9482,
+      "sha256": "e0575c5844370562aea75ee501eba9e73727c72b97c989e4560dcf815017439d"
     },
     {
       "file": "pipelines/hotspots/potential_unified_review.py",
@@ -657,8 +667,8 @@
     },
     {
       "file": "provenance/DOCUMENTATION_VALIDATION.json",
-      "bytes": 575,
-      "sha256": "71ee3f577d7e93042b1c0fd691473b4dafbf35270a5d9e55aaa8a2ddb06f6e0f"
+      "bytes": 918,
+      "sha256": "c8fd2eb3d362b8d5edbb15ed19276129c85247a365edf9ef8f39e21b307afcd7"
     },
     {
       "file": "provenance/EXTRACTION.json",
@@ -717,8 +727,8 @@
     },
     {
       "file": "src/energy_hotspots/scoring.py",
-      "bytes": 8026,
-      "sha256": "bd7e5378bb23c72856a5449f37d3f84a0d39c94ae68176ba615d4373ced8a8fb"
+      "bytes": 8389,
+      "sha256": "dbc089f80a80ec9b20fa80ea5eab15f1fb629a281878fab50ce7a56d29d2d256"
     },
     {
       "file": "tests/conftest.py",

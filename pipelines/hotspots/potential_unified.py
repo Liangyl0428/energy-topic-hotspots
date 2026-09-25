@@ -19,6 +19,7 @@ EXCLUDE_LLM = r'bitcoin|比特币|LLM\s+pretraining|LLM\s+training|training\s+(?
 def hit(pattern,text):return bool(re.search(pattern,str(text),re.I))
 
 def classify(unit,title,body):
+    """按应用对象与任务证据判断：明确相关(strict)、待判断(pending)、排除(excluded)。"""
     spec=UNITS[unit];title=str(title or '');body=str(body or '')
     full=title+' '+body
     obj_t=hit(spec['object'],title); obj=hit(spec['object'],full)

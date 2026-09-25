@@ -1,4 +1,8 @@
-"""All potential-unit quantities derive from the SAME selected record ledger."""
+"""潜在热点的核心统计与资格算法。
+
+calculate(): 同任务证据与评分；qualify(): 入选条件；with_may(): 同期窗口检查。
+build(): 比较严格/扩展范围，形成跟踪建议。代码导读见 docs/ALGORITHM.md。
+"""
 from common import *
 from multiyear_scoring import ordered_scores
 from potential_unified import UNITS
@@ -40,6 +44,7 @@ def selected(d,scenario='strict'):
  return out
 
 def calculate(d,policy,scenario='strict',end='2026-08-31',publisher=False,drop_policy=None):
+ """在同一任务范围内统计记录、申请主体、政策、相对份额与排序分数。"""
  den=pd.read_csv(BASE/'results'/('potential_unified_dedup_denominators.csv' if scenario=='title_year_dedup' else 'potential_unified_denominators.csv'))
  den=den[den.month.le(end[:7])];denfield='with_body' if scenario=='body_available' else 'documents'
  totals=den.groupby('source')[denfield].sum().to_dict()
@@ -69,10 +74,12 @@ def calculate(d,policy,scenario='strict',end='2026-08-31',publisher=False,drop_p
  return z
 
 def qualify(z,params=None):
+ """检查规模、主体、政策组数和两个同期相对份额的全部门槛。"""
  p=params or {};out=z.patents_2026.ge(p.get('patents',50))&z.known_applicant_names.ge(p.get('applicants',20))&z.policy_groups.ge(p.get('policies',2))&z.relative_share.ge(p.get('relative',1.25))&z.matched_jan_may_relative_share.ge(p.get('relative',1.25))
  return out
 
 def with_may(d,policy,scenario='strict',publisher=False,drop_policy=None):
+ """同时计算1—8月和1—5月文献/专利指标，再判断是否达标。"""
  z=calculate(d,policy,scenario,publisher=publisher,drop_policy=drop_policy)
  may=calculate(d,policy,scenario,end='2026-05-31',publisher=publisher,drop_policy=drop_policy)
  z['matched_jan_may_relative_share']=may.relative_share

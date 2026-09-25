@@ -1,4 +1,9 @@
-"""Pure multi-timescale scoring. Frozen taxonomy; nonoverlapping yearly blocks."""
+"""核心与新兴热点的核心算法。
+
+score(): 指标与加权评分；gates(): 逐项入选条件。
+完整名单还需 multiyear_build.build() 的数据范围检查和样本判断。
+代码导读见 docs/ALGORITHM.md。
+"""
 import numpy as np
 import pandas as pd
 from scipy.stats import norm
@@ -38,6 +43,7 @@ def windows(end='2026Q2'):
     return [pd.period_range(end=e-4*i,periods=4,freq='Q').astype(str).tolist() for i in range(5)]
 
 def score(tax,q,context,end='2026Q2',core_years=3,baseline_years=3,omit_baseline=None):
+    """输入目录、季度计数及机构引用汇总；返回指标表、核心成分、新兴成分。"""
     if core_years not in [1,3,5] or baseline_years not in [2,3,4]:raise ValueError('Unsupported prespecified window')
     if not tax.index.is_unique or not set(q.category_id)<=set(tax.index):raise ValueError('Invalid taxonomy IDs')
     if q.duplicated(['category_id','period']).any():raise ValueError('Duplicate topic-quarter')
@@ -99,6 +105,7 @@ def score(tax,q,context,end='2026Q2',core_years=3,baseline_years=3,omit_baseline
     return z,cc,ec
 
 def gates(z,family,p=None):
+    """逐条返回数值入选条件；调用者按行合并，并另行结合样本范围判断。"""
     p=p or {};scope=z.admissible_pool&z.direct_energy
     if family=='core':return pd.DataFrame({'scope':scope,'annual_volume':z.core_papers.ge(p.get('annual_volume',250)*z.core_years),'active_years':z.core_active_years.ge(np.ceil(p.get('year_fraction',1.)*z.core_years)),'persistence':z.core_active_quarters.ge(np.ceil(p.get('quarter_fraction',.75)*4*z.core_years)),'current_volume':z.recent_papers.ge(p.get('current_volume',250)),'current_share':z.share_growth_ratio.ge(p.get('current_share',.8))})
     out={'scope':scope,'volume':z.recent_papers.ge(p.get('volume',100)),'baseline':z.baseline_annual_mean_papers.ge(p.get('baseline',50)),'multiyear':z.multiyear_share_ratio.ge(p.get('multiyear',1.25)),'recent_growth':z.share_growth_ratio.ge(p.get('recent_growth',1.15)),'quarters':z.growing_quarters.ge(p.get('quarters',3)),'trend':z.three_year_log_share_slope.gt(p.get('trend',0)),'peak':z.historical_peak_ratio.ge(p.get('peak',1.05)),'lower95':z.share_ratio_lower95.gt(p.get('lower95',1.05)),'qvalue':z.growth_count_qvalue.lt(p.get('qvalue',.05))}

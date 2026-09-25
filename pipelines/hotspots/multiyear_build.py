@@ -9,6 +9,7 @@ def calculate(scenario='main',end='2026Q2',**kw):
  return score(tax,q,ctx,end=end,**kw)
 
 def build():
+ """核心/新兴完整识别入口：评分、数据方向检查与已记录的样本判断。"""
  z,cc,ec=calculate();save(cc.rename_axis('category_id').reset_index(),'multiyear_core_components.csv');save(ec.rename_axis('category_id').reset_index(),'multiyear_emerging_components.csv')
  variants={}
  for s in ['quality','geometry','dedup','exclude_needs_review','supported_only']:

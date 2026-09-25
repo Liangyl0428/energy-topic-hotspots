@@ -43,6 +43,18 @@
         ]
       },
       {
+        "sheet": "潜在方向结论说明",
+        "file": "results/potential_reading_guide.csv",
+        "columns": [
+          "unit_id",
+          "name",
+          "strict_scope_passed",
+          "expanded_scope_passed",
+          "tracking_advice",
+          "tracking_basis"
+        ]
+      },
+      {
         "sheet": "潜在跟踪方向",
         "file": "results/potential_priority.csv",
         "columns": [

@@ -4,7 +4,7 @@ import pandas as pd,numpy as np
 from openpyxl import Workbook
 from openpyxl.styles import Font,PatternFill,Alignment
 from openpyxl.utils import get_column_letter
-from potential_delivery import POTENTIAL_CN,main_text,experiment_text
+from potential_delivery import POTENTIAL_CN,main_text,experiment_text,reading_guide
 CN = {'category_id': '主题ID',
  'name': '主题名称',
  'report_rank': '榜内排序',
@@ -211,6 +211,9 @@ def presentation(frame):
  for col in ['reason','decision','paper_review_reason','paper_review_decision','core_review_basis','review_reason','review_purpose']:
   if col in df:
    for source,target in phrases.items():df[col]=df[col].str.replace(source,target,regex=False)
+ for col in ['evidence_tier','potential_evidence_tier']:
+  if col in df:
+   for source,target in [('双口径支持的跟踪方向','两种纳入范围均达标，可跟踪'),('边界敏感的条件性跟踪','仅明确相关记录时达标，需核实待判断记录'),('证据不足，保留观察','未满足全部条件，暂不推荐、保留观察')]:df[col]=df[col].str.replace(source,target,regex=False)
  return df
 
 
@@ -232,6 +235,7 @@ def table(df,cols):
 
 def deliver():
  R=BASE/'results';E=BASE/'reliability'
+ save(reading_guide(pd.read_csv(R/'potential_unified_metrics.csv')),'potential_reading_guide.csv')
  z=pd.read_csv(R/'hotspot_summary_all750.csv');core=pd.read_csv(R/'core_hotspots.csv');em=pd.read_csv(R/'emerging_hotspots.csv')
  g=pd.read_csv(E/'gate_and_data_sensitivity.csv');wt=pd.read_csv(E/'weight_trials.csv');abl=pd.read_csv(E/'score_ablation_summary.csv');cov=pd.read_csv(R/'multiyear_coverage_audit.csv')
  manifest=[]
@@ -246,10 +250,16 @@ def deliver():
    for row in ws.iter_rows(min_row=2):
     for cell in row:
      if isinstance(cell.value,float):cell.number_format='0.0000'
+   if name=='潜在方向结论说明':
+    for row in ws.iter_rows():
+     for cell in row:cell.alignment=Alignment(wrap_text=True,vertical='top')
+    for col,width in [('A',18),('B',42),('C',28),('D',28),('E',38),('F',75)]:ws.column_dimensions[col].width=width
+    ws.row_dimensions[1].height=34
+    for i in range(2,ws.max_row+1):ws.row_dimensions[i].height=75
    if name=='阅读说明':
     for row in ws.iter_rows(min_row=2):
      for cell in row:cell.alignment=Alignment(wrap_text=True,vertical='top')
-    for i in range(2,ws.max_row+1):ws.row_dimensions[i].height=46
+    for i in range(2,ws.max_row+1):ws.row_dimensions[i].height=64
   sheet('阅读说明',pd.DataFrame(notes,columns=['项目','说明']))
   if experiments:
    codes=list(dict.fromkeys(g.scenario.tolist()+abl.scenario.tolist()))
@@ -261,19 +271,19 @@ def deliver():
   used=list(dict.fromkeys(c for item in spec for c in item['columns']))
   sheet('字段对照',pd.DataFrame([(x,CN.get(x,x)) for x in used],columns=['字段','中文释义']))
   wb.save(BASE/file);manifest.append(dict(workbook=file,tables=spec))
- notes=[('常见取值','paper=论文，patent=专利；strict=范围明确，pending=范围待判断，excluded=不属于任务范围；diagnostic=诊断样本，heldout=规则固定后抽取的核查样本。'),('如何阅读','先看核心热点、新兴热点和潜在跟踪方向；需要核查时再查看完整结果、样本、任务范围和政策依据。'),('结果',f'{len(core)}个核心、{len(em)}个新兴或持续升温初评候选。潜在4个任务中2项双口径支持、1项条件性跟踪、1项观察。'),('结果用途','供专家评审与应用跟踪。同一主题可同时满足核心和新兴条件；入选不直接证明技术首创、领先或未来成功。'),('核心时间范围','2023年7月—2026年6月，共3年；同时检查2025年7月—2026年6月的最近状态。'),('新兴时间范围','最近一年与2022年7月—2025年6月三个完整年度比较；五年轨迹覆盖2021年7月—2026年6月。'),('如何比较年份','先算每个年度的论文份额，再对背景年度取平均。2026年数据覆盖1—8月，不用其总量与全年直接比较。'),('候选与入选','数值候选只代表通过计算条件。主榜还要求样本范围审阅支持；未审或边界不清的方向在候选、观察表中列出。'),('潜在严格口径','只纳入任务证据明确的记录；专利数和申请主体来自同一批专利，论文与政策使用相同任务定义。'),('潜在扩展口径','在严格口径基础上加入范围待判断的记录，用于检查结论对任务边界的依赖。'),('审阅方式','已有样本判断来自模型辅助阅读，未全量人工清洗，也不是独立领域专家金标准。'),('实验基准','实验中的基准是本文主参数设置。保留比例表示参数或数据范围变化后仍入选的比例，不是准确率。'),('并列排名','排名时把0—100分舍入到小数点后10位；并列项按ID升序展示。实验采用并列最小名次，原始评分用于记录。'),('专家重点','核对主题边界、样本代表性、分类误差、数据覆盖和政策任务对应关系。详细方法及限制见同目录报告。')]
+ notes=[('核心与新兴算法','src/energy_hotspots/scoring.py：score()计算指标与评分，gates()定义入选条件；multiyear_build.py结合数据检查和样本审阅形成名单。'),('潜在热点算法','pipelines/hotspots/potential_unified_metrics.py：calculate()统计证据，qualify()检查门槛，with_may()检查同期窗口。完整导航见docs/ALGORITHM.md。'),('潜在结论怎么读','先看“潜在方向结论说明”。两次都达标=可跟踪；只在明确相关记录下达标=先核实待判断文献；尚未达标=暂不推荐、保留观察。'),('常见取值','paper=论文，patent=专利；strict=范围明确，pending=范围待判断，excluded=不属于任务范围；diagnostic=诊断样本，heldout=规则固定后抽取的核查样本。'),('如何阅读','先看核心热点、新兴热点和潜在跟踪方向；需要核查时再查看完整结果、样本、任务范围和政策依据。'),('结果',f'{len(core)}个核心、{len(em)}个新兴或持续升温初评候选。潜在评估4个具体应用方向：虚拟电厂、电力大模型可跟踪；空气源热泵需核实待判断记录；知识图谱政策证据不足，暂不推荐。'),('结果用途','供专家评审与应用跟踪。同一主题可同时满足核心和新兴条件；入选不直接证明技术首创、领先或未来成功。'),('核心时间范围','2023年7月—2026年6月，共3年；同时检查2025年7月—2026年6月的最近状态。'),('新兴时间范围','最近一年与2022年7月—2025年6月三个完整年度比较；五年轨迹覆盖2021年7月—2026年6月。'),('如何比较年份','先算每个年度的论文份额，再对背景年度取平均。2026年数据覆盖1—8月，不用其总量与全年直接比较。'),('候选与入选','数值候选只代表通过计算条件。主榜还要求样本范围审阅支持；未审或边界不清的方向在候选、观察表中列出。'),('潜在严格口径','只纳入任务证据明确的记录；专利数和申请主体来自同一批专利，论文与政策使用相同任务定义。'),('潜在扩展口径','在严格口径基础上加入范围待判断的记录，用于检查结论对任务边界的依赖。'),('审阅方式','已有样本判断来自模型辅助阅读，未全量人工清洗，也不是独立领域专家金标准。'),('实验基准','实验中的基准是本文主参数设置。保留比例表示参数或数据范围变化后仍入选的比例，不是准确率。'),('并列排名','排名时把0—100分舍入到小数点后10位；并列项按ID升序展示。实验采用并列最小名次，原始评分用于记录。'),('专家重点','核对主题边界、样本代表性、分类误差、数据覆盖和政策任务对应关系。详细方法及限制见同目录报告。')]
  corecols=['report_rank','category_id','name','core_papers','core_active_years','core_active_quarters','core_institutions','recent_papers','share_growth_ratio','core_score','robustness_grade','data_scenarios_passed','time_sensitivity_note','paper_review_reason']
  emcols=['report_rank','category_id','name','recent_papers','baseline_annual_mean_papers','multiyear_share_ratio','share_growth_ratio','historical_peak_ratio','three_year_log_share_slope','emerging_score','robustness_grade','data_scenarios_passed','time_sensitivity_note','paper_review_reason']
- tables=[('核心热点','results/core_hotspots.csv',corecols),('新兴热点','results/emerging_hotspots.csv',emcols),('潜在跟踪方向','results/potential_priority.csv',None),('750类完整结果','results/hotspot_summary_all750.csv',None),('五年年度轨迹','results/multiyear_annual_trajectories.csv',None),('核心数值候选待审','results/multiyear_core_candidates.csv',None),('新兴数值候选审阅','results/multiyear_emerging_candidates.csv',None),('跨年样本审阅结论','results/multiyear_semantic_review.csv',None),('跨年已读样本','review/multiyear_displayed_samples.csv',None),('多年数据覆盖','results/multiyear_coverage_audit.csv',None),('数据稳健性分级','results/multiyear_robustness_grades.csv',None),('观察与待复核','results/watch_and_downgraded.csv',None)]
+ tables=[('核心热点','results/core_hotspots.csv',corecols),('新兴热点','results/emerging_hotspots.csv',emcols),('潜在方向结论说明','results/potential_reading_guide.csv',None),('潜在跟踪方向','results/potential_priority.csv',None),('750类完整结果','results/hotspot_summary_all750.csv',None),('五年年度轨迹','results/multiyear_annual_trajectories.csv',None),('核心数值候选待审','results/multiyear_core_candidates.csv',None),('新兴数值候选审阅','results/multiyear_emerging_candidates.csv',None),('跨年样本审阅结论','results/multiyear_semantic_review.csv',None),('跨年已读样本','review/multiyear_displayed_samples.csv',None),('多年数据覆盖','results/multiyear_coverage_audit.csv',None),('数据稳健性分级','results/multiyear_robustness_grades.csv',None),('观察与待复核','results/watch_and_downgraded.csv',None)]
  for name,file in [('潜在任务完整指标','potential_unified_metrics.csv'),('潜在任务范围定义','potential_unified_scope.csv'),('潜在逐条候选','potential_unified_record_ledger.csv'),('潜在主体证据','potential_unified_applicant_evidence.csv'),('潜在政策任务复核','potential_unified_policy_reviews.csv'),('潜在样本范围复核','potential_unified_document_reviews.csv'),('潜在统计分母','potential_unified_denominators.csv')]:tables.append((name,'results/'+file,None))
  make('750类核心新兴潜在热点分析.xlsx',notes,tables)
- enotes=[('常见取值','paper=论文，patent=专利；strict=范围明确，pending=范围待判断，excluded=不属于任务范围；diagnostic=诊断样本，heldout=规则固定后抽取的核查样本。'),('如何阅读','先看实验情景说明，再看评分指标消融与门槛数据窗口灵敏度。每次试验的明细可用于追溯具体方向。'),('实验规模',f'{len(wt):,}次权重扰动，{len(g)}个门槛、数据、窗口和政策情景。'),('消融是什么意思','每次去掉一个评分成分，重新归一其余权重，观察排名变化；去掉一个入选条件则观察名单变化。'),('权重试验','各原权重分别乘0.8—1.2之间的随机数，再归一。每类500次；weight_000表示第1次，以此类推。'),('时间窗口','核心比较1年、3年、5年；新兴比较此前2年、3年、4年的背景。窗口计数条件按年数或季度比例设置。'),('历史截止点','检查2025Q2、2025Q4、2026Q1。标签、语义判断和引用数据固定，因此是回顾性敏感性分析，不是历史预测回测。'),('删去背景年度','逐次剔除三个背景年度中的一个，检查结果是否被某一年主导。'),('相关与保留比例','Spearman表示排名相似程度；保留比例表示基准入选方向在实验中仍入选的比例。两者都不是准确率。'),('潜在比较范围','潜在只有4个任务，比较前1名、前2名。前10名和前25名不适用，留空。'),('并列规则','按小数点后10位确定并列；展示按ID升序，统计采用并列最小名次。')]
+ enotes=[('常见取值','paper=论文，patent=专利；strict=范围明确，pending=范围待判断，excluded=不属于任务范围；diagnostic=诊断样本，heldout=规则固定后抽取的核查样本。'),('如何阅读','先看实验情景说明，再看评分指标消融与门槛数据窗口灵敏度。每次试验的明细可用于追溯具体方向。'),('实验规模',f'{len(wt):,}次权重扰动，{len(g)}个门槛、数据、窗口和政策情景。'),('消融是什么意思','每次去掉一个评分成分，重新归一其余权重，观察排名变化；去掉一个入选条件则观察名单变化。'),('权重试验','各原权重分别乘0.8—1.2之间的随机数，再归一。每类500次；weight_000表示第1次，以此类推。'),('时间窗口','核心比较1年、3年、5年；新兴比较此前2年、3年、4年的背景。窗口计数条件按年数或季度比例设置。'),('历史截止点','检查2025Q2、2025Q4、2026Q1。标签、语义判断和引用数据固定，因此是回顾性敏感性分析，不是历史预测回测。'),('删去背景年度','逐次剔除三个背景年度中的一个，检查结果是否被某一年主导。'),('相关与保留比例','Spearman表示排名相似程度；保留比例表示基准入选方向在实验中仍入选的比例。两者都不是准确率。'),('潜在比较范围','评估4个具体应用方向：虚拟电厂、电力大模型两种纳入范围均达标；空气源热泵需核实范围；知识图谱政策证据不足。只比较前1名、前2名，前10/25名不适用。'),('并列规则','按小数点后10位确定并列；展示按ID升序，统计采用并列最小名次。')]
  make('750类热点消融实验与灵敏度分析.xlsx',enotes,[(n,'reliability/'+f,None) for n,f in [('评分指标消融','score_ablation_summary.csv'),('门槛数据窗口灵敏度','gate_and_data_sensitivity.csv'),('1500次权重试验','weight_trials.csv'),('权重排名稳定性','weight_rank_stability.csv'),('逐类别消融排名','score_ablation_ranks.csv'),('情景逐主题依据','data_sensitivity_topic_details.csv'),('潜在任务实验','potential_unified_sensitivity_summary.csv'),('潜在逐任务实验依据','potential_unified_sensitivity_details.csv')]],experiments=True)
  dump(BASE/'data/MULTIYEAR_WORKBOOK_TABLES.json',manifest)
  review=pd.read_csv(R/'multiyear_semantic_review.csv');reads=pd.read_csv(BASE/'review/multiyear_displayed_samples.csv')
  report=f'''# 能源热点分析报告
 
-本研究对750个能源相关主题计算文献指标，并结合样本范围审阅，得到**{len(core)}个核心、{len(em)}个新兴或持续升温初评候选**。潜在应用分析覆盖4个任务：2项获得严格和扩展双口径支持，1项适合条件性跟踪，1项保留观察。结果供专家评估，不直接证明技术领先或未来成功。
+本研究对750个能源相关主题计算文献指标，并结合样本范围审阅，得到**{len(core)}个核心、{len(em)}个新兴或持续升温初评候选**。潜在应用分析评估4个具体方向：**虚拟电厂、电力大模型可列为跟踪方向；空气源热泵需先核实待判断文献；电力知识图谱目前政策证据不足，暂不推荐、保留观察。**结果供专家评估，不直接证明技术领先或未来成功。
 
 ## 方法与阅读方式
 
@@ -378,9 +388,11 @@ Spearman相关衡量排名是否相似；名次变动说明单个方向的位置
 
 [实验报告](EXPERIMENT_REPORT.md)解释时间窗口、权重和数据范围的影响；[实验Excel](750类热点消融实验与灵敏度分析.xlsx)提供全部情景和逐次试验。
 
-结果包含12个核心、22个新兴或持续升温初评候选。潜在4个任务中2项双口径支持、1项条件性跟踪、1项观察。结果用于专家评审与应用跟踪。
+结果包含12个核心、22个新兴或持续升温初评候选。潜在评估4个具体应用方向：虚拟电厂、电力大模型可跟踪；空气源热泵需核实待判断记录；知识图谱政策证据不足，暂不推荐。结果用于专家评审与应用跟踪。
 
 `results`存放结果与证据表，`data/multiyear`存放论文汇总输入，`reliability`存放实验，`review`存放已展示样本。方法参数见`data/MULTIYEAR_METHOD.json`。
+
+核心代码位置见[算法代码导读](../../../docs/ALGORITHM.md)。主分析Excel的“潜在方向结论说明”页逐项解释四个方向的结论。
 
 离线复算和报告生成步骤见仓库的[复现指南](../../../docs/REPRODUCING.md)。
 ''')

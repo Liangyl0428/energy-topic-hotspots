@@ -2,8 +2,8 @@
 from common import *
 import pandas as pd
 POTENTIAL_CN = {'papers_2026_jan_aug': '2026年1至8月论文记录数',
- 'unit_id': '统一分析单元ID',
- 'unit_name': '统一分析单元名称',
+ 'unit_id': '应用方向ID',
+ 'unit_name': '具体应用方向',
  'parent_category_id': '来源类别ID',
  'policy_groups': '统一任务部署研发政策组数',
  'policy_points': '统一任务政策证据分',
@@ -56,6 +56,26 @@ POTENTIAL_CN = {'papers_2026_jan_aug': '2026年1至8月论文记录数',
  'policies': '场景政策组数',
  'potential_evidence_score': '统一单元证据分_小池内排序非概率'}
 
+POTENTIAL_CN.update(strict_scope_passed='仅明确相关记录时是否达标',expanded_scope_passed='加入待判断记录后是否达标',tracking_advice='建议如何处理',tracking_basis='为什么给出这一建议')
+
+def reading_guide(units):
+ """从现有判断生成逐方向阅读说明，不参与打分或资格计算。"""
+ rows=[]
+ for r in units.itertuples():
+  strict=bool(r.potential_priority);expanded=bool(r.expanded_potential_priority)
+  if strict and expanded:
+   advice='可列为跟踪方向'
+   basis='仅明确相关记录、加入范围待判断记录，两种范围均满足专利数、主体数、政策及两个同期份额门槛。'
+  elif strict:
+   advice='有条件跟踪：先核实待判断记录'
+   basis=f'严格范围通过；加入待判断记录后，1—8月相对份额为{r.expanded_relative_share:.2f}，1—5月为{r.expanded_matched_jan_may_relative_share:.2f}，未满足两个窗口均≥1.25的条件。'
+  else:
+   advice='暂不推荐，保留观察'
+   basis=f'仅确认{int(r.policy_groups)}组明确政策，未达到至少2组的条件；专利相对份额高也不能替代政策要求。' if r.policy_groups<2 else '严格范围尚未满足全部条件，具体未通过项见任务指标表中的判断依据。'
+  rows.append(dict(unit_id=r.unit_id,name=r.name,strict_scope_passed=strict,expanded_scope_passed=expanded,tracking_advice=advice,tracking_basis=basis))
+ return pd.DataFrame(rows)
+
+
 def main_text(table):
  u=pd.read_csv(BASE/'results/potential_unified_metrics.csv')
  r=pd.read_csv(BASE/'results/potential_unified_document_reviews.csv')
@@ -66,9 +86,19 @@ def main_text(table):
 
 潜在分析围绕四个明确任务：虚拟电厂、空气源热泵、电力知识图谱与知识问答、电力大模型辅助决策与运维。每个任务按相同定义筛选论文和专利，并逐项核对政策支持。它覆盖这四个任务，不是对750类潜在机会的穷尽发现。
 
-{table(u,['name','patents_2026','papers_2026_jan_aug','known_applicant_names','policy_groups','relative_share','expanded_relative_share','evidence_tier'])}
+这里的“任务单元”就是一个单独定义、单独统计证据的应用方向。先看四个方向分别给出了什么结论：
 
-虚拟电厂和电力大模型在严格、扩展两种口径下均通过。空气源热泵在严格口径下通过，加入范围待判断的记录后，相对份额低于1.25，适合附带条件持续跟踪。知识图谱只确认1组明确政策支持，未达到至少2组的门槛，列为观察方向。
+{table(reading_guide(u),['name','strict_scope_passed','expanded_scope_passed','tracking_advice'])}
+
+“双口径”专指两种文献纳入范围：**只用明确相关记录**称为严格口径；**再加入范围待判断的记录**称为扩展口径。明确不相关的记录始终排除。每次计算都同时使用论文、专利与政策证据。“达标”表示全部入选条件通过，包括至少2组明确政策。
+
+再看支持这些结论的主要指标：
+
+{table(u,['name','patents_2026','papers_2026_jan_aug','known_applicant_names','policy_groups','relative_share','expanded_relative_share'])}
+
+虚拟电厂和电力大模型两次计算均通过，因此可跟踪。空气源热泵的1—8月相对份额由{u.set_index('unit_id').loc['U0650','relative_share']:.2f}（严格）降到{u.set_index('unit_id').loc['U0650','expanded_relative_share']:.2f}（扩展），后者低于1.25。它的“条件性”具体指需要先核实待判断文献是否属于该方向，再决定是否推荐。知识图谱只有{int(u.set_index('unit_id').loc['U0356_KG','policy_groups'])}组明确政策，未达到至少2组，因此目前暂不推荐、保留观察。
+
+两种范围下均通过，只说明结果对这种纳入范围变化较稳定。它并不等于已经证明技术领先，也不表示其他数据或政策压力测试全部通过。
 
 **两种口径如何区分。** 严格口径要求题名或研究目的中有明确的任务证据；扩展口径还纳入范围待判断的记录。候选来自分类目录、跨主题关键词和任务对象词检索，合并后按记录ID去重。专利数量与申请主体由同一批入选专利计算；论文使用相同任务定义，政策对应具体应用或研发任务。
 
