@@ -9,16 +9,18 @@
 | core | remove_volume | 202 | 0.924 | 64.000 |
 | core | remove_citation | 202 | 0.907 | 59.000 |
 | core | remove_institutions | 202 | 0.993 | 21.000 |
-| core | remove_persistence | 202 | 1.000 | 1.000 |
+| core | remove_persistence | 202 | 1.000 | 0.000 |
 | core | remove_current | 202 | 0.997 | 14.000 |
-| emerging | remove_multiyear_growth | 44 | 0.956 | 10.000 |
+| emerging | remove_multiyear_growth | 44 | 0.957 | 10.000 |
 | emerging | remove_recent_growth | 44 | 0.931 | 14.000 |
 | emerging | remove_trend | 44 | 0.965 | 10.000 |
 | emerging | remove_quarter_consistency | 44 | 0.957 | 12.000 |
-| emerging | remove_institution_expansion | 44 | 0.981 | 8.000 |
+| emerging | remove_institution_expansion | 44 | 0.982 | 8.000 |
 | potential | remove_patents | 4 | 0.316 | 2.000 |
 | potential | remove_applicants | 4 | 0.316 | 2.000 |
 | potential | remove_policy | 4 | 0.738 | 1.000 |
+
+排名时将0—100分取小数点后10位以消除浮点尾差；并列按ID升序展示，实验采用并列最小名次，Spearman也使用舍入后的分数。原始评分及入选门槛不变。
 
 排名池为本次数值资格池；得分无硬入选阈值，单独改权重不改变正式资格。500次Spearman最小值：核心0.9910，新兴0.9842，潜在0.3162。稳定性不等于准确率。
 

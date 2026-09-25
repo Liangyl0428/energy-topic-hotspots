@@ -6,6 +6,26 @@ from scipy.stats import norm
 CORE_WEIGHTS={'volume':.40,'citation':.20,'institutions':.15,'persistence':.15,'current':.10}
 EMERGING_WEIGHTS={'multiyear_growth':.35,'recent_growth':.25,'trend':.20,'quarter_consistency':.10,'institution_expansion':.10}
 
+# Ignore machine-precision differences in 0--100 scores for ranking only.
+RANK_DECIMALS = 10
+
+
+def ranking_key(scores):
+    """Canonical tie groups; retain unrounded scores for reporting and gates."""
+    return scores.round(RANK_DECIMALS)
+
+
+def rank_scores(scores):
+    """Competition ranks: tied scores share the minimum position."""
+    return ranking_key(scores).rank(ascending=False, method='min')
+
+
+def ordered_scores(scores):
+    """Original scores ordered by canonical score descending, then ID ascending."""
+    order = ranking_key(scores).sort_index().sort_values(ascending=False, kind='stable')
+    return scores.loc[order.index]
+
+
 def percent(s,pool):
     ref=s[pool&s.notna()].sort_values().to_numpy()
     return pd.Series(np.searchsorted(ref,s.fillna(-np.inf),side='right')/len(ref),index=s.index).clip(0,1) if len(ref) else pd.Series(0.,index=s.index)

@@ -1,0 +1,112 @@
+{
+  "passed": true,
+  "completed_utc": "2026-09-25T16:26:29.391696+00:00",
+  "cause": "BLAS CPU kernels perturb scores by about 1e-14; unstable sorting and raw floating-point ties changed candidate order and experiment rank statistics.",
+  "ranking_rule": "Round 0-100 scores to 10 decimal places for ranking only; min ranks for ties; ID ascending for presentation and top-k; Spearman uses rounded scores.",
+  "reproduced_original_failure_with": "OPENBLAS_CORETYPE=Haswell; NumPy 2.4.6, pandas 3.0.6, SciPy 1.17.1",
+  "original_mismatched_pair": [
+    "C0271",
+    "C0378"
+  ],
+  "candidate_positions_reordered": [
+    13,
+    14,
+    76,
+    77,
+    95,
+    96
+  ],
+  "raw_topic_metrics_unchanged": true,
+  "formal_lists_unchanged": {
+    "core": [
+      "C0060",
+      "C0155",
+      "C0067",
+      "C0254",
+      "C0278",
+      "C0191",
+      "C0122",
+      "C0556",
+      "C0245",
+      "C0473",
+      "C0169",
+      "C0251"
+    ],
+    "emerging": [
+      "C0533",
+      "C0381",
+      "C0210",
+      "C0435",
+      "C0713",
+      "C0294",
+      "C0566",
+      "C0542",
+      "C0186",
+      "C0600",
+      "C0091",
+      "C0246",
+      "C0098",
+      "C0348",
+      "C0665",
+      "C0216",
+      "C0534",
+      "C0473",
+      "C0443",
+      "C0191",
+      "C0251",
+      "C0725"
+    ],
+    "potential": [
+      "U0246",
+      "U0650",
+      "U0356_LLM"
+    ]
+  },
+  "all_gate_and_data_scenario_memberships_unchanged": true,
+  "potential_experiment_results_unchanged": true,
+  "excel_cells_readback": 475901,
+  "environments": [
+    {
+      "environment": "native",
+      "versions": {
+        "python": "3.11.13",
+        "numpy": "2.4.6",
+        "pandas": "3.0.6",
+        "scipy": "1.17.1"
+      },
+      "blas_core": "native",
+      "tests_passed": 14,
+      "replay_checks_passed": 55,
+      "weight_trials": 1500,
+      "sensitivity_scenarios": 172
+    },
+    {
+      "environment": "haswell",
+      "versions": {
+        "python": "3.11.13",
+        "numpy": "2.4.6",
+        "pandas": "3.0.6",
+        "scipy": "1.17.1"
+      },
+      "blas_core": "Haswell",
+      "tests_passed": 14,
+      "replay_checks_passed": 55,
+      "weight_trials": 1500,
+      "sensitivity_scenarios": 172
+    },
+    {
+      "environment": "legacy",
+      "versions": {
+        "python": "3.10.12",
+        "numpy": "2.2.6",
+        "pandas": "2.3.3",
+        "scipy": "1.15.3"
+      },
+      "blas_core": "native",
+      "tests_passed": 14,
+      "replay_checks_passed": 55,
+      "weight_trials": 1500,
+      "sensitivity_scenarios": 172
+    }
+  ]
+}

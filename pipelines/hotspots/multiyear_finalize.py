@@ -1,6 +1,7 @@
 """Replace current deliverables while preserving unified potential evidence."""
 from common import *
 import pandas as pd,numpy as np
+from multiyear_scoring import ordered_scores
 
 def finalize():
  z=pd.read_csv(BASE/'results/multiyear_metrics_all750.csv').set_index('category_id')
@@ -31,7 +32,7 @@ def finalize():
    grades.append(r)
  gr=pd.DataFrame(grades);save(gr,'multiyear_robustness_grades.csv')
  for family,flag,score,file in [('core','final_core','core_score','core_hotspots.csv'),('emerging','final_emerging','emerging_score','emerging_hotspots.csv')]:
-  d=z[z[flag]].sort_values(score,ascending=False).reset_index();d.insert(0,'report_rank',range(1,len(d)+1));d=d.merge(gr[gr.family.eq(family)].drop(columns=['name','family','scope']),on='category_id',how='left');save(d,file)
+  d=z.loc[ordered_scores(z.loc[z[flag],score]).index].reset_index();d.insert(0,'report_rank',range(1,len(d)+1));d=d.merge(gr[gr.family.eq(family)].drop(columns=['name','family','scope']),on='category_id',how='left');save(d,file)
  save(z.reset_index(),'literature_metrics_all750.csv');save(z.reset_index(),'hotspot_summary_all750.csv')
  watch=z[(z.core_eligible&~z.final_core)|(z.emerging_robust&~z.final_emerging)|(z.share_growth_ratio.ge(1.15)&~z.final_emerging)].copy();save(watch.reset_index(),'watch_and_downgraded.csv')
  changes=[]

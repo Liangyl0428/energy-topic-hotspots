@@ -2,7 +2,7 @@
 from common import *
 import pandas as pd,numpy as np,itertools
 from scipy.stats import spearmanr
-from multiyear_scoring import gates,CORE_WEIGHTS,EMERGING_WEIGHTS
+from multiyear_scoring import gates,CORE_WEIGHTS,EMERGING_WEIGHTS,ranking_key,rank_scores,ordered_scores
 R=BASE/'reliability'
 z=pd.read_csv(BASE/'results/multiyear_metrics_all750.csv').set_index('category_id')
 components={f:pd.read_csv(BASE/'results'/f'multiyear_{f}_components.csv').set_index('category_id') for f in ['core','emerging']}
@@ -14,14 +14,13 @@ for family,comp in components.items():
  w=pd.Series(weights[family]);score=100*comp.dot(w)
  np.testing.assert_allclose(score,z[family+'_score'],atol=1e-9)
  mask=z.core_eligible if family=='core' else z.emerging_robust
- idx=z.index[mask];base=score.loc[idx];br=base.rank(ascending=False,method='min')
- def order(s):return s.sort_index().sort_values(ascending=False,kind='stable')
+ idx=z.index[mask];base=score.loc[idx];br=rank_scores(base)
  def compare(label,s,w):
-  v=s.loc[idx];rr=v.rank(ascending=False,method='min')
-  row=dict(family=family,scenario=label,pool_size=len(idx),spearman=float(spearmanr(base,v).statistic),mean_abs_rank_change=float((rr-br).abs().mean()),max_abs_rank_change=float((rr-br).abs().max()),weights=json.dumps(w.to_dict()),formal_membership_changed_by_score_alone=0)
+  v=s.loc[idx];rr=rank_scores(v)
+  row=dict(family=family,scenario=label,pool_size=len(idx),spearman=float(spearmanr(ranking_key(base),ranking_key(v)).statistic),mean_abs_rank_change=float((rr-br).abs().mean()),max_abs_rank_change=float((rr-br).abs().max()),weights=json.dumps(w.to_dict()),formal_membership_changed_by_score_alone=0)
   for k in [10,25]:
    if k>len(idx):row[f'top{k}_overlap']=np.nan;row[f'top{k}_jaccard']=np.nan;continue
-   a=set(order(base).head(k).index);b=set(order(v).head(k).index);row[f'top{k}_overlap']=len(a&b);row[f'top{k}_jaccard']=len(a&b)/len(a|b)
+   a=set(ordered_scores(base).head(k).index);b=set(ordered_scores(v).head(k).index);row[f'top{k}_overlap']=len(a&b);row[f'top{k}_jaccard']=len(a&b)/len(a|b)
   return row,rr
  row,_=compare('baseline',score,w);abl.append(row)
  for col in comp:
@@ -29,7 +28,7 @@ for family,comp in components.items():
   for cid in idx:detail.append(dict(family=family,scenario='remove_'+col,category_id=cid,name=z.loc[cid,'name'],baseline_rank=br[cid],rank=rr[cid],score=s[cid]))
  rng=np.random.default_rng(75020260925);ranks=[];tops=[]
  for i in range(500):
-  wi=w*rng.uniform(.8,1.2,len(w));wi/=wi.sum();s=100*comp.dot(wi);row,rr=compare(f'weight_{i:03d}',s,wi);trials.append(row);ranks.append(rr);tops.append(set(order(s.loc[idx]).head(min(10,len(idx))).index))
+  wi=w*rng.uniform(.8,1.2,len(w));wi/=wi.sum();s=100*comp.dot(wi);row,rr=compare(f'weight_{i:03d}',s,wi);trials.append(row);ranks.append(rr);tops.append(set(ordered_scores(s.loc[idx]).head(min(10,len(idx))).index))
  rankdf=pd.DataFrame(ranks)
  for cid in idx:stability.append(dict(family=family,category_id=cid,name=z.loc[cid,'name'],baseline_rank=br[cid],min_rank=rankdf[cid].min(),median_rank=rankdf[cid].median(),max_rank=rankdf[cid].max(),top10_trial_fraction=np.mean([cid in t for t in tops]) if len(idx)>=10 else np.nan,formal_selected=bool(z.loc[cid,flags[family]])))
 
@@ -67,7 +66,7 @@ for years in [2,4]:
 for omit in [1,2,3]:
  f=pd.read_csv(BASE/'results'/f'multiyear_omit_baseline_{omit}.csv').set_index('category_id');f['robust_min_ratio']=z.robust_min_ratio;record('emerging',f'omit_baseline_year_{omit}',f,'leave_year_out',note='删除一个完整基线年，重算平均份额/主体广度/计数检验；最近同比、五年峰值和数据确认固定，定位基线杠杆')
 for df,file in [(pd.DataFrame(abl),'score_ablation_summary.csv'),(pd.DataFrame(detail),'score_ablation_ranks.csv'),(pd.DataFrame(trials),'weight_trials.csv'),(pd.DataFrame(stability),'weight_rank_stability.csv'),(pd.DataFrame(scenarios),'gate_and_data_sensitivity.csv'),(pd.DataFrame(td),'data_sensitivity_topic_details.csv')]:df.to_csv(R/file,index=False,encoding='utf-8-sig')
-dump(R/'EXPERIMENT_METHOD.json',dict(version='750-multiyear-v1',created=now(),baseline_formula_regression='all750 core/emerging formulas checked',baseline_membership_regression='exact',weight_trials_per_family=500,seed=75020260925,grids=grids,window_rules='core1/3/5years; emerging2/3/4-year disjoint annualmean baseline; three earlier endpoints; annual baseline omission',limitations='Frozen current classification, semantic decisions and citation snapshot; retrospective sensitivity, not as-of future prediction validation.'))
+dump(R/'EXPERIMENT_METHOD.json',dict(version='750-multiyear-v1',created=now(),baseline_formula_regression='all750 core/emerging formulas checked',baseline_membership_regression='exact',weight_trials_per_family=500,seed=75020260925,ranking='10 decimal score keys; min tied ranks; ID ascending for top-k; Spearman on rounded scores',grids=grids,window_rules='core1/3/5years; emerging2/3/4-year disjoint annualmean baseline; three earlier endpoints; annual baseline omission',limitations='Frozen current classification, semantic decisions and citation snapshot; retrospective sensitivity, not as-of future prediction validation.'))
 from potential_experiments import run
 run()
 print('MULTIYEAR_EXPERIMENTS',len(scenarios),'literature scenarios',flush=True)

@@ -15,5 +15,8 @@
   "scope": "从冻结季度、情景机构并集与引用汇总重算多年指标，潜在从候选记录重算；不重检索全库，不重新专家审核；历史截止点为回顾性敏感性。",
   "weight_trials": 1500,
   "sensitivity_scenarios": 172,
-  "archive_extraction_replay_passed": true
+  "archive_extraction_replay_passed": true,
+  "tests_passed": 14,
+  "blas_core": "Haswell",
+  "completed_utc": "2026-09-25T16:28:41.644939+00:00"
 }

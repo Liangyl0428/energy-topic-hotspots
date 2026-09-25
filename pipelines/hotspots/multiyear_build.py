@@ -1,7 +1,7 @@
 """Create all 750 metrics, shortlist and explicit semantic-review queues."""
 from common import *
 import pandas as pd,numpy as np
-from multiyear_scoring import score,gates,CORE_WEIGHTS,EMERGING_WEIGHTS
+from multiyear_scoring import score,gates,CORE_WEIGHTS,EMERGING_WEIGHTS,ordered_scores
 D=BASE/'data/multiyear';tax=pd.read_csv(BASE/'results/category_catalog.csv').set_index('category_id')
 
 def calculate(scenario='main',end='2026Q2',**kw):
@@ -38,7 +38,7 @@ def build():
  z['review_status']=np.where(z.final_core|z.final_emerging,'已有样本依据的专家初评候选',np.where(z.core_eligible|z.emerging_robust,'数值通过，语义未通过或待复核','未过本版数值门槛'))
  save(z.reset_index(),'multiyear_metrics_all750.csv')
  for family,gate,sc in [('core','core_eligible','core_score'),('emerging','emerging_robust','emerging_score')]:
-  d=z[z[gate]].sort_values(sc,ascending=False).reset_index();d.insert(0,'numeric_rank',range(1,len(d)+1));save(d,'multiyear_'+family+'_candidates.csv')
+  d=z.loc[ordered_scores(z.loc[z[gate],sc]).index].reset_index();d.insert(0,'numeric_rank',range(1,len(d)+1));save(d,'multiyear_'+family+'_candidates.csv')
  print('MULTIYEAR_CANDIDATES',int(z.core_eligible.sum()),int(z.emerging_robust.sum()),'reviewed',int(z.final_core.sum()),int(z.final_emerging.sum()),flush=True)
  print(z[z.final_core|z.final_emerging][['name','core_papers','recent_papers','multiyear_share_ratio','historical_peak_ratio','final_core','final_emerging']].to_string(),flush=True)
  for end in ['2026Q1','2025Q4','2025Q2']:
@@ -55,7 +55,7 @@ def build():
  for i,w in enumerate(windows()):
   for cid,row in z.iterrows():rows.append(dict(category_id=cid,name=row['name'],block=i,start_quarter=w[0],end_quarter=w[-1],papers=row[f'year{i}_papers'],background=row[f'year{i}_denominator'],share=row[f'year{i}_share']))
  save(pd.DataFrame(rows),'multiyear_annual_trajectories.csv')
- method=dict(version='750-multiyear-v1',created=now(),core_window=['2023-07-01','2026-06-30'],recent_window=['2025-07-01','2026-06-30'],emerging_baseline=['2022-07-01','2025-06-30'],history=['2021-07-01','2026-06-30'],core_weights=CORE_WEIGHTS,emerging_weights=EMERGING_WEIGHTS,baseline='Equal mean of 3 separately normalized annual shares; disjoint from recent year',core_gates='three-year>=750, every year>=150, >=9/12 quarters each>=25, recent>=250 and recentYOYshare>=0.8; direct scope and semantic review',emerging_gates='recent>=100; baseline annual mean>=50; recent/3-year mean>=1.25; YOY>=1.15; >=3 growing quarters; 3-year slope>0; recent/previous4-year peak>=1.05; pooled-count lower95>1.05 and BHq<.05; quality/geometry/dedup long+YOY and latestYTD ratios>=1.10; semantic review',small_base='Below baseline mean50 retained as early-signal watch, not forced to pass established-growth gate',statistics='Count-only pooled-binomial approximations are screening diagnostics; no serial-dependence-adjusted confidence or causal claim.',citation='Snapshot cumulative citations, publication-year percentiles within filtered scope; historical endpoints are retrospective sensitivity, not temporal validation',potential='Unchanged unified4 task units, fixed 2026 patent/policy data; no invented historical patent series',review='Any new numeric candidates without sample scope review remain pending; thresholds not tuned to preserve old lists')
+ method=dict(version='750-multiyear-v1',created=now(),core_window=['2023-07-01','2026-06-30'],recent_window=['2025-07-01','2026-06-30'],emerging_baseline=['2022-07-01','2025-06-30'],history=['2021-07-01','2026-06-30'],core_weights=CORE_WEIGHTS,emerging_weights=EMERGING_WEIGHTS,ranking='Scores rounded to 10 decimal places for ranking only; tied display order by ID ascending; experiment ranks use min ties and Spearman uses the same rounded scores.',baseline='Equal mean of 3 separately normalized annual shares; disjoint from recent year',core_gates='three-year>=750, every year>=150, >=9/12 quarters each>=25, recent>=250 and recentYOYshare>=0.8; direct scope and semantic review',emerging_gates='recent>=100; baseline annual mean>=50; recent/3-year mean>=1.25; YOY>=1.15; >=3 growing quarters; 3-year slope>0; recent/previous4-year peak>=1.05; pooled-count lower95>1.05 and BHq<.05; quality/geometry/dedup long+YOY and latestYTD ratios>=1.10; semantic review',small_base='Below baseline mean50 retained as early-signal watch, not forced to pass established-growth gate',statistics='Count-only pooled-binomial approximations are screening diagnostics; no serial-dependence-adjusted confidence or causal claim.',citation='Snapshot cumulative citations, publication-year percentiles within filtered scope; historical endpoints are retrospective sensitivity, not temporal validation',potential='Unchanged unified4 task units, fixed 2026 patent/policy data; no invented historical patent series',review='Any new numeric candidates without sample scope review remain pending; thresholds not tuned to preserve old lists')
  dump(BASE/'data/MULTIYEAR_METHOD.json',method)
  return z
 if __name__=='__main__':build()

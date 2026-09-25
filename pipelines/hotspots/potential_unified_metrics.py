@@ -1,5 +1,6 @@
 """All potential-unit quantities derive from the SAME selected record ledger."""
 from common import *
+from multiyear_scoring import ordered_scores
 from potential_unified import UNITS
 import pandas as pd,numpy as np
 
@@ -96,7 +97,7 @@ def build():
  z['scope_sensitivity']=np.where(z.expanded_potential_priority,'扩展口径亦通过','扩展口径未通过')
  z['scope_sensitivity']+=np.where(z.uncertainty_ratio_lower.ge(1.25),'；非对称待判压力下仍≥1.25','；非对称待判压力下低于1.25')
  save(z.reset_index(),'potential_unified_metrics.csv')
- output=z[z.potential_priority].sort_values('potential_evidence_score',ascending=False).reset_index();output.insert(0,'report_rank',range(1,len(output)+1));save(output,'potential_priority.csv')
+ output=z.loc[ordered_scores(z.loc[z.potential_priority,'potential_evidence_score']).index].reset_index();output.insert(0,'report_rank',range(1,len(output)+1));save(output,'potential_priority.csv')
  save(z[~z.potential_priority].reset_index(),'potential_unified_watch.csv')
  # Export every candidate with a reason, but text bodies stay in Parquet for size.
  fields=['unit_id','unit_name','parent_category_id','row_id','doc_id','source','category_id','date','title','from_original_category','from_old_cross_query','from_new_object_query','rule_status','final_status','decision_basis']

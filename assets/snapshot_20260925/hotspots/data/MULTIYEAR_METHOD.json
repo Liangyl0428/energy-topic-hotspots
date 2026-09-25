@@ -1,6 +1,6 @@
 {
   "version": "750-multiyear-v1",
-  "created": "2026-09-25T15:28:19.924885+00:00",
+  "created": "2026-09-25T16:22:13.784555+00:00",
   "core_window": [
     "2023-07-01",
     "2026-06-30"
@@ -31,6 +31,7 @@
     "quarter_consistency": 0.1,
     "institution_expansion": 0.1
   },
+  "ranking": "Scores rounded to 10 decimal places for ranking only; tied display order by ID ascending; experiment ranks use min ties and Spearman uses the same rounded scores.",
   "baseline": "Equal mean of 3 separately normalized annual shares; disjoint from recent year",
   "core_gates": "three-year>=750, every year>=150, >=9/12 quarters each>=25, recent>=250 and recentYOYshare>=0.8; direct scope and semantic review",
   "emerging_gates": "recent>=100; baseline annual mean>=50; recent/3-year mean>=1.25; YOY>=1.15; >=3 growing quarters; 3-year slope>0; recent/previous4-year peak>=1.05; pooled-count lower95>1.05 and BHq<.05; quality/geometry/dedup long+YOY and latestYTD ratios>=1.10; semantic review",

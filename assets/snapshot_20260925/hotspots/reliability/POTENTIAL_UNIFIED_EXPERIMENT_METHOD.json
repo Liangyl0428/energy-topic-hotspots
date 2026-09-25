@@ -1,5 +1,5 @@
 {
-  "created_utc": "2026-09-25T15:28:28.210649+00:00",
+  "created_utc": "2026-09-25T16:22:26.224541+00:00",
   "units": [
     "U0246",
     "U0650",
@@ -13,6 +13,7 @@
     0.2,
     0.5
   ],
+  "ranking": "10 decimal score keys; min tied ranks; ID ascending for top-k; Spearman on rounded scores",
   "rank_scope": "四个统一任务单元内百分位；不可与旧30方向或750原类别分数直接比较。",
   "top_k": "Only top1/top2 meaningful; top10/top25 not applicable and blank.",
   "smoothing": "0.5 success,0.5 complement: denominator+1",

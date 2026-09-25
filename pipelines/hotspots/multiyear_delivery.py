@@ -47,13 +47,13 @@ def deliver():
    sheet(name,df);spec.append(dict(sheet=name,file=path,columns=list(df.columns)))
   sheet('字段对照',pd.DataFrame(list(CN.items()),columns=['字段','中文释义']))
   wb.save(BASE/file);manifest.append(dict(workbook=file,tables=spec))
- notes=[('版本','750-multiyear-v1；固定750标签，核心与新兴已改为多年方法。'),('结果',f'{len(core)}个核心初评候选、{len(em)}个新兴/持续升温初评候选；潜在4任务单元中2项双口径支持、1项条件跟踪、1项观察。'),('核心时间尺度','主窗2023-07至2026-06，共3年；同时要求最近一年活跃。1/3/5年另做敏感性。'),('新兴时间尺度','最近2025-07至2026-06，对比此前2022-07至2025-06三个不重叠年度的平均份额；五年历史2021-07至2026-06。'),('份额与覆盖','各年度分别按同期论文背景归一后平均，避免某个收录量大的年度支配基线；2026年只有1至8月，不与全年直接比总量。'),('核心门槛','三年论文≥750、每年≥150、12季度至少9季度各≥25；最近一年≥250且同比份额比≥0.8；领域与语义审阅通过。'),('新兴门槛','最近一年≥100、前三年年均≥50、多年份额比≥1.25、同比≥1.15、至少3季度同比增长、三年斜率>0、超过前四年峰值≥5%；计数检验和数据方向确认通过。'),('新兴含义','文献关注度持续上升，可能包括成熟技术的新一轮增长，不等于技术首次出现。低基数新苗头及历史峰值以下恢复保留观察。'),('审阅范围','全部750类均计算；核心审阅范围是新评分前25加既有通过项，新兴覆盖所有本次数值稳健候选；其余未审核心明确列为候选待审，不是无价值。'),('样本限制','跨年补审是模型辅助阅读，不是独立专家金标准；方向通过也不等于所有记录纯净。'),('统计限制','计数近似检验未校正所有时间相关与收录偏差；历史截止点使用冻结标签及本次引用快照，属于回顾性敏感性，不是预测回测。'),('潜在范围','保留2026年同集合专利、论文和任务政策口径；没有多年专利数据，不构造专利增长。'),('旧版对照','分数定义已改变，旧新分差不能直接解释为技术升降；见名单变化表。')]
+ notes=[('版本','750-multiyear-v1；固定750标签，核心与新兴已改为多年方法。'),('结果',f'{len(core)}个核心初评候选、{len(em)}个新兴/持续升温初评候选；潜在4任务单元中2项双口径支持、1项条件跟踪、1项观察。'),('核心时间尺度','主窗2023-07至2026-06，共3年；同时要求最近一年活跃。1/3/5年另做敏感性。'),('新兴时间尺度','最近2025-07至2026-06，对比此前2022-07至2025-06三个不重叠年度的平均份额；五年历史2021-07至2026-06。'),('份额与覆盖','各年度分别按同期论文背景归一后平均，避免某个收录量大的年度支配基线；2026年只有1至8月，不与全年直接比总量。'),('核心门槛','三年论文≥750、每年≥150、12季度至少9季度各≥25；最近一年≥250且同比份额比≥0.8；领域与语义审阅通过。'),('新兴门槛','最近一年≥100、前三年年均≥50、多年份额比≥1.25、同比≥1.15、至少3季度同比增长、三年斜率>0、超过前四年峰值≥5%；计数检验和数据方向确认通过。'),('新兴含义','文献关注度持续上升，可能包括成熟技术的新一轮增长，不等于技术首次出现。低基数新苗头及历史峰值以下恢复保留观察。'),('审阅范围','全部750类均计算；核心审阅范围是新评分前25加既有通过项，新兴覆盖所有本次数值稳健候选；其余未审核心明确列为候选待审，不是无价值。'),('样本限制','跨年补审是模型辅助阅读，不是独立专家金标准；方向通过也不等于所有记录纯净。'),('统计限制','计数近似检验未校正所有时间相关与收录偏差；历史截止点使用冻结标签及本次引用快照，属于回顾性敏感性，不是预测回测。'),('潜在范围','保留2026年同集合专利、论文和任务政策口径；没有多年专利数据，不构造专利增长。'),('并列排名','排名时将0—100分取小数点后10位以消除浮点尾差；并列按ID升序展示，实验采用并列最小名次，Spearman也使用舍入后的分数。原始评分及入选门槛不变。'),('旧版对照','分数定义已改变，旧新分差不能直接解释为技术升降；见名单变化表。')]
  corecols=['report_rank','category_id','name','core_papers','core_active_years','core_active_quarters','core_institutions','recent_papers','share_growth_ratio','core_score','robustness_grade','data_scenarios_passed','time_sensitivity_note','paper_review_reason']
  emcols=['report_rank','category_id','name','recent_papers','baseline_annual_mean_papers','multiyear_share_ratio','share_growth_ratio','historical_peak_ratio','three_year_log_share_slope','emerging_score','robustness_grade','data_scenarios_passed','time_sensitivity_note','paper_review_reason']
  tables=[('核心热点','results/core_hotspots.csv',corecols),('新兴热点','results/emerging_hotspots.csv',emcols),('潜在跟踪方向','results/potential_priority.csv',None),('750类完整结果','results/hotspot_summary_all750.csv',None),('多年方法前后变化','results/multiyear_before_after.csv',None),('五年年度轨迹','results/multiyear_annual_trajectories.csv',None),('核心数值候选待审','results/multiyear_core_candidates.csv',None),('新兴数值候选审阅','results/multiyear_emerging_candidates.csv',None),('跨年补审结论','results/multiyear_semantic_review.csv',None),('跨年已读样本','review/multiyear_displayed_samples.csv',None),('多年数据覆盖','results/multiyear_coverage_audit.csv',None),('数据稳健性分级','results/multiyear_robustness_grades.csv',None),('观察与待复核','results/watch_and_downgraded.csv',None)]
  for name,file in [('潜在统一单元全表','potential_unified_metrics.csv'),('潜在范围定义','potential_unified_scope.csv'),('潜在逐条候选','potential_unified_record_ledger.csv'),('潜在主体证据','potential_unified_applicant_evidence.csv'),('潜在政策任务复核','potential_unified_policy_reviews.csv'),('潜在样本范围复核','potential_unified_document_reviews.csv'),('潜在统计分母','potential_unified_denominators.csv')]:tables.append((name,'results/'+file,None))
  make('750类核心新兴潜在热点分析.xlsx',notes,tables)
- enotes=notes[:1]+[('总量',f'{len(wt)}次权重扰动，{len(g)}个门槛/数据/窗口场景。'),('消融','移除一个评分成分后归一；资格和语义判断固定。只改分数不改变名单。'),('窗口长度','核心1/3/5年；计数门槛按年缩放，季度按比例缩放。新兴此前2/3/4年基线不与最近一年重叠。'),('截止点','2025Q2、2025Q4、2026Q1；仅对应截止点数值规则，冻结当前标签与语义判断，不输入2026年8月确认；不视为预测回测。'),('删基线年','逐次剔除三个背景年度，重算年均份额、机构与计数检验；最近同比和五年峰值仍固定。'),('数据压力','质量、几何、去重、排除待复核、仅规则支持均重算计数、机构与引用背景；新兴保留主数据方向确认，属于条件测试。'),('排序池','核心/新兴在本次数值资格池内比较，潜在只有4单元；前10/25超过池大小留空。')]
+ enotes=notes[:1]+[('并列排名','排名时将0—100分取小数点后10位以消除浮点尾差；并列按ID升序展示，实验采用并列最小名次，Spearman也使用舍入后的分数。原始评分及入选门槛不变。'),('总量',f'{len(wt)}次权重扰动，{len(g)}个门槛/数据/窗口场景。'),('消融','移除一个评分成分后归一；资格和语义判断固定。只改分数不改变名单。'),('窗口长度','核心1/3/5年；计数门槛按年缩放，季度按比例缩放。新兴此前2/3/4年基线不与最近一年重叠。'),('截止点','2025Q2、2025Q4、2026Q1；仅对应截止点数值规则，冻结当前标签与语义判断，不输入2026年8月确认；不视为预测回测。'),('删基线年','逐次剔除三个背景年度，重算年均份额、机构与计数检验；最近同比和五年峰值仍固定。'),('数据压力','质量、几何、去重、排除待复核、仅规则支持均重算计数、机构与引用背景；新兴保留主数据方向确认，属于条件测试。'),('排序池','核心/新兴在本次数值资格池内比较，潜在只有4单元；前10/25超过池大小留空。')]
  make('750类热点消融实验与灵敏度分析.xlsx',enotes,[(n,'reliability/'+f,None) for n,f in [('评分指标消融','score_ablation_summary.csv'),('门槛数据窗口灵敏度','gate_and_data_sensitivity.csv'),('1500次权重试验','weight_trials.csv'),('权重排名稳定性','weight_rank_stability.csv'),('逐类别消融排名','score_ablation_ranks.csv'),('情景逐主题依据','data_sensitivity_topic_details.csv'),('潜在统一口径实验','potential_unified_sensitivity_summary.csv'),('潜在逐单元实验依据','potential_unified_sensitivity_details.csv')]])
  dump(BASE/'data/MULTIYEAR_WORKBOOK_TABLES.json',manifest)
  method=read(BASE/'data/MULTIYEAR_METHOD.json');review=pd.read_csv(R/'multiyear_semantic_review.csv');reads=pd.read_csv(BASE/'review/multiyear_displayed_samples.csv')
@@ -68,6 +68,8 @@ def deliver():
 核心评分：三年平均份额40%、同发表年引用百分位20%、三年去重机构15%、活跃季度占比15%、最近一年份额10%。要求三年≥750篇、每年≥150篇、12季度至少9个季度各≥25篇，最近一年≥250篇且同比份额≥0.8。引用为当前快照累计引用，不是历史引用增长。
 
 新兴评分：对前三年背景的份额增长35%、最近同比增长25%、近三年对数份额趋势20%、同比增长季度占比10%、机构扩展10%。要求最新一年≥100篇、基线年均≥50篇、多年份额比≥1.25、同比≥1.15、至少3个增长季度、三年斜率>0、比前四年最高份额至少高5%。另要求合并基线的计数近似下界>1.05及BH q<0.05；文本日期质量、原几何、全库题名年度去重口径的长期和同比份额，以及最新1至8月同月份额，均≥1.10。计数检验只作筛查，未消除收录偏差、时序相关或标签误差。
+
+排名时将0—100分取小数点后10位以消除浮点尾差；并列按ID升序展示，实验采用并列最小名次，Spearman也使用舍入后的分数。原始评分及入选门槛不变。
 
 主方法和门槛先于查看新名单固定，没有调整参数以保留旧榜。低基数新苗头、未超过历史峰值的恢复、数值通过但语义未审者进入观察/候选表。三年斜率是描述性量；五年峰值判断有门槛敏感性，详见实验。
 
@@ -112,6 +114,8 @@ def deliver():
 ## 评分与权重
 
 {table(abl[abl.scenario.ne('baseline')],['family','scenario','pool_size','spearman','max_abs_rank_change'])}
+
+排名时将0—100分取小数点后10位以消除浮点尾差；并列按ID升序展示，实验采用并列最小名次，Spearman也使用舍入后的分数。原始评分及入选门槛不变。
 
 排名池为本次数值资格池；得分无硬入选阈值，单独改权重不改变正式资格。500次Spearman最小值：核心{wt[wt.family.eq('core')].spearman.min():.4f}，新兴{wt[wt.family.eq('emerging')].spearman.min():.4f}，潜在{wt[wt.family.eq('potential')].spearman.min():.4f}。稳定性不等于准确率。
 

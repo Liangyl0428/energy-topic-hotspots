@@ -3,7 +3,7 @@ from common import *
 import pandas as pd,numpy as np,duckdb
 from openpyxl import load_workbook
 from scipy.stats import spearmanr
-from multiyear_scoring import windows,score,gates
+from multiyear_scoring import windows,score,gates,ranking_key
 from multiyear_delivery import safe,CN
 from validate_potential import run as validate_potential
 
@@ -44,7 +44,7 @@ def run():
  for fam in ['core','emerging']:
   comp=pd.read_csv(BASE/'results'/f'multiyear_{fam}_components.csv').set_index('category_id');mask=z.core_eligible if fam=='core' else z.emerging_robust;idx=z.index[mask]
   for row in wt[wt.family.eq(fam)].itertuples():
-   w=pd.Series(json.loads(row.weights));assert np.isclose(w.sum(),1);ss=100*comp.dot(w);rho=spearmanr(z.loc[idx,fam+'_score'],ss.loc[idx]).statistic;assert np.isclose(rho,row.spearman)
+   w=pd.Series(json.loads(row.weights));assert np.isclose(w.sum(),1);ss=100*comp.dot(w);rho=spearmanr(ranking_key(z.loc[idx,fam+'_score']),ranking_key(ss.loc[idx])).statistic;assert np.isclose(rho,row.spearman)
   b=g[g.family.eq(fam)&g.scenario.eq('baseline')].iloc[0];assert set(b.selected_ids.split(';'))==set(z.index[z['final_'+fam]])
  checks['all1500_weight_trials_and_baseline_sets']=True;checks['scenarios']=len(g)
  cells=0

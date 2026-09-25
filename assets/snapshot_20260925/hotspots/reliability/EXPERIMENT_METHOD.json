@@ -1,10 +1,11 @@
 {
   "version": "750-multiyear-v1",
-  "created": "2026-09-25T15:28:24.316629+00:00",
+  "created": "2026-09-25T16:22:21.390355+00:00",
   "baseline_formula_regression": "all750 core/emerging formulas checked",
   "baseline_membership_regression": "exact",
   "weight_trials_per_family": 500,
   "seed": 75020260925,
+  "ranking": "10 decimal score keys; min tied ranks; ID ascending for top-k; Spearman on rounded scores",
   "grids": {
     "core": {
       "annual_volume": [

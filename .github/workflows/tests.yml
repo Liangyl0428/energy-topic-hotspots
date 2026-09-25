@@ -5,12 +5,32 @@ permissions:
 jobs:
   test:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - python: "3.10"
+            dependencies: "numpy==2.2.6 pandas==2.3.3 scipy==1.15.3"
+            blas: ""
+            label: original-dependencies
+          - python: "3.11"
+            dependencies: ""
+            blas: ""
+            label: latest-dependencies
+          # This kernel reproduced the original floating-point tie failure.
+          - python: "3.11"
+            dependencies: ""
+            blas: Haswell
+            label: latest-haswell
+    name: ${{ matrix.label }}
+    env:
+      OPENBLAS_CORETYPE: ${{ matrix.blas }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
-      - run: python -m pip install -e '.[dev]'
+          python-version: ${{ matrix.python }}
+      - run: python -m pip install -e '.[dev]' ${{ matrix.dependencies }}
       - run: python -m pytest -q
       - run: energy-hotspots replay --experiments --output work/ci750
       - run: python tools/check_release.py

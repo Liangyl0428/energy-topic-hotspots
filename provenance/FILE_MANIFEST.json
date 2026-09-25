@@ -7,8 +7,8 @@
     },
     {
       "file": ".github/workflows/tests.yml",
-      "bytes": 460,
-      "sha256": "65bdbad74c54aee9dc6d2593ef4e93139f1902a752af7ca6b1e555d3262caacb"
+      "bytes": 1118,
+      "sha256": "85f8e77ddb397285bd70c8cf1fb646e203a94b282497d45f456234467ee4b43b"
     },
     {
       "file": ".gitignore",
@@ -32,23 +32,23 @@
     },
     {
       "file": "assets/snapshot_20260925/hotspots/750类核心新兴潜在热点分析.xlsx",
-      "bytes": 3289953,
-      "sha256": "b75271341dc63f79a879ad72f20c86ec3912db8a027d6fe8ccdfde7d3c31a541"
+      "bytes": 3162830,
+      "sha256": "c84d46b23fab1e1176e7631086388d7c6ea2dc90abf34a0f13546b98078f200c"
     },
     {
       "file": "assets/snapshot_20260925/hotspots/750类热点消融实验与灵敏度分析.xlsx",
-      "bytes": 505520,
-      "sha256": "5b6707ae01ac814296379bd0560cc3e2ebf1f664282c92bff11c6eb8b837f26f"
+      "bytes": 494851,
+      "sha256": "164f4ef74795d319b5952732e65c08cbba4b582f44f8ce781575952ab159ccdb"
     },
     {
       "file": "assets/snapshot_20260925/hotspots/EXPERIMENT_REPORT.md",
-      "bytes": 7994,
-      "sha256": "e46ad09a91141b4fab0988041bdcb8874e43f51944c4220e363b60fb5ee64b46"
+      "bytes": 8195,
+      "sha256": "01140e8558520dfd79b39d097a9dbfa952519331148e9cc5d1c2342656bde504"
     },
     {
       "file": "assets/snapshot_20260925/hotspots/METHOD.json",
-      "bytes": 1844,
-      "sha256": "6cd1f9d7f0b2cf9e02f94d83240b8ce08e419be0eed734630762c70b1514af9f"
+      "bytes": 2023,
+      "sha256": "a2a4e057846019a68b4377ce4e353df49fabdb606d2179eb9bdf4a84602160d9"
     },
     {
       "file": "assets/snapshot_20260925/hotspots/README.md",
@@ -57,8 +57,8 @@
     },
     {
       "file": "assets/snapshot_20260925/hotspots/REPORT.md",
-      "bytes": 22608,
-      "sha256": "5b2c64f6ec19a60bb802ca7cf104408f415cf5e348f32a099051832b3f71a60c"
+      "bytes": 22809,
+      "sha256": "36d950e774a4549ef03906fb31e57082ddc2f68e3d56b3418eedfcf340090c24"
     },
     {
       "file": "assets/snapshot_20260925/hotspots/data/FINAL_METHOD.json",
@@ -67,8 +67,8 @@
     },
     {
       "file": "assets/snapshot_20260925/hotspots/data/MULTIYEAR_METHOD.json",
-      "bytes": 1844,
-      "sha256": "6cd1f9d7f0b2cf9e02f94d83240b8ce08e419be0eed734630762c70b1514af9f"
+      "bytes": 2023,
+      "sha256": "a2a4e057846019a68b4377ce4e353df49fabdb606d2179eb9bdf4a84602160d9"
     },
     {
       "file": "assets/snapshot_20260925/hotspots/data/MULTIYEAR_REVIEW_DESIGN.json",
@@ -247,13 +247,13 @@
     },
     {
       "file": "assets/snapshot_20260925/hotspots/reliability/EXPERIMENT_METHOD.json",
-      "bytes": 1850,
-      "sha256": "1595feec2532ec1a8191bb4ba907c74282af9bdc95fef011679b0f71cdf5aab1"
+      "bytes": 1956,
+      "sha256": "0f4516fbb80a6162037f3bf504117f4117bdf733369352eb35a7f4f2a8bae909"
     },
     {
       "file": "assets/snapshot_20260925/hotspots/reliability/POTENTIAL_UNIFIED_EXPERIMENT_METHOD.json",
-      "bytes": 1715,
-      "sha256": "5b1bc33261fe990d62d4755de8f40dcc95d29de8a1a4376eef615b4bd513bc05"
+      "bytes": 1821,
+      "sha256": "a25ccbb89fd6b12de3e0a755f993c71f20a92727950bcddbc168d8a3a386269e"
     },
     {
       "file": "assets/snapshot_20260925/hotspots/reliability/data_sensitivity_topic_details.csv",
@@ -287,23 +287,23 @@
     },
     {
       "file": "assets/snapshot_20260925/hotspots/reliability/score_ablation_ranks.csv",
-      "bytes": 114977,
-      "sha256": "72c81368184a6a8cd0b170d63b03bbada72a880976853b2704c82cd6112d4a19"
+      "bytes": 114976,
+      "sha256": "36f43af811dd4e207ed2cb0947a9da9acce3502544ac24a897a0d0373ca4dd54"
     },
     {
       "file": "assets/snapshot_20260925/hotspots/reliability/score_ablation_summary.csv",
-      "bytes": 4148,
-      "sha256": "d453fbb2e20ce04286210d0786b844af84a0eb715f784aa5d260cba8372afad9"
+      "bytes": 4116,
+      "sha256": "d34d62cf180527424f0198b4d32c22e8eb2f9f8f3b24802c09377d704a3327b5"
     },
     {
       "file": "assets/snapshot_20260925/hotspots/reliability/weight_rank_stability.csv",
       "bytes": 19773,
-      "sha256": "9df32f3be0800381bf2fe13eec5648228b25c5639fcbc7d667578a688b9ba8de"
+      "sha256": "aa2fd7fdc5e91234aaafe5847dae74b404fedf7ce31deb35b3cdd84398879f82"
     },
     {
       "file": "assets/snapshot_20260925/hotspots/reliability/weight_trials.csv",
-      "bytes": 379531,
-      "sha256": "f5d028520a031f6f7236394ceac42d109d6f79f10715b20a239b2c59556fd97a"
+      "bytes": 379572,
+      "sha256": "9b1631f74f00196fe52ee20c1b97f60afe7450c754c1e2ceb3bbd90acbf8f2d5"
     },
     {
       "file": "assets/snapshot_20260925/hotspots/results/category_catalog.csv",
@@ -368,7 +368,7 @@
     {
       "file": "assets/snapshot_20260925/hotspots/results/multiyear_core_candidates.csv",
       "bytes": 238171,
-      "sha256": "a5084508d25af3eda8759acb58976600891553621fd23b829d441c17141c764f"
+      "sha256": "0d79470526ccb2697da8a8e8227fa28ba114abd56c5160408ebcfa27727b09b0"
     },
     {
       "file": "assets/snapshot_20260925/hotspots/results/multiyear_core_components.csv",
@@ -552,13 +552,13 @@
     },
     {
       "file": "docs/METHOD.md",
-      "bytes": 1834,
-      "sha256": "aaeeabfed96a061ac304f28b29a82dce64b9cb819651d3c873a8e5734144ebdf"
+      "bytes": 2035,
+      "sha256": "1987d97acf8b9d2ec9069a3a04a7f3ed35dbe0a8609590782a10ac9a1c4207e8"
     },
     {
       "file": "docs/REPRODUCING.md",
-      "bytes": 1453,
-      "sha256": "546c79340721e22db847e42a02a3d992ced2fe60c3d9d702d99570ab70b2e8b0"
+      "bytes": 1718,
+      "sha256": "6b687cf3ad209b2d1124f74b87664afadef0d5e4ee37c09bd6936d41f7929211"
     },
     {
       "file": "pipelines/hotspots/common.py",
@@ -567,23 +567,23 @@
     },
     {
       "file": "pipelines/hotspots/multiyear_build.py",
-      "bytes": 5960,
-      "sha256": "fd046ac365319123e7ccc7d6fcd6003f797a6340e47b0b83a19b12840e1cadda"
+      "bytes": 6152,
+      "sha256": "520378238db4c51d49889b81bb96d04ac9a14be44484b24b8461650b97a18505"
     },
     {
       "file": "pipelines/hotspots/multiyear_delivery.py",
-      "bytes": 20663,
-      "sha256": "0929dba6379882616224298aeb71e403e63cb5834860ffd0511f012a46ddb5e3"
+      "bytes": 21503,
+      "sha256": "fa6c2615be9d15ff1ac1e3f42cf78346fa163348f33cf9ede915fc419601693f"
     },
     {
       "file": "pipelines/hotspots/multiyear_experiments.py",
-      "bytes": 7939,
-      "sha256": "475b89300765660e3f16a14096eda5d4f0dec9a46b6d3a7e3b6caa1dc4ddd8d6"
+      "bytes": 8008,
+      "sha256": "53a1e73361a3a03716182ee6f40be9fbad0842bf17825953b9594c09b6835830"
     },
     {
       "file": "pipelines/hotspots/multiyear_finalize.py",
-      "bytes": 3806,
-      "sha256": "b5732822ed580dfc95c7a683e8fbc32381c4f85b78a76888ecf2fbc2bb108e96"
+      "bytes": 3855,
+      "sha256": "af50c77cf31b2d0d9deff60faf3cf0caf875c1c71fbf9c86094c2673d2499fd0"
     },
     {
       "file": "pipelines/hotspots/multiyear_plots.py",
@@ -607,13 +607,13 @@
     },
     {
       "file": "pipelines/hotspots/multiyear_scoring.py",
-      "bytes": 7383,
-      "sha256": "3ee570e56ff3c63c9146f582cccf8118c62237e428c71e4e119f4d9b4e5de0d8"
+      "bytes": 8026,
+      "sha256": "bd7e5378bb23c72856a5449f37d3f84a0d39c94ae68176ba615d4373ced8a8fb"
     },
     {
       "file": "pipelines/hotspots/multiyear_validate.py",
-      "bytes": 6768,
-      "sha256": "44dca2d26c839371b31ae75fb514fed2e86bfc26ae1de70df559be894e591f86"
+      "bytes": 6806,
+      "sha256": "d030c3391237c83b8e882a6c79786c870b957f6e89164906316c90b3faf58f2b"
     },
     {
       "file": "pipelines/hotspots/potential_background.py",
@@ -627,8 +627,8 @@
     },
     {
       "file": "pipelines/hotspots/potential_experiments.py",
-      "bytes": 8780,
-      "sha256": "1222e53665f026c121a345c1b5063851e1f3b3d133fd4fe27c50c70975c29e3e"
+      "bytes": 8879,
+      "sha256": "f75f92119c13f7dd56c9e916fdaa33f77bb9be0779ab2e09f660d14aa38b0a52"
     },
     {
       "file": "pipelines/hotspots/potential_integration.py",
@@ -642,8 +642,8 @@
     },
     {
       "file": "pipelines/hotspots/potential_unified_metrics.py",
-      "bytes": 8990,
-      "sha256": "32e27a8a8f69d4640094b772d7f797f547f137edc3221d9aabec585d1df06ad4"
+      "bytes": 9039,
+      "sha256": "3203e58ab77ab656d13002671e1af9ba647ae6708c7a938d97c00d3e01074b69"
     },
     {
       "file": "pipelines/hotspots/potential_unified_review.py",
@@ -652,8 +652,8 @@
     },
     {
       "file": "pipelines/hotspots/replay_snapshot.py",
-      "bytes": 3663,
-      "sha256": "bc955f0a1e4dc788b6d32523b2600e4b799b98d812b5fc09c9c0a8c07d0fb4a4"
+      "bytes": 3657,
+      "sha256": "b1b550016e82cf07887de645edefb653c7c8c93c8a30eec678506af424e2c29a"
     },
     {
       "file": "provenance/EXTRACTION.json",
@@ -662,8 +662,13 @@
     },
     {
       "file": "provenance/ISOLATED_RELEASE_VALIDATION.json",
-      "bytes": 710,
-      "sha256": "f8b12f14616a964986fea4ffd58c212de234c3fdf97acb1bea0be8a48ffeab8a"
+      "bytes": 813,
+      "sha256": "3d885bc3a070ba2a0593ef7d214c993c51ca8f068b8dbc8a3f20efc391dc4b78"
+    },
+    {
+      "file": "provenance/RANKING_PORTABILITY.json",
+      "bytes": 2541,
+      "sha256": "ac9423e3639818ae79f7a9c06e75cf16bffddb921cbe49129986a4a5931eda07"
     },
     {
       "file": "provenance/REPLAY_VALIDATION.json",
@@ -672,8 +677,8 @@
     },
     {
       "file": "provenance/VALIDATION.md",
-      "bytes": 694,
-      "sha256": "fafa3de9357252c839c56369d770f7fb1be673975ae93f5f705b155122b58683"
+      "bytes": 1163,
+      "sha256": "5e0173d3457b202c98537615f5d67cd04895b81b7e29ae7d9e567526fecb2c95"
     },
     {
       "file": "pyproject.toml",
@@ -707,8 +712,8 @@
     },
     {
       "file": "src/energy_hotspots/scoring.py",
-      "bytes": 7383,
-      "sha256": "3ee570e56ff3c63c9146f582cccf8118c62237e428c71e4e119f4d9b4e5de0d8"
+      "bytes": 8026,
+      "sha256": "bd7e5378bb23c72856a5449f37d3f84a0d39c94ae68176ba615d4373ced8a8fb"
     },
     {
       "file": "tests/conftest.py",
@@ -719,6 +724,11 @@
       "file": "tests/test_multiyear.py",
       "bytes": 2261,
       "sha256": "cdd5032f70f9d764a3e1c274bf6dd147ae26470e7a92fc3ac7b372930fcd9bfa"
+    },
+    {
+      "file": "tests/test_ranking.py",
+      "bytes": 1871,
+      "sha256": "b8a00ec60749f8be531a0f77215d27dd09ab6d74b1d1b2474da326ed975530b7"
     },
     {
       "file": "tools/build_release.py",

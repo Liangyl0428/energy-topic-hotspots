@@ -3,6 +3,7 @@ from common import *
 from potential_unified_metrics import load_records,policies,with_may,qualify,SCENARIOS
 import pandas as pd,numpy as np,itertools
 from scipy.stats import spearmanr
+from multiyear_scoring import ranking_key,rank_scores,ordered_scores
 
 def run():
  R=BASE/'reliability';d=load_records();p=policies()
@@ -10,14 +11,13 @@ def run():
  comp=z[['patent_component','applicant_component','policy_component']].copy();comp.columns=['patents','applicants','policy']
  w=np.array([.3,.2,.5]);base=100*comp.dot(w)
  np.testing.assert_allclose(base,z.potential_evidence_score,atol=1e-10)
- br=base.rank(ascending=False,method='min');selected=set(z.index[z.potential_priority])
- def order(s):return s.sort_index().sort_values(ascending=False,kind='stable')
+ br=rank_scores(base);selected=set(z.index[z.potential_priority])
  def compare(name,s,weights):
-  rr=s.rank(ascending=False,method='min')
-  out=dict(family='potential',scenario=name,pool_size=len(z),spearman=float(spearmanr(base,s).statistic),mean_abs_rank_change=float((rr-br).abs().mean()),max_abs_rank_change=float((rr-br).abs().max()),weights=json.dumps(dict(zip(comp.columns,map(float,weights)))),formal_membership_changed_by_score_alone=0)
+  rr=rank_scores(s)
+  out=dict(family='potential',scenario=name,pool_size=len(z),spearman=float(spearmanr(ranking_key(base),ranking_key(s)).statistic),mean_abs_rank_change=float((rr-br).abs().mean()),max_abs_rank_change=float((rr-br).abs().max()),weights=json.dumps(dict(zip(comp.columns,map(float,weights)))),formal_membership_changed_by_score_alone=0)
   for k in [1,2,10,25]:
    if k>len(z):out[f'top{k}_overlap']=np.nan;out[f'top{k}_jaccard']=np.nan;continue
-   a=set(order(base).head(k).index);b=set(order(s).head(k).index)
+   a=set(ordered_scores(base).head(k).index);b=set(ordered_scores(s).head(k).index)
    out[f'top{k}_overlap']=len(a&b);out[f'top{k}_jaccard']=len(a&b)/len(a|b)
   out['reviewed_final_top10_overlap']=np.nan
   return out,rr
@@ -28,7 +28,7 @@ def run():
   for uid in z.index:details.append(dict(family='potential',scenario='remove_'+key,category_id=uid,unit_id=uid,name=z.loc[uid,'name'],baseline_rank=br[uid],rank=rr[uid],score=ss[uid]))
  rng=np.random.default_rng(75020260925);tops=[]
  for i in range(500):
-  wi=w*rng.uniform(.8,1.2,3);wi/=wi.sum();ss=100*comp.dot(wi);row,rr=compare(f'weight_{i:03d}',ss,wi);trials.append(row);rankrows.append(rr);tops.append(order(ss).index[0])
+  wi=w*rng.uniform(.8,1.2,3);wi/=wi.sum();ss=100*comp.dot(wi);row,rr=compare(f'weight_{i:03d}',ss,wi);trials.append(row);rankrows.append(rr);tops.append(ordered_scores(ss).index[0])
  ranks=pd.DataFrame(rankrows)
  for uid in z.index:st.append(dict(family='potential',category_id=uid,unit_id=uid,name=z.loc[uid,'name'],baseline_rank=br[uid],min_rank=ranks[uid].min(),median_rank=ranks[uid].median(),max_rank=ranks[uid].max(),top10_trial_fraction=np.nan,top1_trial_fraction=float(np.mean(np.array(tops)==uid)),formal_selected=uid in selected))
  cases=[];topic=[]
@@ -73,7 +73,7 @@ def run():
  pd.DataFrame(cases).to_csv(R/'potential_unified_sensitivity_summary.csv',index=False,encoding='utf-8-sig')
  pub=p[p.support_strength.ge(2)].drop_duplicates(['unit_id','publisher']).groupby('unit_id').size().reindex(z.index,fill_value=0)
  pub.rename('distinct_reported_publishers').to_csv(R/'policy_publisher_sensitivity.csv')
- dump(R/'POTENTIAL_UNIFIED_EXPERIMENT_METHOD.json',dict(created_utc=now(),units=list(z.index),unit_pool_size=4,weight_trials=500,weights=[.3,.2,.5],rank_scope='四个统一任务单元内百分位；不可与旧30方向或750原类别分数直接比较。',top_k='Only top1/top2 meaningful; top10/top25 not applicable and blank.',smoothing='0.5 success,0.5 complement: denominator+1',baseline='Strict unified sets, patent>=50,applicants>=20,task-policy groups>=2,both2026JanAug and matchedJanMay ratios>=1.25',policy_window='截至8月已核成文日期，JanMay仅检验同期文献/专利覆盖，非历史政策回测。',data_scenarios=SCENARIOS,source_balance='Both sources use the same evidence scope; body-available and global dedup scenarios also rebuild background denominators.',uncertainty='Pending-label bounds and deterministic patent removal are assumption stress tests, not statistical confidence intervals.',grids=grid,scenarios=len(cases),review='Frozen samples informed explicit document corrections; heldout pre-correction disagreements retained, not independent expert accuracy.'))
+ dump(R/'POTENTIAL_UNIFIED_EXPERIMENT_METHOD.json',dict(created_utc=now(),units=list(z.index),unit_pool_size=4,weight_trials=500,weights=[.3,.2,.5],ranking='10 decimal score keys; min tied ranks; ID ascending for top-k; Spearman on rounded scores',rank_scope='四个统一任务单元内百分位；不可与旧30方向或750原类别分数直接比较。',top_k='Only top1/top2 meaningful; top10/top25 not applicable and blank.',smoothing='0.5 success,0.5 complement: denominator+1',baseline='Strict unified sets, patent>=50,applicants>=20,task-policy groups>=2,both2026JanAug and matchedJanMay ratios>=1.25',policy_window='截至8月已核成文日期，JanMay仅检验同期文献/专利覆盖，非历史政策回测。',data_scenarios=SCENARIOS,source_balance='Both sources use the same evidence scope; body-available and global dedup scenarios also rebuild background denominators.',uncertainty='Pending-label bounds and deterministic patent removal are assumption stress tests, not statistical confidence intervals.',grids=grid,scenarios=len(cases),review='Frozen samples informed explicit document corrections; heldout pre-correction disagreements retained, not independent expert accuracy.'))
  method=read(R/'EXPERIMENT_METHOD.json');method.update(potential_revision='See POTENTIAL_UNIFIED_EXPERIMENT_METHOD.json; four task units replace legacy potential pool.',rank_pool='Core/emerging unchanged; potential uses4 unified task units and top1/top2.',total_gate_and_data_scenarios=len(pd.read_csv(R/'gate_and_data_sensitivity.csv')));dump(R/'EXPERIMENT_METHOD.json',method)
  print('POTENTIAL_EXPERIMENTS',len(cases),'scenarios',len(topic),'unit results',flush=True)
 

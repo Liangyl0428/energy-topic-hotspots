@@ -10,7 +10,7 @@ def framecheck(name,a,b):
  try:
   pd.testing.assert_frame_equal(a,b,check_dtype=False,check_exact=False,rtol=1e-9,atol=1e-8)
   ok=True
- except AssertionError as e:print(name,str(e)[:800]);ok=False
+ except AssertionError as e:print(name,str(e));ok=False
  checks.append(dict(check=name,passed=ok))
 
 z=build()
