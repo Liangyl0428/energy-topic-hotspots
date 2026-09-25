@@ -192,7 +192,7 @@ def presentation(frame):
  # Category-level literature views use the current task-unit conclusions.
  if 'core_score' in df and 'potential_unit_ids' in df:
   df=df.drop(columns=[c for c in df if c in ARCHIVE_COLUMNS])
-  df.loc[df.potential_unit_ids.fillna('').eq(''),'potential_reason']='未纳入四个任务单元的评估范围，不作潜在热点判断'
+  df.loc[df.potential_unit_ids.fillna('').eq(''),'potential_reason']='未纳入四个应用方向的评估范围，不作潜在热点判断'
  phrases={
   '退出多年核心并保留观察':'不纳入核心名单，列为观察方向',
   '退出多年核心':'不纳入核心名单',

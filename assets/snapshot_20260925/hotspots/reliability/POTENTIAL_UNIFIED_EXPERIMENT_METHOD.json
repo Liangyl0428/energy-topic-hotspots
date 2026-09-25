@@ -14,7 +14,7 @@
     0.5
   ],
   "ranking": "10 decimal score keys; min tied ranks; ID ascending for top-k; Spearman on rounded scores",
-  "rank_scope": "四个统一任务单元内百分位；不可与旧30方向或750原类别分数直接比较。",
+  "rank_scope": "四个统一应用方向内百分位；不可与旧30方向或750原类别分数直接比较。",
   "top_k": "Only top1/top2 meaningful; top10/top25 not applicable and blank.",
   "smoothing": "0.5 success,0.5 complement: denominator+1",
   "baseline": "Strict unified sets, patent>=50,applicants>=20,task-policy groups>=2,both2026JanAug and matchedJanMay ratios>=1.25",
