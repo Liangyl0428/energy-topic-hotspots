@@ -1,0 +1,240 @@
+{
+  "version": "750-multiyear-v1",
+  "topics": 750,
+  "passed": true,
+  "checks": 55,
+  "literature_tables_recomputed": 21,
+  "core_with_recorded_reviews": 12,
+  "emerging_with_recorded_reviews": 22,
+  "potential_units": 4,
+  "potential_strict_selected": 3,
+  "potential_dual_scope_selected": 2,
+  "potential_conditional_selected": 1,
+  "candidate_unit_records": 13094,
+  "experiment_files_recomputed": 10,
+  "scope": "从冻结季度、情景机构并集与引用汇总重算多年指标，潜在从候选记录重算；不重检索全库，不重新专家审核；历史截止点为回顾性敏感性。",
+  "details": [
+    {
+      "check": "multiyear_metrics_all750.csv",
+      "passed": true
+    },
+    {
+      "check": "multiyear_core_components.csv",
+      "passed": true
+    },
+    {
+      "check": "multiyear_emerging_components.csv",
+      "passed": true
+    },
+    {
+      "check": "multiyear_core_candidates.csv",
+      "passed": true
+    },
+    {
+      "check": "multiyear_emerging_candidates.csv",
+      "passed": true
+    },
+    {
+      "check": "multiyear_annual_trajectories.csv",
+      "passed": true
+    },
+    {
+      "check": "multiyear_quality.csv",
+      "passed": true
+    },
+    {
+      "check": "multiyear_geometry.csv",
+      "passed": true
+    },
+    {
+      "check": "multiyear_dedup.csv",
+      "passed": true
+    },
+    {
+      "check": "multiyear_exclude_needs_review.csv",
+      "passed": true
+    },
+    {
+      "check": "multiyear_supported_only.csv",
+      "passed": true
+    },
+    {
+      "check": "multiyear_cutoff_2025Q2.csv",
+      "passed": true
+    },
+    {
+      "check": "multiyear_cutoff_2025Q4.csv",
+      "passed": true
+    },
+    {
+      "check": "multiyear_cutoff_2026Q1.csv",
+      "passed": true
+    },
+    {
+      "check": "multiyear_core_1y.csv",
+      "passed": true
+    },
+    {
+      "check": "multiyear_core_5y.csv",
+      "passed": true
+    },
+    {
+      "check": "multiyear_baseline_2y.csv",
+      "passed": true
+    },
+    {
+      "check": "multiyear_baseline_4y.csv",
+      "passed": true
+    },
+    {
+      "check": "multiyear_omit_baseline_1.csv",
+      "passed": true
+    },
+    {
+      "check": "multiyear_omit_baseline_2.csv",
+      "passed": true
+    },
+    {
+      "check": "multiyear_omit_baseline_3.csv",
+      "passed": true
+    },
+    {
+      "check": "potential/patents_2026",
+      "passed": true
+    },
+    {
+      "check": "potential/papers_2026_jan_aug",
+      "passed": true
+    },
+    {
+      "check": "potential/known_applicant_names",
+      "passed": true
+    },
+    {
+      "check": "potential/applicant_metadata_fraction",
+      "passed": true
+    },
+    {
+      "check": "potential/policy_groups",
+      "passed": true
+    },
+    {
+      "check": "potential/policy_points",
+      "passed": true
+    },
+    {
+      "check": "potential/patent_denominator",
+      "passed": true
+    },
+    {
+      "check": "potential/paper_denominator",
+      "passed": true
+    },
+    {
+      "check": "potential/relative_share",
+      "passed": true
+    },
+    {
+      "check": "potential/pending_patents",
+      "passed": true
+    },
+    {
+      "check": "potential/pending_papers",
+      "passed": true
+    },
+    {
+      "check": "potential/patent_component",
+      "passed": true
+    },
+    {
+      "check": "potential/applicant_component",
+      "passed": true
+    },
+    {
+      "check": "potential/policy_component",
+      "passed": true
+    },
+    {
+      "check": "potential/potential_evidence_score",
+      "passed": true
+    },
+    {
+      "check": "potential/matched_jan_may_relative_share",
+      "passed": true
+    },
+    {
+      "check": "potential/jan_may_patents",
+      "passed": true
+    },
+    {
+      "check": "potential/jan_may_papers",
+      "passed": true
+    },
+    {
+      "check": "potential/potential_priority",
+      "passed": true
+    },
+    {
+      "check": "potential/expanded_patents_2026",
+      "passed": true
+    },
+    {
+      "check": "potential/expanded_papers_2026_jan_aug",
+      "passed": true
+    },
+    {
+      "check": "potential/expanded_relative_share",
+      "passed": true
+    },
+    {
+      "check": "potential/expanded_matched_jan_may_relative_share",
+      "passed": true
+    },
+    {
+      "check": "potential/expanded_potential_priority",
+      "passed": true
+    },
+    {
+      "check": "experiments/score_ablation_summary.csv",
+      "passed": true
+    },
+    {
+      "check": "experiments/score_ablation_ranks.csv",
+      "passed": true
+    },
+    {
+      "check": "experiments/weight_trials.csv",
+      "passed": true
+    },
+    {
+      "check": "experiments/weight_rank_stability.csv",
+      "passed": true
+    },
+    {
+      "check": "experiments/gate_and_data_sensitivity.csv",
+      "passed": true
+    },
+    {
+      "check": "experiments/data_sensitivity_topic_details.csv",
+      "passed": true
+    },
+    {
+      "check": "experiments/potential_score_components.csv",
+      "passed": true
+    },
+    {
+      "check": "experiments/policy_publisher_sensitivity.csv",
+      "passed": true
+    },
+    {
+      "check": "experiments/potential_unified_sensitivity_summary.csv",
+      "passed": true
+    },
+    {
+      "check": "experiments/potential_unified_sensitivity_details.csv",
+      "passed": true
+    }
+  ],
+  "weight_trials": 1500,
+  "sensitivity_scenarios": 172
+}

@@ -1,0 +1,52 @@
+{
+  "version": "0.3.0",
+  "source": "kkkk/hotspots750_20260925",
+  "method": "750-multiyear-v1",
+  "source_files": [
+    {
+      "file": "kkkk/hotspots750_20260925/src/multiyear_build.py",
+      "sha256": "fd046ac365319123e7ccc7d6fcd6003f797a6340e47b0b83a19b12840e1cadda"
+    },
+    {
+      "file": "kkkk/hotspots750_20260925/src/multiyear_delivery.py",
+      "sha256": "0929dba6379882616224298aeb71e403e63cb5834860ffd0511f012a46ddb5e3"
+    },
+    {
+      "file": "kkkk/hotspots750_20260925/src/multiyear_experiments.py",
+      "sha256": "475b89300765660e3f16a14096eda5d4f0dec9a46b6d3a7e3b6caa1dc4ddd8d6"
+    },
+    {
+      "file": "kkkk/hotspots750_20260925/src/multiyear_finalize.py",
+      "sha256": "b5732822ed580dfc95c7a683e8fbc32381c4f85b78a76888ecf2fbc2bb108e96"
+    },
+    {
+      "file": "kkkk/hotspots750_20260925/src/multiyear_plots.py",
+      "sha256": "34669d804d2cf26315c43f96fec256baf34c7a3564c2148a95ef5183b78549b9"
+    },
+    {
+      "file": "kkkk/hotspots750_20260925/src/multiyear_prepare.py",
+      "sha256": "29895e0c32dbc56590c36a5323f34329694393515f7315b5364bcd3160f42594"
+    },
+    {
+      "file": "kkkk/hotspots750_20260925/src/multiyear_review_decisions.py",
+      "sha256": "15c06daf0b0845e3ace7ea6f7ccbdfae1bb53505a46e235d9163126b7d66b3cc"
+    },
+    {
+      "file": "kkkk/hotspots750_20260925/src/multiyear_review_samples.py",
+      "sha256": "8f424f0ec672ba2e6b6800799eab96d742d10611c8d12f492ff4f34e03cc99a4"
+    },
+    {
+      "file": "kkkk/hotspots750_20260925/src/multiyear_scoring.py",
+      "sha256": "3ee570e56ff3c63c9146f582cccf8118c62237e428c71e4e119f4d9b4e5de0d8"
+    },
+    {
+      "file": "kkkk/hotspots750_20260925/src/multiyear_validate.py",
+      "sha256": "44dca2d26c839371b31ae75fb514fed2e86bfc26ae1de70df559be894e591f86"
+    }
+  ],
+  "topics": 750,
+  "core": 12,
+  "emerging": 22,
+  "potential_units": 4,
+  "input_subset": "Frozen quarterly/monthly counts, scenario-specific institution/citation aggregates, limited reviewed excerpts and potential candidate evidence"
+}

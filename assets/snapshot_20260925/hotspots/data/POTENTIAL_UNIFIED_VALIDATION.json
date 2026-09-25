@@ -1,0 +1,32 @@
+{
+  "passed": true,
+  "units": 4,
+  "selected_units": [
+    "U0246",
+    "U0356_LLM",
+    "U0650"
+  ],
+  "source_denominators": {
+    "ytd": {
+      "patent": 279732,
+      "paper": 314731
+    },
+    "may": {
+      "patent": 270944,
+      "paper": 214000
+    }
+  },
+  "record_decisions": 13094,
+  "reviewed_unit_records": 192,
+  "unique_reviewed_records": 192,
+  "policy_unit_group_relations": 13,
+  "policy_groups": 9,
+  "same_patent_set_applicant_counts": true,
+  "same_window_ratios": true,
+  "literature_regression_checked": false,
+  "core_emerging_intentionally_revised": true,
+  "weight_trials": 500,
+  "potential_scenarios": 71,
+  "potential_unit_scenario_rows": 284,
+  "completed_utc": "2026-09-25T15:35:12.398006+00:00"
+}

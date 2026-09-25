@@ -1,0 +1,21 @@
+{
+  "created": "2026-09-25T15:21:32.953497+00:00",
+  "scopes": {
+    "main": "TRUE",
+    "quality": "NOT title_only AND strftime(date,'%m-%d')<>'01-01'",
+    "geometry": "cosine_to_centroid>=0.45 AND distance_margin>=0.02",
+    "dedup": "row_id IN (SELECT row_id FROM dedup_ids)",
+    "exclude_needs_review": "NOT needs_review",
+    "supported_only": "eligible_for_supported_analysis"
+  },
+  "endpoints": [
+    "2026Q2",
+    "2026Q1",
+    "2025Q4",
+    "2025Q2"
+  ],
+  "coverage": "2020-01..2026-08; scoring ends at complete 2026Q2",
+  "citation": "Snapshot cumulative citation percentile, three prior full publication years; historical cutoffs are retrospective window diagnostics, not as-of forecasts.",
+  "dedup": "Global normalized title+calendar-year; short title uses doc_id; keep earliest date,row_id",
+  "institutions": "Distinct normalized name union recomputed for each scope and core horizon; emerging baseline is annual mean breadth, not 3-year union."
+}

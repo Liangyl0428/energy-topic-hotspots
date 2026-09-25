@@ -1,0 +1,32 @@
+# Raw corpora, local models, generated runs and credentials stay outside Git.
+/.venv/
+/work/
+/data/
+/models/
+/outputs/
+/dist/
+/build/
+/.env
+/.env.*
+*.egg-info/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.DS_Store
+*.sqlite*
+*.duckdb*
+*.joblib
+*.onnx
+*.safetensors
+*.npy
+*.npz
+*.parquet
+*.pem
+*.key
+*.log
+/config/local.json
+# Minimal frozen evidence required for the portable 750-topic replay.
+!/assets/snapshot_20260925/hotspots/evidence/potential_unified_candidates.parquet
+!/assets/snapshot_20260925/hotspots/data/patent_metadata.parquet
+!/assets/snapshot_20260925/hotspots/data/potential_unified_global_dedup.parquet

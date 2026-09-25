@@ -1,0 +1,42 @@
+{
+  "version": "750-multiyear-v1",
+  "created": "2026-09-25T15:28:19.924885+00:00",
+  "core_window": [
+    "2023-07-01",
+    "2026-06-30"
+  ],
+  "recent_window": [
+    "2025-07-01",
+    "2026-06-30"
+  ],
+  "emerging_baseline": [
+    "2022-07-01",
+    "2025-06-30"
+  ],
+  "history": [
+    "2021-07-01",
+    "2026-06-30"
+  ],
+  "core_weights": {
+    "volume": 0.4,
+    "citation": 0.2,
+    "institutions": 0.15,
+    "persistence": 0.15,
+    "current": 0.1
+  },
+  "emerging_weights": {
+    "multiyear_growth": 0.35,
+    "recent_growth": 0.25,
+    "trend": 0.2,
+    "quarter_consistency": 0.1,
+    "institution_expansion": 0.1
+  },
+  "baseline": "Equal mean of 3 separately normalized annual shares; disjoint from recent year",
+  "core_gates": "three-year>=750, every year>=150, >=9/12 quarters each>=25, recent>=250 and recentYOYshare>=0.8; direct scope and semantic review",
+  "emerging_gates": "recent>=100; baseline annual mean>=50; recent/3-year mean>=1.25; YOY>=1.15; >=3 growing quarters; 3-year slope>0; recent/previous4-year peak>=1.05; pooled-count lower95>1.05 and BHq<.05; quality/geometry/dedup long+YOY and latestYTD ratios>=1.10; semantic review",
+  "small_base": "Below baseline mean50 retained as early-signal watch, not forced to pass established-growth gate",
+  "statistics": "Count-only pooled-binomial approximations are screening diagnostics; no serial-dependence-adjusted confidence or causal claim.",
+  "citation": "Snapshot cumulative citations, publication-year percentiles within filtered scope; historical endpoints are retrospective sensitivity, not temporal validation",
+  "potential": "Unchanged unified4 task units, fixed 2026 patent/policy data; no invented historical patent series",
+  "review": "Any new numeric candidates without sample scope review remain pending; thresholds not tuned to preserve old lists"
+}

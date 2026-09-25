@@ -1,0 +1,46 @@
+{
+  "all259_source_label_adapter_hashes_unchanged": true,
+  "five_nonoverlapping_year_blocks_independently_counted": true,
+  "three_year_institution_union_recomputed": true,
+  "core_selected": 12,
+  "emerging_selected": 22,
+  "potential": {
+    "passed": true,
+    "units": 4,
+    "selected_units": [
+      "U0246",
+      "U0356_LLM",
+      "U0650"
+    ],
+    "source_denominators": {
+      "ytd": {
+        "patent": 279732,
+        "paper": 314731
+      },
+      "may": {
+        "patent": 270944,
+        "paper": 214000
+      }
+    },
+    "record_decisions": 13094,
+    "reviewed_unit_records": 192,
+    "unique_reviewed_records": 192,
+    "policy_unit_group_relations": 13,
+    "policy_groups": 9,
+    "same_patent_set_applicant_counts": true,
+    "same_window_ratios": true,
+    "literature_regression_checked": false,
+    "core_emerging_intentionally_revised": true,
+    "weight_trials": 500,
+    "potential_scenarios": 71,
+    "potential_unit_scenario_rows": 284,
+    "completed_utc": "2026-09-25T15:35:12.398006+00:00"
+  },
+  "cross_year_reviewed_records": 192,
+  "cross_year_reviewed_categories": 26,
+  "all1500_weight_trials_and_baseline_sets": true,
+  "scenarios": 172,
+  "excel_cells_readback": 475901,
+  "passed": true,
+  "completed": "2026-09-25T15:35:22.695714+00:00"
+}

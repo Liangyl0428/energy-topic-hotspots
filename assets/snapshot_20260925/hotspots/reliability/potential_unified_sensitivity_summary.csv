@@ -1,0 +1,72 @@
+﻿family,scenario,kind,parameters,numeric_candidates,reviewed_selected,baseline_count,retained,retention,jaccard,gained,lost,selected_ids,interpretation
+potential,baseline,baseline,{},3,3,3,3,1.0,1.0,,,U0246;U0356_LLM;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,remove_gate_patents,gate_ablation,{},3,3,3,3,1.0,1.0,,,U0246;U0356_LLM;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,remove_gate_applicants,gate_ablation,{},3,3,3,3,1.0,1.0,,,U0246;U0356_LLM;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,remove_gate_policies,gate_ablation,{},4,4,3,3,1.0,0.75,U0356_KG,,U0246;U0356_KG;U0356_LLM;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,remove_gate_relative,gate_ablation,{},3,3,3,3,1.0,1.0,,,U0246;U0356_LLM;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,remove_gate_matched_may,gate_ablation,{},3,3,3,3,1.0,1.0,,,U0246;U0356_LLM;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,patents=25,one_at_a_time,"{""patents"": 25}",3,3,3,3,1.0,1.0,,,U0246;U0356_LLM;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,patents=50,one_at_a_time,"{""patents"": 50}",3,3,3,3,1.0,1.0,,,U0246;U0356_LLM;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,patents=100,one_at_a_time,"{""patents"": 100}",3,3,3,3,1.0,1.0,,,U0246;U0356_LLM;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,patents=200,one_at_a_time,"{""patents"": 200}",3,3,3,3,1.0,1.0,,,U0246;U0356_LLM;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,patents=500,one_at_a_time,"{""patents"": 500}",2,2,3,2,0.6666666666666666,0.6666666666666666,,U0650,U0246;U0356_LLM,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,applicants=10,one_at_a_time,"{""applicants"": 10}",3,3,3,3,1.0,1.0,,,U0246;U0356_LLM;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,applicants=20,one_at_a_time,"{""applicants"": 20}",3,3,3,3,1.0,1.0,,,U0246;U0356_LLM;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,applicants=40,one_at_a_time,"{""applicants"": 40}",3,3,3,3,1.0,1.0,,,U0246;U0356_LLM;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,applicants=100,one_at_a_time,"{""applicants"": 100}",3,3,3,3,1.0,1.0,,,U0246;U0356_LLM;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,policies=1,one_at_a_time,"{""policies"": 1}",4,4,3,3,1.0,0.75,U0356_KG,,U0246;U0356_KG;U0356_LLM;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,policies=2,one_at_a_time,"{""policies"": 2}",3,3,3,3,1.0,1.0,,,U0246;U0356_LLM;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,policies=3,one_at_a_time,"{""policies"": 3}",2,2,3,2,0.6666666666666666,0.6666666666666666,,U0356_LLM,U0246;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,policies=4,one_at_a_time,"{""policies"": 4}",2,2,3,2,0.6666666666666666,0.6666666666666666,,U0356_LLM,U0246;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,relative=1.0,one_at_a_time,"{""relative"": 1.0}",3,3,3,3,1.0,1.0,,,U0246;U0356_LLM;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,relative=1.25,one_at_a_time,"{""relative"": 1.25}",3,3,3,3,1.0,1.0,,,U0246;U0356_LLM;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,relative=1.5,one_at_a_time,"{""relative"": 1.5}",3,3,3,3,1.0,1.0,,,U0246;U0356_LLM;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,relative=2.0,one_at_a_time,"{""relative"": 2.0}",1,1,3,1,0.3333333333333333,0.3333333333333333,,U0246;U0650,U0356_LLM,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,relative=3.0,one_at_a_time,"{""relative"": 3.0}",1,1,3,1,0.3333333333333333,0.3333333333333333,,U0246;U0650,U0356_LLM,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,relative=5.0,one_at_a_time,"{""relative"": 5.0}",0,0,3,0,0.0,0.0,,U0246;U0356_LLM;U0650,,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,"policies=1,relative=1.0",joint_grid,"{""policies"": 1, ""relative"": 1.0}",4,4,3,3,1.0,0.75,U0356_KG,,U0246;U0356_KG;U0356_LLM;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,"policies=1,relative=1.25",joint_grid,"{""policies"": 1, ""relative"": 1.25}",4,4,3,3,1.0,0.75,U0356_KG,,U0246;U0356_KG;U0356_LLM;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,"policies=1,relative=1.5",joint_grid,"{""policies"": 1, ""relative"": 1.5}",4,4,3,3,1.0,0.75,U0356_KG,,U0246;U0356_KG;U0356_LLM;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,"policies=1,relative=2.0",joint_grid,"{""policies"": 1, ""relative"": 2.0}",2,2,3,1,0.3333333333333333,0.25,U0356_KG,U0246;U0650,U0356_KG;U0356_LLM,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,"policies=1,relative=3.0",joint_grid,"{""policies"": 1, ""relative"": 3.0}",2,2,3,1,0.3333333333333333,0.25,U0356_KG,U0246;U0650,U0356_KG;U0356_LLM,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,"policies=1,relative=5.0",joint_grid,"{""policies"": 1, ""relative"": 5.0}",1,1,3,0,0.0,0.0,U0356_KG,U0246;U0356_LLM;U0650,U0356_KG,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,"policies=2,relative=1.0",joint_grid,"{""policies"": 2, ""relative"": 1.0}",3,3,3,3,1.0,1.0,,,U0246;U0356_LLM;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,"policies=2,relative=1.25",joint_grid,"{""policies"": 2, ""relative"": 1.25}",3,3,3,3,1.0,1.0,,,U0246;U0356_LLM;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,"policies=2,relative=1.5",joint_grid,"{""policies"": 2, ""relative"": 1.5}",3,3,3,3,1.0,1.0,,,U0246;U0356_LLM;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,"policies=2,relative=2.0",joint_grid,"{""policies"": 2, ""relative"": 2.0}",1,1,3,1,0.3333333333333333,0.3333333333333333,,U0246;U0650,U0356_LLM,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,"policies=2,relative=3.0",joint_grid,"{""policies"": 2, ""relative"": 3.0}",1,1,3,1,0.3333333333333333,0.3333333333333333,,U0246;U0650,U0356_LLM,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,"policies=2,relative=5.0",joint_grid,"{""policies"": 2, ""relative"": 5.0}",0,0,3,0,0.0,0.0,,U0246;U0356_LLM;U0650,,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,"policies=3,relative=1.0",joint_grid,"{""policies"": 3, ""relative"": 1.0}",2,2,3,2,0.6666666666666666,0.6666666666666666,,U0356_LLM,U0246;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,"policies=3,relative=1.25",joint_grid,"{""policies"": 3, ""relative"": 1.25}",2,2,3,2,0.6666666666666666,0.6666666666666666,,U0356_LLM,U0246;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,"policies=3,relative=1.5",joint_grid,"{""policies"": 3, ""relative"": 1.5}",2,2,3,2,0.6666666666666666,0.6666666666666666,,U0356_LLM,U0246;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,"policies=3,relative=2.0",joint_grid,"{""policies"": 3, ""relative"": 2.0}",0,0,3,0,0.0,0.0,,U0246;U0356_LLM;U0650,,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,"policies=3,relative=3.0",joint_grid,"{""policies"": 3, ""relative"": 3.0}",0,0,3,0,0.0,0.0,,U0246;U0356_LLM;U0650,,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,"policies=3,relative=5.0",joint_grid,"{""policies"": 3, ""relative"": 5.0}",0,0,3,0,0.0,0.0,,U0246;U0356_LLM;U0650,,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,"policies=4,relative=1.0",joint_grid,"{""policies"": 4, ""relative"": 1.0}",2,2,3,2,0.6666666666666666,0.6666666666666666,,U0356_LLM,U0246;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,"policies=4,relative=1.25",joint_grid,"{""policies"": 4, ""relative"": 1.25}",2,2,3,2,0.6666666666666666,0.6666666666666666,,U0356_LLM,U0246;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,"policies=4,relative=1.5",joint_grid,"{""policies"": 4, ""relative"": 1.5}",2,2,3,2,0.6666666666666666,0.6666666666666666,,U0356_LLM,U0246;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,"policies=4,relative=2.0",joint_grid,"{""policies"": 4, ""relative"": 2.0}",0,0,3,0,0.0,0.0,,U0246;U0356_LLM;U0650,,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,"policies=4,relative=3.0",joint_grid,"{""policies"": 4, ""relative"": 3.0}",0,0,3,0,0.0,0.0,,U0246;U0356_LLM;U0650,,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,"policies=4,relative=5.0",joint_grid,"{""policies"": 4, ""relative"": 5.0}",0,0,3,0,0.0,0.0,,U0246;U0356_LLM;U0650,,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,unified_strict,potential_data_sensitivity,{},3,3,3,3,1.0,1.0,,,U0246;U0356_LLM;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,unified_expanded,potential_data_sensitivity,{},2,2,3,2,0.6666666666666666,0.6666666666666666,,U0650,U0246;U0356_LLM,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,unified_title_only_evidence,potential_data_sensitivity,{},3,3,3,3,1.0,1.0,,,U0246;U0356_LLM;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,unified_body_available,potential_data_sensitivity,{},3,3,3,3,1.0,1.0,,,U0246;U0356_LLM;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,unified_original_candidates_only,potential_data_sensitivity,{},3,3,3,3,1.0,1.0,,,U0246;U0356_LLM;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,unified_cross_candidates_only,potential_data_sensitivity,{},3,3,3,3,1.0,1.0,,,U0246;U0356_LLM;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,unified_title_year_dedup,potential_data_sensitivity,{},3,3,3,3,1.0,1.0,,,U0246;U0356_LLM;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,unified_no_manual_overrides,potential_data_sensitivity,{},3,3,3,3,1.0,1.0,,,U0246;U0356_LLM;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,collapse_policy_by_publisher,policy_dependence,{},3,3,3,3,1.0,1.0,,,U0246;U0356_LLM;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,drop_policy_PG0c5b3c750cbcc373,leave_policy_out,{},3,3,3,3,1.0,1.0,,,U0246;U0356_LLM;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,drop_policy_PG5893eb51fbe74f74,leave_policy_out,{},2,2,3,2,0.6666666666666666,0.6666666666666666,,U0356_LLM,U0246;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,drop_policy_PG5ac3fa0f783a35bd,leave_policy_out,{},3,3,3,3,1.0,1.0,,,U0246;U0356_LLM;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,drop_policy_PG6c583acfca3795b4,leave_policy_out,{},3,3,3,3,1.0,1.0,,,U0246;U0356_LLM;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,drop_policy_PG7d274c67283d6ea9,leave_policy_out,{},3,3,3,3,1.0,1.0,,,U0246;U0356_LLM;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,drop_policy_PGac6aa0c45898145a,leave_policy_out,{},3,3,3,3,1.0,1.0,,,U0246;U0356_LLM;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,drop_policy_PGb9ba6e943b8bc238,leave_policy_out,{},3,3,3,3,1.0,1.0,,,U0246;U0356_LLM;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,drop_policy_PGcce94a18e35ebd3a,leave_policy_out,{},3,3,3,3,1.0,1.0,,,U0246;U0356_LLM;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,drop_policy_PGcef8793fc07c31ad,leave_policy_out,{},2,2,3,2,0.6666666666666666,0.6666666666666666,,U0356_LLM,U0246;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,pending_papers_only,classification_uncertainty,{},2,2,3,2,0.6666666666666666,0.6666666666666666,,U0650,U0246;U0356_LLM,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,pending_patents_only,classification_uncertainty,{},3,3,3,3,1.0,1.0,,,U0246;U0356_LLM;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,patent_positive_removal_10%,classification_uncertainty,"{""assumed_false_positive_fraction"": 0.1}",3,3,3,3,1.0,1.0,,,U0246;U0356_LLM;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测
+potential,patent_positive_removal_20%,classification_uncertainty,"{""assumed_false_positive_fraction"": 0.2}",3,3,3,3,1.0,1.0,,,U0246;U0356_LLM;U0650,统一任务集合、同源主体、任务政策重算；4个单元内条件压力测试，不是准确率或未来预测

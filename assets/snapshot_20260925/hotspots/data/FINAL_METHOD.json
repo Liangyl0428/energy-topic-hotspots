@@ -1,0 +1,56 @@
+{
+  "created_utc": "2026-09-25T14:26:32.855861+00:00",
+  "labels": 750,
+  "core": 12,
+  "emerging": 22,
+  "potential": 3,
+  "policy_adopted_relations": 61,
+  "policy_groups": 39,
+  "patent_reviewed_categories": 30,
+  "paper_reviewed_categories": 67,
+  "denpat": 279732,
+  "denpaper": 314731,
+  "denmay": 270944,
+  "potential_weights": [
+    0.3,
+    0.2,
+    0.5
+  ],
+  "geometric_scores": "Inherited original clustering geometry; not 750-category centroids or confidence.",
+  "policy_not_reviewed_is_unknown": true,
+  "main_method_source": "kkkk/hotspots486_20260925",
+  "extended_review": "Core top25 plus4 previous486 core directions, 15 displayed records each; all38 emerging candidates reviewed.",
+  "potential_selection": "Unified4 task units; split parents not assigned aggregate scores. See POTENTIAL_UNIFIED_METHOD.json.",
+  "potential_units": 4,
+  "potential_selected_units": 3,
+  "limit": "Library-relative signals, not accuracy estimates, chronological precedence or forecasts.",
+  "core_review_candidates": 29,
+  "core_followup_categories": [
+    "C0011",
+    "C0169",
+    "C0221",
+    "C0251"
+  ],
+  "core_followup_samples": 60,
+  "core_followup_restored": 3,
+  "new_emerging_robustness_grade_method": "以四项数据口径压力测试是否保留正式新兴资格分级：A=4/4，相对稳健；B=3/4，单项敏感；C=0至2/4，多项敏感、优先复核。时间窗口另列，不参与该数据口径等级。四项测试并非统计独立，等级不是准确率、概率或未来预测；规则支持/待复核标记不是金标准，原几何不是750类置信度；半年窗口仍沿用原计数门槛。",
+  "new_emerging_grade_counts": {
+    "B 单项敏感": 3,
+    "A 相对稳健": 2,
+    "C 多项敏感": 2
+  },
+  "literature_smoothing_half_per_category": 375,
+  "potential_binary_smoothing_denominator_add": 1,
+  "potential_percentile_pool": 4,
+  "potential_unit_metrics": "results/potential_unified_metrics.csv",
+  "potential_all_counts_and_applicants_same_ledger": true,
+  "potential_matched_jan_may": true,
+  "potential_review_units": 4,
+  "potential_conditionally_tracked": [
+    "U0650"
+  ],
+  "potential_policy_scope": "results/potential_unified_policy_reviews.csv",
+  "literature_method": "MULTIYEAR_METHOD.json",
+  "literature_window": "core3years plus latest1year; emerging latest1year vs disjoint prior3years; five-year trajectory",
+  "semantic_pending": true
+}

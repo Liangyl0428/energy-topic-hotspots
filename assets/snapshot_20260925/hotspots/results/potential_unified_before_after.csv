@@ -1,0 +1,5 @@
+﻿unit_id,category_id,name,patents_2026,papers_2026_jan_aug,known_applicant_names,policy_groups,relative_share,matched_jan_may_relative_share,potential_priority,old_parent_patents_2026,old_parent_known_applicant_names,old_parent_cross_label_relative_share
+U0246,C0246,虚拟电厂资源聚合、调度与市场履约,659,424,436,6,1.7479713250204845,1.618839430880806,True,686,477,1.453105538123049
+U0650,C0650,空气源热泵设备、运行与系统应用,285,173,231,4,1.8514152302353448,1.8908096633723603,True,152,125,1.3173389534455728
+U0356_KG,C0356,电力知识图谱与知识问答,803,26,565,1,34.11435824012507,33.621222118979965,False,2800,1990,5.788182622572433
+U0356_LLM,C0356,电力大模型辅助决策与运维,566,132,380,2,4.81040048364178,5.076171001667436,True,2800,1990,5.788182622572433

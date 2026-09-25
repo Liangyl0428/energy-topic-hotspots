@@ -1,0 +1,90 @@
+{
+  "version": "750-multiyear-v1",
+  "created": "2026-09-25T15:28:24.316629+00:00",
+  "baseline_formula_regression": "all750 core/emerging formulas checked",
+  "baseline_membership_regression": "exact",
+  "weight_trials_per_family": 500,
+  "seed": 75020260925,
+  "grids": {
+    "core": {
+      "annual_volume": [
+        150,
+        250,
+        400
+      ],
+      "year_fraction": [
+        0.67,
+        1.0
+      ],
+      "quarter_fraction": [
+        0.5,
+        0.75,
+        1.0
+      ],
+      "current_volume": [
+        150,
+        250,
+        400
+      ],
+      "current_share": [
+        0.7,
+        0.8,
+        1.0
+      ]
+    },
+    "emerging": {
+      "volume": [
+        50,
+        100,
+        150
+      ],
+      "baseline": [
+        25,
+        50,
+        100
+      ],
+      "multiyear": [
+        1.15,
+        1.25,
+        1.5,
+        2.0
+      ],
+      "recent_growth": [
+        1.0,
+        1.15,
+        1.25
+      ],
+      "quarters": [
+        2,
+        3,
+        4
+      ],
+      "peak": [
+        0.9,
+        1.0,
+        1.05,
+        1.15
+      ],
+      "robust": [
+        1.0,
+        1.1,
+        1.15
+      ],
+      "lower95": [
+        1.0,
+        1.05,
+        1.1
+      ],
+      "qvalue": [
+        0.01,
+        0.05,
+        0.1
+      ]
+    }
+  },
+  "window_rules": "core1/3/5years; emerging2/3/4-year disjoint annualmean baseline; three earlier endpoints; annual baseline omission",
+  "limitations": "Frozen current classification, semantic decisions and citation snapshot; retrospective sensitivity, not as-of future prediction validation.",
+  "potential_revision": "See POTENTIAL_UNIFIED_EXPERIMENT_METHOD.json; four task units replace legacy potential pool.",
+  "rank_pool": "Core/emerging unchanged; potential uses4 unified task units and top1/top2.",
+  "total_gate_and_data_scenarios": 172
+}

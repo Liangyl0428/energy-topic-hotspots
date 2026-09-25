@@ -1,0 +1,36 @@
+{
+  "new_targets": [
+    "C0009",
+    "C0109",
+    "C0115",
+    "C0132",
+    "C0155",
+    "C0159",
+    "C0169",
+    "C0191",
+    "C0221",
+    "C0245",
+    "C0251",
+    "C0258",
+    "C0276",
+    "C0343",
+    "C0473",
+    "C0534",
+    "C0566",
+    "C0656",
+    "C0686",
+    "C0725"
+  ],
+  "historical_core_targets": [
+    "C0060",
+    "C0067",
+    "C0122",
+    "C0254",
+    "C0278",
+    "C0556"
+  ],
+  "records": 192,
+  "design": "3 deterministic random records per each of3 annual blocks for new/new-family candidates; one per earlier block for accepted cores; no category-accuracy estimate",
+  "displayed_excerpt_chars": 650,
+  "judgments": "Written separately only after actual reading"
+}

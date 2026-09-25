@@ -1,0 +1,64 @@
+{
+  "created_utc": "2026-09-25T15:28:28.210649+00:00",
+  "units": [
+    "U0246",
+    "U0650",
+    "U0356_KG",
+    "U0356_LLM"
+  ],
+  "unit_pool_size": 4,
+  "weight_trials": 500,
+  "weights": [
+    0.3,
+    0.2,
+    0.5
+  ],
+  "rank_scope": "四个统一任务单元内百分位；不可与旧30方向或750原类别分数直接比较。",
+  "top_k": "Only top1/top2 meaningful; top10/top25 not applicable and blank.",
+  "smoothing": "0.5 success,0.5 complement: denominator+1",
+  "baseline": "Strict unified sets, patent>=50,applicants>=20,task-policy groups>=2,both2026JanAug and matchedJanMay ratios>=1.25",
+  "policy_window": "截至8月已核成文日期，JanMay仅检验同期文献/专利覆盖，非历史政策回测。",
+  "data_scenarios": [
+    "strict",
+    "expanded",
+    "title_only_evidence",
+    "body_available",
+    "original_candidates_only",
+    "cross_candidates_only",
+    "title_year_dedup",
+    "no_manual_overrides"
+  ],
+  "source_balance": "Both sources use the same evidence scope; body-available and global dedup scenarios also rebuild background denominators.",
+  "uncertainty": "Pending-label bounds and deterministic patent removal are assumption stress tests, not statistical confidence intervals.",
+  "grids": {
+    "patents": [
+      25,
+      50,
+      100,
+      200,
+      500
+    ],
+    "applicants": [
+      10,
+      20,
+      40,
+      100
+    ],
+    "policies": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "relative": [
+      1.0,
+      1.25,
+      1.5,
+      2.0,
+      3.0,
+      5.0
+    ]
+  },
+  "scenarios": 71,
+  "review": "Frozen samples informed explicit document corrections; heldout pre-correction disagreements retained, not independent expert accuracy."
+}

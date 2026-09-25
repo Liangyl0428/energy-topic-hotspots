@@ -1,0 +1,19 @@
+{
+  "version": "750-multiyear-v1",
+  "topics": 750,
+  "passed": true,
+  "checks": 55,
+  "literature_tables_recomputed": 21,
+  "core_with_recorded_reviews": 12,
+  "emerging_with_recorded_reviews": 22,
+  "potential_units": 4,
+  "potential_strict_selected": 3,
+  "potential_dual_scope_selected": 2,
+  "potential_conditional_selected": 1,
+  "candidate_unit_records": 13094,
+  "experiment_files_recomputed": 10,
+  "scope": "从冻结季度、情景机构并集与引用汇总重算多年指标，潜在从候选记录重算；不重检索全库，不重新专家审核；历史截止点为回顾性敏感性。",
+  "weight_trials": 1500,
+  "sensitivity_scenarios": 172,
+  "archive_extraction_replay_passed": true
+}
