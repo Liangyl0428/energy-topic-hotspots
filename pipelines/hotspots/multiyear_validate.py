@@ -4,7 +4,7 @@ import pandas as pd,numpy as np,duckdb
 from openpyxl import load_workbook
 from scipy.stats import spearmanr
 from multiyear_scoring import windows,score,gates,ranking_key
-from multiyear_delivery import safe,CN
+from multiyear_delivery import safe,CN,presentation
 from validate_potential import run as validate_potential
 
 def run():
@@ -51,7 +51,7 @@ def run():
  for workbook in read(BASE/'data/MULTIYEAR_WORKBOOK_TABLES.json'):
   wb=load_workbook(BASE/workbook['workbook'],read_only=True,data_only=True)
   for spec in workbook['tables']:
-   df=pd.read_csv(BASE/spec['file'])[spec['columns']];ws=wb[spec['sheet']];rows=ws.iter_rows(values_only=True);headers=next(rows);assert list(headers)==[CN.get(x,x) for x in df.columns]
+   df=presentation(pd.read_csv(BASE/spec['file']))[spec['columns']];ws=wb[spec['sheet']];rows=ws.iter_rows(values_only=True);headers=next(rows);assert list(headers)==[CN.get(x,x) for x in df.columns]
    assert ws.max_row==len(df)+1 and ws.max_column==len(df.columns)
    for actual,expected in zip(rows,df.itertuples(index=False,name=None)):
     for a,e in zip(actual,expected):

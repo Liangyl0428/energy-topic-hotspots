@@ -1,11 +1,21 @@
-# 多年版本验证
+# 结果如何验证
 
-独立仓库回放55项检查通过：重算21张文献指标/候选/轨迹表、24项潜在严格/扩展指标，并重跑对照10张实验表。1500次权重扰动、172个情景均一致。仓库测试14项通过。
+验证分为计算一致性、文件一致性和证据核对三个层次。
 
-原交付另独立核对五个年度原文计数、三年机构并集、全部259个标签/适配分区哈希及Excel回读。详细见快照data/MULTIYEAR_VALIDATION.json。
+## 计算一致性
 
-回放使用冻结汇总与候选证据，不声称重聚类、重检索全库或独立专家准确率验证。
+14项测试覆盖时间窗口互不重叠、背景年度隔离、计数门槛随窗口缩放、缺失数据与来源检查、并列排序和快照复算。
 
-当前多年版ZIP已在独立临时目录解压，再次完成55项回放与全部实验；只复用第三方Python依赖。见ISOLATED_RELEASE_VALIDATION.json。
+完整复算包含55项检查：21张文献指标、候选和轨迹表，24项潜在严格或扩展口径指标，以及10张实验表。实验包含1,500次权重扰动和172个情景。
 
-并列排名修复已在Python 3.10/NumPy 2.2/pandas 2.3、Python 3.11/NumPy 2.4/pandas 3.0及显式Haswell BLAS内核下完成全部14项测试和55项回放。统一小数点后10位的排名键，保留原始分数与门槛；核心候选表3对并列项的展示顺序和实验排名统计已同步更新。全部入选集合、原始750主题指标及潜在实验结果不变，两份Excel共475901个数据单元格回读通过。见RANKING_PORTABILITY.json。
+已验证Python 3.10配合NumPy 2.2、pandas 2.3，以及Python 3.11配合NumPy 2.4、pandas 3.0；也验证了显式Haswell计算内核。环境记录见[RANKING_PORTABILITY.json](RANKING_PORTABILITY.json)，逐项结果见[REPLAY_VALIDATION.json](REPLAY_VALIDATION.json)。
+
+## 文件一致性
+
+两份Excel按导出清单与对应CSV逐单元格核对；文档与展示验证见[DOCUMENTATION_VALIDATION.json](DOCUMENTATION_VALIDATION.json)。公开文件的大小与SHA-256校验值见[FILE_MANIFEST.json](FILE_MANIFEST.json)。发行包解压后的独立复算记录见[ISOLATED_RELEASE_VALIDATION.json](ISOLATED_RELEASE_VALIDATION.json)。
+
+## 数据与证据核对
+
+数据准备阶段核对了五个年度的论文计数、三年机构并集、259个标签与适配分区的校验值，并检查了样本证据和潜在任务同源统计。相关记录见快照中的`data/MULTIYEAR_VALIDATION.json`和`data/POTENTIAL_UNIFIED_VALIDATION.json`。
+
+这些检查说明计算与附带证据可以追溯，不代表750个主题已经通过独立专家评审，也不等同于分类准确率、检索召回率或未来预测效果。

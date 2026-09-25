@@ -170,24 +170,6 @@
           "final_emerging",
           "core_review_basis",
           "review_status",
-          "patents_2026",
-          "patents_jan_may",
-          "active_patent_months",
-          "known_applicant_names",
-          "applicant_metadata_fraction",
-          "country_count",
-          "patent_review_decision",
-          "patent_review_reason",
-          "patent_review_pass",
-          "reviewed_policy_documents",
-          "reviewed_policy_points",
-          "policy_review_status",
-          "patent_literature_relative_share",
-          "jan_may_patent_relative_share",
-          "cross_label_papers_ytd",
-          "cross_label_patents_ytd",
-          "cross_label_relative_share",
-          "cross_label_jan_may_relative_share",
           "potential_evidence_score",
           "potential_numeric_gate",
           "potential_priority",
@@ -208,21 +190,6 @@
           "jan1_fraction",
           "needs_review_fraction",
           "supported_fraction"
-        ]
-      },
-      {
-        "sheet": "多年方法前后变化",
-        "file": "results/multiyear_before_after.csv",
-        "columns": [
-          "family",
-          "category_id",
-          "name",
-          "old_selected",
-          "new_selected",
-          "change",
-          "old_score",
-          "new_score",
-          "note"
         ]
       },
       {
@@ -416,7 +383,7 @@
         ]
       },
       {
-        "sheet": "跨年补审结论",
+        "sheet": "跨年样本审阅结论",
         "file": "results/multiyear_semantic_review.csv",
         "columns": [
           "category_id",
@@ -563,24 +530,6 @@
           "final_emerging",
           "core_review_basis",
           "review_status",
-          "patents_2026",
-          "patents_jan_may",
-          "active_patent_months",
-          "known_applicant_names",
-          "applicant_metadata_fraction",
-          "country_count",
-          "patent_review_decision",
-          "patent_review_reason",
-          "patent_review_pass",
-          "reviewed_policy_documents",
-          "reviewed_policy_points",
-          "policy_review_status",
-          "patent_literature_relative_share",
-          "jan_may_patent_relative_share",
-          "cross_label_papers_ytd",
-          "cross_label_patents_ytd",
-          "cross_label_relative_share",
-          "cross_label_jan_may_relative_share",
           "potential_evidence_score",
           "potential_numeric_gate",
           "potential_priority",
@@ -604,7 +553,7 @@
         ]
       },
       {
-        "sheet": "潜在统一单元全表",
+        "sheet": "潜在任务完整指标",
         "file": "results/potential_unified_metrics.csv",
         "columns": [
           "unit_id",
@@ -646,7 +595,7 @@
         ]
       },
       {
-        "sheet": "潜在范围定义",
+        "sheet": "潜在任务范围定义",
         "file": "results/potential_unified_scope.csv",
         "columns": [
           "unit_id",
@@ -870,7 +819,7 @@
         ]
       },
       {
-        "sheet": "潜在统一口径实验",
+        "sheet": "潜在任务实验",
         "file": "reliability/potential_unified_sensitivity_summary.csv",
         "columns": [
           "family",
@@ -890,7 +839,7 @@
         ]
       },
       {
-        "sheet": "潜在逐单元实验依据",
+        "sheet": "潜在逐任务实验依据",
         "file": "reliability/potential_unified_sensitivity_details.csv",
         "columns": [
           "unit_id",

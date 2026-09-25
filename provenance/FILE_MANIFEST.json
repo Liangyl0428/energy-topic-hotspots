@@ -22,28 +22,28 @@
     },
     {
       "file": "NOTICE.md",
-      "bytes": 467,
-      "sha256": "d15e64c884ba7d943341d05cd320d10eac60c261c48ee0b271b28097ad5a8ba2"
+      "bytes": 457,
+      "sha256": "882f87b5727e51fb218e791de9b764cbb0c45610b87d637e9f68d4e42fe17afd"
     },
     {
       "file": "README.md",
-      "bytes": 3263,
-      "sha256": "dfb1185ec00513fccc32175905ef5a3e9556582e1aacfc81b8095154a733dcf8"
+      "bytes": 3718,
+      "sha256": "581d57f2abd93bf183ce463011bc0fc40abd7b435e7ea2c0f0b13afbbd814991"
     },
     {
       "file": "assets/snapshot_20260925/hotspots/750类核心新兴潜在热点分析.xlsx",
-      "bytes": 3162830,
-      "sha256": "c84d46b23fab1e1176e7631086388d7c6ea2dc90abf34a0f13546b98078f200c"
+      "bytes": 3056461,
+      "sha256": "234cfb4ef39e83e7d09ba7385f690e71fbedeec5e1049aba75b69f8379473607"
     },
     {
       "file": "assets/snapshot_20260925/hotspots/750类热点消融实验与灵敏度分析.xlsx",
-      "bytes": 494851,
-      "sha256": "164f4ef74795d319b5952732e65c08cbba4b582f44f8ce781575952ab159ccdb"
+      "bytes": 496875,
+      "sha256": "feeaa3876c22103bbc1212a85efbe592514be0fa78c2a73e979f9169da3976d8"
     },
     {
       "file": "assets/snapshot_20260925/hotspots/EXPERIMENT_REPORT.md",
-      "bytes": 8195,
-      "sha256": "01140e8558520dfd79b39d097a9dbfa952519331148e9cc5d1c2342656bde504"
+      "bytes": 8122,
+      "sha256": "b9f55c70de300bd419cfb52c8b6672d6ed5fa0b2e27b67037eba022f686f8d9c"
     },
     {
       "file": "assets/snapshot_20260925/hotspots/METHOD.json",
@@ -52,13 +52,13 @@
     },
     {
       "file": "assets/snapshot_20260925/hotspots/README.md",
-      "bytes": 985,
-      "sha256": "70c03932b9d579b1c736ae1de6d006d01f831c3209bd27e9bbf90d2d177bc956"
+      "bytes": 846,
+      "sha256": "2733b7db6e11e9d07c2a85839ab3749c4608e45768ad9e57458faeff10d47b8a"
     },
     {
       "file": "assets/snapshot_20260925/hotspots/REPORT.md",
-      "bytes": 22809,
-      "sha256": "36d950e774a4549ef03906fb31e57082ddc2f68e3d56b3418eedfcf340090c24"
+      "bytes": 10614,
+      "sha256": "f6219e37b29c77c129013f92ff1e07d7b07885740ef2476bb9254293e5c785db"
     },
     {
       "file": "assets/snapshot_20260925/hotspots/data/FINAL_METHOD.json",
@@ -82,8 +82,8 @@
     },
     {
       "file": "assets/snapshot_20260925/hotspots/data/MULTIYEAR_WORKBOOK_TABLES.json",
-      "bytes": 26222,
-      "sha256": "5d0774b8faff4e000107b87697dd13db79ea40f0e422dfbec5c7eec3f6ac6efd"
+      "bytes": 24577,
+      "sha256": "e511ea128d6f81c722f2d6b8f16998cc4138a2222e3849ef1f92595ca1d421e8"
     },
     {
       "file": "assets/snapshot_20260925/hotspots/data/POTENTIAL_UNIFIED_METHOD.json",
@@ -322,8 +322,8 @@
     },
     {
       "file": "assets/snapshot_20260925/hotspots/results/field_dictionary.csv",
-      "bytes": 5412,
-      "sha256": "a617fdcd371ca103e58faf7af037be34d8060181205f1e5ba6f6b60a353c4fad"
+      "bytes": 4739,
+      "sha256": "22498aa2dbf4601e1b432242f35120b284e88902e2e7d4c614d231dc92af8021"
     },
     {
       "file": "assets/snapshot_20260925/hotspots/results/hotspot_summary_all750.csv",
@@ -547,18 +547,18 @@
     },
     {
       "file": "docs/DATA_SCHEMA.md",
-      "bytes": 1216,
-      "sha256": "56422e728fc024a9f796817c010134611c045f8c18b37c705710c5d2802f127d"
+      "bytes": 2625,
+      "sha256": "e166f07802b67fdffbf5e1716d01268b2fdf7bc560e33ff755eaabf2302304a6"
     },
     {
       "file": "docs/METHOD.md",
-      "bytes": 2035,
-      "sha256": "1987d97acf8b9d2ec9069a3a04a7f3ed35dbe0a8609590782a10ac9a1c4207e8"
+      "bytes": 5460,
+      "sha256": "8985cd75042c8388dbb58797d2e95bfa6502e95fd136cddc2be4dc5133cc8c10"
     },
     {
       "file": "docs/REPRODUCING.md",
-      "bytes": 1718,
-      "sha256": "6b687cf3ad209b2d1124f74b87664afadef0d5e4ee37c09bd6936d41f7929211"
+      "bytes": 3136,
+      "sha256": "9314fd63d65c92a256f7fe8e60253b6118522af72807ded7c209c8f979630577"
     },
     {
       "file": "pipelines/hotspots/common.py",
@@ -572,8 +572,8 @@
     },
     {
       "file": "pipelines/hotspots/multiyear_delivery.py",
-      "bytes": 21503,
-      "sha256": "fa6c2615be9d15ff1ac1e3f42cf78346fa163348f33cf9ede915fc419601693f"
+      "bytes": 32429,
+      "sha256": "8b6bb9c8f3e4c1e1a0d2f8bf8d82867634af1d42bececf56f9391b3b3d2d9610"
     },
     {
       "file": "pipelines/hotspots/multiyear_experiments.py",
@@ -612,8 +612,8 @@
     },
     {
       "file": "pipelines/hotspots/multiyear_validate.py",
-      "bytes": 6806,
-      "sha256": "d030c3391237c83b8e882a6c79786c870b957f6e89164906316c90b3faf58f2b"
+      "bytes": 6833,
+      "sha256": "aa792bad778aca7ad498ff9983ac7867d198d988f68d4221b6c04f23ad11ee57"
     },
     {
       "file": "pipelines/hotspots/potential_background.py",
@@ -622,8 +622,8 @@
     },
     {
       "file": "pipelines/hotspots/potential_delivery.py",
-      "bytes": 11142,
-      "sha256": "bb53856e3692cf8eb8fda356d245b0fdb6726342d7d3020a50f260b0b712a950"
+      "bytes": 8616,
+      "sha256": "547e38354d8db95805fcccc3f367aeb499455976cd6bd167788d2957ab8300da"
     },
     {
       "file": "pipelines/hotspots/potential_experiments.py",
@@ -656,6 +656,11 @@
       "sha256": "b1b550016e82cf07887de645edefb653c7c8c93c8a30eec678506af424e2c29a"
     },
     {
+      "file": "provenance/DOCUMENTATION_VALIDATION.json",
+      "bytes": 575,
+      "sha256": "71ee3f577d7e93042b1c0fd691473b4dafbf35270a5d9e55aaa8a2ddb06f6e0f"
+    },
+    {
       "file": "provenance/EXTRACTION.json",
       "bytes": 2018,
       "sha256": "c17474307dffc7edcc6f22810403cd710d83c80eab959696187fae1fd5efad8c"
@@ -677,8 +682,8 @@
     },
     {
       "file": "provenance/VALIDATION.md",
-      "bytes": 1163,
-      "sha256": "5e0173d3457b202c98537615f5d67cd04895b81b7e29ae7d9e567526fecb2c95"
+      "bytes": 1599,
+      "sha256": "7182d50673f7bf8c7c56f5a6820c302e931e31188ad35a3a7b571bd4a2430cb8"
     },
     {
       "file": "pyproject.toml",

@@ -1,11 +1,11 @@
-# 750主题多年热点分析
+# 能源热点分析结果
 
-- [主分析Excel](750类核心新兴潜在热点分析.xlsx)
-- [实验Excel](750类热点消融实验与灵敏度分析.xlsx)
-- [报告](REPORT.md) / [实验报告](EXPERIMENT_REPORT.md)
+先阅读[分析报告](REPORT.md)了解入选方向和判断依据，再用[主分析Excel](750类核心新兴潜在热点分析.xlsx)检查指标与样本。
 
-当前方法见data/MULTIYEAR_METHOD.json。核心近三年加最近一年；新兴最近一年对比此前三年非重叠背景并检查五年轨迹。潜在保持四个统一任务单元。
+[实验报告](EXPERIMENT_REPORT.md)解释时间窗口、权重和数据范围的影响；[实验Excel](750类热点消融实验与灵敏度分析.xlsx)提供全部情景和逐次试验。
 
-复现顺序：multiyear_prepare.py → multiyear_build.py → multiyear_review_samples.py（展示样本后另写明确判断）→ multiyear_build.py → multiyear_experiments.py → multiyear_finalize.py → multiyear_delivery.py → multiyear_validate.py。复算使用已冻结的语义决定不等于完成新的专家审核。独立仓库提供不依赖全量数据库的汇总回放。
+结果包含12个核心、22个新兴或持续升温初评候选。潜在4个任务中2项双口径支持、1项条件性跟踪、1项观察。结果用于专家评审与应用跟踪。
 
-旧一年主窗版在audit/MULTIYEAR_BASELINE.json所指备份中；旧年度脚本不再是当前默认入口。历史截止点为回顾性窗口诊断，不是预测回测。
+`results`存放结果与证据表，`data/multiyear`存放论文汇总输入，`reliability`存放实验，`review`存放已展示样本。方法参数见`data/MULTIYEAR_METHOD.json`。
+
+离线复算和报告生成步骤见仓库的[复现指南](../../../docs/REPRODUCING.md)。

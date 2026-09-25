@@ -1,13 +1,54 @@
-# 多年评分输入
+# 输入数据格式
 
-score命令输入CSV：
+`energy-hotspots score`读取三个CSV文件：主题目录、季度论文数、机构与引用信息。以`category_id`关联同一主题。
 
-- taxonomy：唯一category_id以及name、domain、status、analysis_scope。直接能源范围值为“能源电力直接相关”。
-- quarters：category_id、period（如2026Q2）、papers；每主题每季度一条，非负整数。如有source必须全为paper。需完整五年季度背景，不能把未采集季度填零。
-- context：category_id；recent_institutions；core_institutions_1y、core_institutions_3y、core_institutions_5y；year0_institutions至year4_institutions；citation_cohort_percentile。
+```bash
+energy-hotspots score \
+  --taxonomy taxonomy.csv \
+  --quarters quarters.csv \
+  --context context.csv \
+  --output scores.csv
+```
 
-year0为最近一年，year1为前一年，以此类推。机构并集和引用统计必须对应输入季度表的过滤情景与截止时间；禁止不同范围混用。示例结构即assets快照内data/multiyear/main_2026Q2_context.csv。
+输出文件必须尚不存在。默认截止季度为`2026Q2`，核心窗口为3年，新兴背景为此前3年；全部参数见`energy-hotspots score --help`。
 
-`score` 返回数值评分和基本资格；正式结果还需文本/日期、几何、去重和最新同月方向确认，以及明确语义审阅。
+## 主题目录：taxonomy.csv
 
-潜在输入仍为冻结候选、候选专利主体、任务政策、样本修订、全库背景分母和去重ID子集。category_id是750主题主键，unit_id是潜在任务主键；C0356拆成两个任务，不能相加成单个类别分数。
+| 字段 | 含义 |
+| --- | --- |
+| `category_id` | 唯一主题ID，如`C0246` |
+| `name` | 主题名称 |
+| `domain` | 所属领域 |
+| `status` | 类别状态 |
+| `analysis_scope` | 分析范围；直接能源范围使用“能源电力直接相关” |
+
+[主题目录示例](../assets/snapshot_20260925/hotspots/results/category_catalog.csv)列出附带的750个主题。
+
+## 季度论文数：quarters.csv
+
+| 字段 | 含义 |
+| --- | --- |
+| `category_id` | 对应主题ID |
+| `period` | 季度，如`2026Q2` |
+| `papers` | 论文数，必须为非负整数 |
+| `source` | 可选；提供时必须全部为`paper` |
+
+每个“主题×季度”最多一条记录。输入需覆盖截止点之前完整五年的季度背景。只有确认该季度已采集而该主题没有记录时才能记为0；不能用0替代未采集季度。
+
+## 机构与引用：context.csv
+
+| 字段 | 含义 |
+| --- | --- |
+| `category_id` | 对应主题ID |
+| `recent_institutions` | 最近一年参与机构数 |
+| `core_institutions_1y`、`core_institutions_3y`、`core_institutions_5y` | 对应窗口内去重后的机构数 |
+| `year0_institutions`至`year4_institutions` | 五个独立年度的机构数，`year0`为最近一年 |
+| `citation_cohort_percentile` | 按发表年份比较的引用百分位均值 |
+
+机构和引用信息必须与季度表采用相同的数据范围和截止日期。跨年机构数取并集，不能把逐年机构数简单相加。参见[机构与引用示例](../assets/snapshot_20260925/hotspots/data/multiyear/main_2026Q2_context.csv)。
+
+## 输出与潜在任务数据
+
+`score`输出评分和基本数值资格。完整文献流程还需文本日期、几何、去重与同月覆盖检查，并记录主题范围判断。
+
+潜在任务采用独立的记录级证据输入，包括候选论文与专利、申请主体、任务政策、样本判断、背景分母和去重ID。`unit_id`是任务主键，`category_id`是关联的主题主键。一个主题可关联多个任务，例如`C0356`关联知识图谱和大模型两个任务；任务记录可重叠，不应合并成一个类别总分。
