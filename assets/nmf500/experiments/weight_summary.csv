@@ -1,0 +1,6 @@
+﻿,spearman,spearman,spearman,top20_overlap,top20_overlap,top20_overlap,max_rank_shift,max_rank_shift,max_rank_shift
+,min,median,max,min,median,max,min,median,max
+family,,,,,,,,,
+core,0.996698257842171,0.9995758941814759,0.9999807519175057,0.85,1.0,1.0,4.0,15.0,31.0
+emerging,0.998355776752347,0.99975867893634,0.999991335961892,0.95,1.0,1.0,2.0,14.0,32.0
+potential,0.8401461412774571,0.983411818495482,0.999914593622193,0.9,1.0,1.0,14.0,82.0,227.0

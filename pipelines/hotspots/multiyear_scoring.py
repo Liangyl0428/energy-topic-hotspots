@@ -42,7 +42,7 @@ def windows(end='2026Q2'):
     e=pd.Period(end,freq='Q')
     return [pd.period_range(end=e-4*i,periods=4,freq='Q').astype(str).tolist() for i in range(5)]
 
-def score(tax,q,context,end='2026Q2',core_years=3,baseline_years=3,omit_baseline=None):
+def score(tax,q,context,end='2026Q2',core_years=3,baseline_years=3,omit_baseline=None,activity_quarter_min=25,active_year_min=150):
     """输入目录、季度计数及机构引用汇总；返回指标表、核心成分、新兴成分。"""
     if core_years not in [1,3,5] or baseline_years not in [2,3,4]:raise ValueError('Unsupported prespecified window')
     if not tax.index.is_unique or not set(q.category_id)<=set(tax.index):raise ValueError('Invalid taxonomy IDs')
@@ -75,12 +75,12 @@ def score(tax,q,context,end='2026Q2',core_years=3,baseline_years=3,omit_baseline
     # OLS slope of 3 disjoint annual log shares, oldest -> newest; descriptive, no p-value.
     z['three_year_log_share_slope']=(np.log(z.year0_share)-np.log(z.year2_share))/2
     z['growing_quarters']=(sm[ws[0]].to_numpy()>sm[ws[1]].to_numpy()).sum(axis=1)
-    z['active_quarters']=n[ws[0]].ge(25).sum(axis=1)
+    z['active_quarters']=n[ws[0]].ge(activity_quarter_min).sum(axis=1)
     cw=sum(ws[:core_years],[])
     z['core_years']=core_years;z['core_papers']=n[cw].sum(axis=1).astype(int)
     z['core_mean_annual_share']=z[[f'year{i}_share' for i in range(core_years)]].mean(axis=1)
-    z['core_active_quarters']=n[cw].ge(25).sum(axis=1)
-    z['core_active_years']=z[[f'year{i}_papers' for i in range(core_years)]].ge(150).sum(axis=1)
+    z['core_active_quarters']=n[cw].ge(activity_quarter_min).sum(axis=1)
+    z['core_active_years']=z[[f'year{i}_papers' for i in range(core_years)]].ge(active_year_min).sum(axis=1)
     z['core_persistence']=z.core_active_quarters/(4*core_years)
     z['recent_institutions']=context.recent_institutions.reindex(z.index)
     z['core_institutions']=context[f'core_institutions_{core_years}y'].reindex(z.index)

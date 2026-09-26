@@ -30,7 +30,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python }}
-      - run: python -m pip install -e '.[dev]' ${{ matrix.dependencies }}
+      - run: python -m pip install -e '.[dev]' tabulate ${{ matrix.dependencies }}
       - run: python -m pytest -q
       - run: energy-hotspots replay --experiments --output work/ci750
       - run: python tools/check_release.py

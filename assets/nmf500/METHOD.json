@@ -1,0 +1,53 @@
+{
+  "version": "nmf500-sample-v1",
+  "paper_labels": "fixed H model.transform on all splits; same transform_max_iter=200, tol=1e-4; no training W used",
+  "normalization": "source-specific observed sample denominators; yearly shares; no extrapolated full-corpus counts",
+  "windows": {
+    "core": [
+      "2023-07-01",
+      "2026-06-30"
+    ],
+    "recent": [
+      "2025-07-01",
+      "2026-06-30"
+    ],
+    "baseline": [
+      "2022-07-01",
+      "2025-06-30"
+    ],
+    "history": [
+      "2021-07-01",
+      "2026-06-30"
+    ]
+  },
+  "core_thresholds": {
+    "annual_mean_min": 60,
+    "recent_min": 50,
+    "quarter_activity_min": 5,
+    "each_year_min": 30,
+    "active_quarters_min": 9,
+    "yoy_min": 0.8
+  },
+  "emerging_thresholds": {
+    "volume": 25,
+    "baseline": 8,
+    "multiyear_ratio_min": 1.25,
+    "yoy_min": 1.15,
+    "growing_quarters_min": 3,
+    "historical_peak_min": 1.05,
+    "lower95_min": 1.05,
+    "BH_q_max": 0.05
+  },
+  "threshold_basis": "Exploratory minimum observed sample support; frozen before examining rankings. Different from full-corpus 750-topic absolute-count gates.",
+  "citation": "current snapshot cumulative citation, within publication-year sample percentile; not forward forecast",
+  "institutions": "normalized observed names; sample breadth is not total institution count",
+  "potential": "confidence-filtered cosine candidate association; no automatic policy task endorsement; patent/paper ratios use same temporal windows and separate source denominators",
+  "quality_limits": [
+    "sample source selection and unequal within-year coverage",
+    "label ambiguity",
+    "policy domain shift",
+    "count-only screening intervals do not model serial dependence",
+    "shared trained model makes retrospective trends descriptive"
+  ],
+  "semantic_review": "new NMF IDs have no inherited 750-topic review approvals"
+}

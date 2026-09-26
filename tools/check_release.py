@@ -14,6 +14,8 @@ BINARY={
  'assets/snapshot_20260925/hotspots/data/potential_unified_global_dedup.parquet',
  'assets/snapshot_20260925/hotspots/750类核心新兴潜在热点分析.xlsx',
  'assets/snapshot_20260925/hotspots/750类热点消融实验与灵敏度分析.xlsx',
+ 'assets/nmf500/500主题核心新兴潜在热点.xlsx',
+ 'assets/nmf500/500主题热点审阅结果.xlsx',
 }
 
 def publishable_files():

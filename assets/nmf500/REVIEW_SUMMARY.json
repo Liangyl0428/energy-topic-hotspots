@@ -1,0 +1,12 @@
+{
+  "reviewed_numeric_candidate_topics": 40,
+  "core_conditional_followup": 2,
+  "core_followup_passing_all_data_filters": 0,
+  "emerging_followup": 8,
+  "potential_application_leads": 3,
+  "fully_verified_potential_hotspots": 0,
+  "policy_records_reviewed": 20,
+  "old_reposted_policy_excluded": 1,
+  "scope": "已显示代表论文标题及可用摘要、潜在候选专利摘要和对应政策片段；非全类人工标注或独立专家认定",
+  "semantic_review_sha256": "b853e55b659001b50a084a43b9fb9b20a8c440a338fe3e0d79f84099962de7b7"
+}

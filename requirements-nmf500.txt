@@ -1,0 +1,9 @@
+# Portable aggregate experiments/reports; raw reconstruction also needs joblib/sklearn.
+numpy>=1.26,<3
+pandas>=2.2,<4
+scipy>=1.12,<2
+tabulate>=0.9,<1
+openpyxl>=3.1,<4
+joblib>=1.3,<2
+scikit-learn>=1.7,<1.9
+threadpoolctl>=3,<4

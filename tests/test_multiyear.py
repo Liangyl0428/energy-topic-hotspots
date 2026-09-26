@@ -46,6 +46,18 @@ def test_patent_source_cannot_enter(inputs):
  tax,q,c=inputs;q['source']='paper';q.loc[0,'source']='patent'
  with pytest.raises(ValueError,match='Literature only'):score(tax,q,c)
 
+def test_sample_activity_thresholds_do_not_change_counts_or_growth(inputs):
+ tax,q,c=inputs
+ q=q.copy();q['papers']=q.papers//10
+ full,_,_=score(tax,q,c)
+ sample,_,_=score(tax,q,c,activity_quarter_min=5,active_year_min=30)
+ assert full.loc['A','core_active_quarters']==0
+ assert sample.loc['A','core_active_quarters']==12
+ assert sample.loc['A','core_active_years']==3
+ pd.testing.assert_series_equal(full.core_papers,sample.core_papers)
+ pd.testing.assert_series_equal(full.multiyear_share_ratio,sample.multiyear_share_ratio)
+ assert not sample.emerging_eligible.any()
+
 def test_multiyear_snapshot_replay(tmp_path):
  r=replay(tmp_path/'replay')
  assert r['passed'] and r['topics']==750

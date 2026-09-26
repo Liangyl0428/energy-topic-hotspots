@@ -1,0 +1,79 @@
+{
+  "passed": 18,
+  "total": 18,
+  "checks": [
+    {
+      "check": "500_unique_topics",
+      "passed": true
+    },
+    {
+      "check": "paper_ids_unique",
+      "passed": true
+    },
+    {
+      "check": "complete_500_by_20_quarters",
+      "passed": true
+    },
+    {
+      "check": "quarter_counts_reproduce_from_document_rows",
+      "passed": true
+    },
+    {
+      "check": "recent_counts_reproduce",
+      "passed": true
+    },
+    {
+      "check": "sample_totals_match_summary",
+      "passed": true
+    },
+    {
+      "check": "rank_scores_finite",
+      "passed": true
+    },
+    {
+      "check": "followup_is_subset_of_numeric_candidates",
+      "passed": true
+    },
+    {
+      "check": "all_selected_new_emerging_preserve_filter_direction",
+      "passed": true
+    },
+    {
+      "check": "conditional_core_not_misreported_as_robust",
+      "passed": true
+    },
+    {
+      "check": "no_unverified_potential_promoted_to_full_verification",
+      "passed": true
+    },
+    {
+      "check": "reviewed_policy_groups_deduplicated",
+      "passed": true
+    },
+    {
+      "check": "reviewed_policy_quotes_match_frozen_source_and_hashes",
+      "passed": true
+    },
+    {
+      "check": "2006_policy_not_counted_as_recent_support",
+      "passed": true
+    },
+    {
+      "check": "transfer_unique_complete_and_finite",
+      "passed": true
+    },
+    {
+      "check": "top3_descending_and_valid_ids",
+      "passed": true
+    },
+    {
+      "check": "centers_finite_unit_norm_or_inactive",
+      "passed": true
+    },
+    {
+      "check": "review_workbook_matches_followup_counts",
+      "passed": true
+    }
+  ],
+  "interpretation": "数值、记录级回算与引文完整性验证；非分类准确率或专家认可率"
+}

@@ -1,0 +1,16 @@
+{
+  "seed": 20260926,
+  "draws_per_family": 1500,
+  "weight_multipliers": [
+    0.8,
+    1.2
+  ],
+  "top_k": 20,
+  "diagnostic_scenarios": 96,
+  "experiment_design": "post-hoc descriptive diagnostics; not preregistered or used to tune selection",
+  "ranking": "10-decimal canonical ties; top20 ties broken by category ID; rank intervals use competition ranks, so top20_fraction can include ties beyond 20",
+  "eligibility": "Weights affect ranking only. Frozen numeric gates and semantic decisions; newly passing topics remain unreviewed.",
+  "uncertainty": "Perturbation intervals are scenario ranges, not statistical confidence intervals. No expert accuracy or causal claim.",
+  "window_limit": "Citation cohort context fixed to 2023–2025; windows test count/institution horizons, not a full historical backtest.",
+  "potential_limit": "No applicant-diversity data. Policy-family LOO is on the three reviewed leads only, not all 500 themes."
+}
