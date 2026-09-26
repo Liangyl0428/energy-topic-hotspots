@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 from openpyxl import load_workbook
 
-from build import OUTPUT, dump
+from build import OUTPUT, dump, paper_eligibility
 
 
 def validate(out=OUTPUT):
@@ -15,7 +15,7 @@ def validate(out=OUTPUT):
     def check(name, ok):
         checks.append({'check': name, 'passed': bool(ok)})
     papers = pd.read_parquet(out / 'paper_assignments.parquet')
-    clean = papers[papers.topic_id.ge(0) & papers.date.le('2026-06-30') & ~papers.is_retracted.fillna(False) & ~papers.template_record.fillna(False)]
+    clean = papers[paper_eligibility(papers)]
     quarters = pd.read_csv(out / 'quarter_counts.csv')
     metrics = pd.read_csv(out / 'hotspot_metrics.csv').set_index('category_id')
     reviewed = pd.read_csv(out / 'reviewed_hotspot_metrics.csv').set_index('category_id')
@@ -35,7 +35,8 @@ def validate(out=OUTPUT):
     check('sample_totals_match_summary', len(papers) == summary['input_papers'] and len(clean) == summary['eligible_papers'])
     check('rank_scores_finite', np.isfinite(metrics[['core_score', 'emerging_score']]).all().all())
     check('followup_is_subset_of_numeric_candidates', (~reviewed.core_followup | metrics.core_numeric_candidate).all() and (~reviewed.emerging_followup | metrics.emerging_numeric_candidate).all() and (~potential.potential_followup | potential.potential_numeric_candidate).all())
-    check('all_selected_new_emerging_preserve_filter_direction', reviewed.loc[reviewed.emerging_followup, 'emerging_robust_candidate'].all())
+    filter_columns = [c for c in metrics if c.endswith('_emerging_candidate') and c != 'emerging_numeric_candidate']
+    check('emerging_robust_requires_all_full_filter_gates', (metrics.emerging_robust_candidate == (metrics.emerging_numeric_candidate & metrics[filter_columns].all(axis=1))).all())
     check('conditional_core_not_misreported_as_robust', int(reviewed.loc[reviewed.core_followup, 'core_robust_candidate'].sum()) == summary['core_followup_passing_all_data_filters'])
     check('no_unverified_potential_promoted_to_full_verification', not potential.fully_verified_potential_hotspot.any())
     approved_families = policy[policy.accepted.eq(True)].groupby('category_id').family.nunique().reindex(potential.index, fill_value=0)
@@ -50,6 +51,7 @@ def validate(out=OUTPUT):
     old = policy[policy.doc_id.eq('policy:bfeb5830e2f4a417e2a38695')]
     check('2006_policy_not_counted_as_recent_support', len(old) == 1 and not old.iloc[0].accepted and old.iloc[0].reviewed_issue_date == '2006-11-03')
     check('transfer_unique_complete_and_finite', assignments.doc_id.is_unique and len(assignments) == summary['input_transfer_documents'] and np.isfinite(assignments[['topic_1_cosine', 'topic_2_cosine', 'topic_3_cosine']]).all().all())
+    check('similarity_filter_never_certifies_semantics', assignments.needs_review.all() and assignments.similarity_filter_passed.equals(~(assignments.low_cosine | assignments.low_margin)))
     check('top3_descending_and_valid_ids', (assignments.topic_1_cosine >= assignments.topic_2_cosine).all() and (assignments.topic_2_cosine >= assignments.topic_3_cosine).all() and assignments[['topic_1_id', 'topic_2_id', 'topic_3_id']].ge(0).all().all() and assignments[['topic_1_id', 'topic_2_id', 'topic_3_id']].lt(500).all().all())
     centers = np.load(out / 'topic_centroids.npy')
     norms = np.linalg.norm(centers, axis=1)

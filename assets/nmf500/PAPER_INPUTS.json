@@ -5,5 +5,8 @@
   "aaaa/openalex_keywords_nmf/models/validation_scored.npz": "84d899c6e4649c5e2502f60810853e5d8cb8d3143754fc26f14334912199b30f",
   "aaaa/data/validation.parquet": "ee0628d01293796853dcdcfd2fbbf139f686cc9585e1e789fcb1a94974f646fa",
   "aaaa/openalex_keywords_nmf/models/replay_scored.npz": "0c3670bdf12251772cae782883a9271bde4a07ae314207ed3a431e6ef26744bb",
-  "aaaa/data/replay_evolution.parquet": "02a35bfbe06afb5bb9a5d9cdb2ae40c1d9a88ae0bbe8bbb2ef3062949999b193"
+  "aaaa/data/replay_evolution.parquet": "02a35bfbe06afb5bb9a5d9cdb2ae40c1d9a88ae0bbe8bbb2ef3062949999b193",
+  "assignment_method": "fixed-H-l2-contribution-v2",
+  "inference_source_sha256": "5ed8aefcf0e48413d93d08611c68e5652279fc1431fae9e262a3393fe7fee218",
+  "metadata_database_sha256": "3a9d938136ae32bed02794133f40862ea841ec8cb2f18c3dcee5cb7da1afa559"
 }

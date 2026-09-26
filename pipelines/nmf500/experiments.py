@@ -211,7 +211,7 @@ def run(inp, output, draws=1500, seed=20260926):
         window_limit='Citation cohort context fixed to 2023–2025; windows test count/institution horizons, not a full historical backtest.',
         potential_limit='No applicant-diversity data. Policy-family LOO is on the three reviewed leads only, not all 500 themes.')
     (output/'PROTOCOL.json').write_text(json.dumps(protocol,ensure_ascii=False,indent=2)+'\n')
-    report = '# NMF500 灵敏度与消融实验\n\n' + json.dumps(protocol,ensure_ascii=False,indent=2) + '\n\n## 权重扰动\n\n' + weight_summary.to_markdown() + '\n\n## 逐项评分消融\n\n' + frames['scenarios'].query("kind == 'score_component_ablation'").to_markdown(index=False) + '\n\n## 时间窗口与旧门槛\n\n' + frames['scenarios'][frames['scenarios'].kind.isin(['window','threshold_legacy'])].to_markdown(index=False) + '\n\n## 政策组留一法\n\n' + frames['policy_family_loo'].to_markdown(index=False) + '\n\n完整门槛/来源/置信过滤实验见 scenarios.csv；逐主题名单见 scenario_memberships.csv。移除语义审阅显示数值候选池大小，不代表这些候选真实有效。原有三种数据过滤实验另见输入目录 sensitivity.csv。\n'
+    report = '# NMF500 灵敏度与消融实验\n\n' + json.dumps(protocol,ensure_ascii=False,indent=2) + '\n\n## 权重扰动\n\n' + weight_summary.to_markdown() + '\n\n## 逐项评分消融\n\n' + frames['scenarios'].query("kind == 'score_component_ablation'").to_markdown(index=False) + '\n\n## 时间窗口与旧门槛\n\n' + frames['scenarios'][frames['scenarios'].kind.isin(['window','threshold_legacy'])].to_markdown(index=False) + '\n\n## 政策组留一法\n\n' + frames['policy_family_loo'].to_markdown(index=False) + '\n\n完整门槛/来源/置信过滤实验见 scenarios.csv；逐主题名单见 scenario_memberships.csv。移除语义审阅显示数值候选池大小，不代表这些候选真实有效。五种数据过滤实验另见输入目录 sensitivity.csv。\n'
     (output/'REPORT.md').write_text(report)
     print(json.dumps(protocol,ensure_ascii=False),flush=True)
 
@@ -219,7 +219,7 @@ def run(inp, output, draws=1500, seed=20260926):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--input',type=Path,default=REPO/'assets/nmf500')
-    parser.add_argument('--output',type=Path,default=REPO/'outputs/nmf500/experiments')
+    parser.add_argument('--output',type=Path,default=REPO/'outputs/nmf500_v021/experiments')
     parser.add_argument('--draws',type=int,default=1500)
     args = parser.parse_args()
     run(args.input,args.output,args.draws)

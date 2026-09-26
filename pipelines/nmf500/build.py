@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import importlib.util
 import json
 import sys
 from pathlib import Path
@@ -25,10 +26,16 @@ from energy_hotspots.scoring import score, gates, windows, percent, rank_scores
 
 NMF = ROOT / 'energy-topic-identification/pipelines/keyword_nmf/results'
 INPUTS = ROOT / 'aaaa/openalex_keywords_nmf/models'
-OUTPUT = REPO / 'outputs/nmf500'
+OUTPUT = REPO / 'outputs/nmf500_v021'
 SPLITS = {'train': 'development_train', 'validation': 'validation', 'replay': 'replay_evolution'}
 CORE_GATES = {'annual_volume': 60, 'current_volume': 50}
 EMERGING_GATES = {'volume': 25, 'baseline': 8}
+
+# One inference implementation shared with the classification repository.
+_spec = importlib.util.spec_from_file_location('nmf_canonical_components', ROOT / 'energy-topic-identification/pipelines/keyword_nmf/src/components.py')
+_nmf = importlib.util.module_from_spec(_spec)
+sys.modules[_spec.name] = _nmf
+_spec.loader.exec_module(_nmf)
 
 
 def sha(path):
@@ -53,6 +60,10 @@ def prepare_papers(out):
     for split, filename in SPLITS.items():
         inputs += [INPUTS / f'{split}_scored.npz', ROOT / f'aaaa/data/{filename}.parquet']
     fingerprints = {str(p.relative_to(ROOT)): sha(p) for p in inputs}
+    fingerprints['assignment_method'] = _nmf.ASSIGNMENT_METHOD
+    fingerprints['inference_source_sha256'] = sha(_spec.origin)
+    database = ROOT / 'analyze/data/independent_corpus.duckdb'
+    fingerprints['metadata_database_sha256'] = sha(database)
     cache, check = out / 'paper_assignments.parquet', out / 'PAPER_INPUTS.json'
     if cache.exists() and check.exists() and json.loads(check.read_text()) == fingerprints:
         return pd.read_parquet(cache)
@@ -67,7 +78,7 @@ def prepare_papers(out):
         valid = np.flatnonzero(x.getnnz(1) > 0)
         for start in range(0, len(valid), 4096):
             rows = valid[start:start + 4096]
-            w = model.transform(x[rows])
+            w = _nmf.contribution_weights(model.transform(x[rows]), model.components_)
             good = w.sum(1) > 1e-12
             labels[rows[good]] = w[good].argmax(1)
             best = w.max(1)
@@ -81,6 +92,7 @@ def prepare_papers(out):
         frame['split'] = split
         frame['nmf_relative_top1'] = top
         frame['nmf_relative_margin'] = margin
+        frame['assignment_method'] = _nmf.ASSIGNMENT_METHOD
         frames.append(frame)
     papers = pd.concat(frames, ignore_index=True)
     conn = duckdb.connect(str(ROOT / 'analyze/data/independent_corpus.duckdb'), read_only=True)
@@ -109,7 +121,19 @@ def taxonomy(papers):
     catalog['status'] = 'NMF关键词主题'
     catalog['analysis_scope'] = '待主题范围审阅'
     catalog['uniform_assigned_papers'] = catalog.category_id.map(papers.category_id.value_counts()).fillna(0).astype(int)
+    catalog['paper_documents'] = catalog.uniform_assigned_papers
+    catalog['active'] = catalog.paper_documents.gt(0)
+    for split in SPLITS:
+        catalog[f'{split}_documents'] = catalog.category_id.map(papers[papers.split.eq(split)].category_id.value_counts()).fillna(0).astype(int)
     return catalog.set_index('category_id')
+
+
+def paper_eligibility(papers):
+    title = papers.clean_title.fillna('').str.casefold().str.strip()
+    placeholder = title.isin(['', 'title pending', 'untitled', 'no title', '[no title]'])
+    return (papers.topic_id.ge(0) & papers.date.le('2026-06-30')
+            & ~papers.is_retracted.fillna(False) & ~papers.template_record.fillna(False)
+            & papers.metadata_matched & ~placeholder)
 
 
 def quarterly_context(papers, tax):
@@ -166,7 +190,7 @@ def update_centers_and_transfer(papers, out):
         ids = pd.read_parquet(ROOT / f'aaaa/data/{filename}.parquet', columns=['work_id']).work_id
         frame = papers.set_index('work_id').loc[ids]
         labels = frame.topic_id.to_numpy()
-        allowed = (labels >= 0) & ~frame.is_retracted.fillna(False).to_numpy() & ~frame.template_record.fillna(False).to_numpy()
+        allowed = paper_eligibility(frame).to_numpy()
         vectors = np.load(ROOT / f'aaaa/bge_m3/models/bge_{split}.npy', mmap_mode='r')
         np.add.at(sums, labels[allowed], vectors[allowed])
         counts += np.bincount(labels[allowed], minlength=500)
@@ -182,9 +206,7 @@ def update_centers_and_transfer(papers, out):
     active = np.flatnonzero(counts > 0)
     train_active = np.flatnonzero(np.linalg.norm(train_centers, axis=1) > 0)
     def nearest(emb, c, eligible):
-        sim = np.asarray(emb) @ c[eligible].T
-        order = np.argsort(-sim, axis=1, kind='stable')[:, :3]
-        return eligible[order], np.take_along_axis(sim, order, axis=1)
+        return _nmf.nearest_centroid_assign(emb, c, eligible, top_n=3)
     _, val_scores = nearest(valid_emb, train_centers, train_active)
     thresholds = {'cosine_p10': float(np.quantile(val_scores[:, 0], .1)), 'margin_p10': float(np.quantile(val_scores[:, 0]-val_scores[:, 1], .1)), 'calibration_documents': len(valid_labels), 'active_centers': len(active), 'calibration': 'uniform-NMF 2024 validation papers against uniform-NMF train-only centers; retrospective threshold, not transfer accuracy'}
     np.save(out / 'topic_centroids.npy', centers)
@@ -201,7 +223,9 @@ def update_centers_and_transfer(papers, out):
     t['top1_top2_margin'] = scores[:, 0]-scores[:, 1]
     t['low_cosine'] = scores[:, 0] < thresholds['cosine_p10']
     t['low_margin'] = t.top1_top2_margin < thresholds['margin_p10']
-    t['needs_review'] = t.low_cosine | t.low_margin
+    t['similarity_filter_passed'] = ~(t.low_cosine | t.low_margin)
+    t['needs_review'] = True
+    t['assignment_method'] = _nmf.ASSIGNMENT_METHOD
     t.to_parquet(out / 'patent_policy_assignments.parquet', index=False)
     old = pd.read_parquet(NMF / 'patent_policy_assignments.parquet')[['doc_id', 'topic_1_id']]
     compare = t.merge(old, on='doc_id', suffixes=('', '_upstream'), validate='one_to_one')
@@ -220,14 +244,14 @@ def transfer_metrics(tax, papers, out):
     t['within_cutoff'] = t.date.le('2026-06-30')
     t['in_recent_window'] = t.date.between('2025-07-01', '2026-06-30')
     t['in_policy_window'] = t.date.between('2023-07-01', '2026-06-30')
-    t['assignment_status'] = np.where(t.needs_review, '低置信候选关联', '通过论文校准阈值的候选关联')
+    t['assignment_status'] = np.where(t.similarity_filter_passed, '通过论文相似度过滤，仍待语义复核', '未通过论文相似度过滤，待语义复核')
     t.to_parquet(out / 'transfer_evidence.parquet', index=False)
     z = tax[['topic_id', 'name', 'top_keywords']].copy()
     pwin = papers[papers.date.between('2025-07-01', '2026-06-30')]
     total_papers = len(pwin)
     z['recent_papers'] = pwin.groupby('category_id').size().reindex(z.index, fill_value=0)
     for scenario in ['all', 'confidence_filtered']:
-        selected = t if scenario == 'all' else t[~t.needs_review]
+        selected = t if scenario == 'all' else t[t.similarity_filter_passed]
         pats = selected[selected.source.eq('patent') & selected.in_recent_window]
         pols = selected[selected.source.eq('policy') & selected.in_policy_window]
         z[f'{scenario}_recent_patents'] = pats.groupby('category_id').size().reindex(z.index, fill_value=0)
@@ -296,7 +320,7 @@ def build(out):
     check = papers[['work_id', 'split', 'topic_id']].merge(old, on='work_id', suffixes=('', '_upstream'), validate='one_to_one')
     assignment_changes = check.assign(changed=check.topic_id.ne(check.topic_id_upstream)).groupby('split').changed.agg(['sum', 'mean']).reset_index()
     csv(assignment_changes, out / 'uniform_inference_changes.csv')
-    base = papers[papers.topic_id.ge(0) & papers.date.le('2026-06-30') & ~papers.is_retracted.fillna(False) & ~papers.template_record.fillna(False)].copy()
+    base = papers[paper_eligibility(papers)].copy()
     tax = taxonomy(base)
     z, q, ctx, cc, ec = calculate(base, tax)
     csv(tax.reset_index(), out / 'topic_catalog.csv')
@@ -308,6 +332,8 @@ def build(out):
         'abstract_available': base[~base.title_only],
         'title_year_dedup': base.drop_duplicates(['title_key', 'year']),
         'exclude_jan1': base[base.date.dt.strftime('%m-%d').ne('01-01')],
+        'assignment_margin': base[base.nmf_relative_margin.ge(.05)],
+        'equal_quarter_quota': base.sort_values('quarter_sample_rank').groupby('period', group_keys=False).head(2000),
     }
     sensitivities = []
     for name, frame in variants.items():
@@ -319,7 +345,7 @@ def build(out):
         sensitivities.append({'scenario': name, 'papers': len(frame), 'core_candidates': int(zz.core_numeric_candidate.sum()), 'emerging_candidates': int(zz.emerging_numeric_candidate.sum()), 'core_rank_spearman': float(z.core_score.corr(zz.core_score, method='spearman')), 'emerging_rank_spearman': float(z.emerging_score.corr(zz.emerging_score, method='spearman'))})
     z['core_robust_candidate'] = z.core_numeric_candidate & z[[f'{n}_core_candidate' for n in variants]].all(axis=1)
     # The main strict count gates still apply; sensitivity checks demand direction persistence.
-    z['emerging_robust_candidate'] = z.emerging_numeric_candidate & z[[f'{n}_{col}' for n in variants for col in ['multiyear_ratio', 'yoy_ratio']]].ge(1.1).all(axis=1)
+    z['emerging_robust_candidate'] = z.emerging_numeric_candidate & z[[f'{n}_emerging_candidate' for n in variants]].all(axis=1)
     z['scope_review_status'] = '待主题与代表文献审阅'
     csv(z.reset_index(), out / 'hotspot_metrics.csv')
     for family in ['core', 'emerging']:
@@ -334,7 +360,7 @@ def build(out):
         for r in examples.itertuples():
             sample_rows.append({'category_id': cid, 'name': tax.loc[cid, 'name'], 'source': 'paper', 'doc_id': r.work_id, 'date': str(r.date.date()), 'title': r.clean_title, 'text_excerpt': r.clean_abstract[:2500], 'confidence': r.nmf_relative_margin, 'needs_review': True})
         for source in ['patent', 'policy']:
-            group = transfer[transfer.category_id.eq(cid) & transfer.source.eq(source) & ~transfer.needs_review & (transfer.in_recent_window if source == 'patent' else transfer.in_policy_window)]
+            group = transfer[transfer.category_id.eq(cid) & transfer.source.eq(source) & transfer.similarity_filter_passed & (transfer.in_recent_window if source == 'patent' else transfer.in_policy_window)]
             for r in group.nlargest(3, 'topic_1_cosine').itertuples():
                 sample_rows.append({'category_id': cid, 'name': tax.loc[cid, 'name'], 'source': source, 'doc_id': r.doc_id, 'date': str(r.date.date()), 'title': r.title, 'text_excerpt': str(r.body)[:2500], 'confidence': r.topic_1_cosine, 'needs_review': r.needs_review})
     examples = pd.DataFrame(sample_rows)
@@ -346,6 +372,9 @@ def build(out):
     summary = {'topic_count': len(tax), 'input_papers': len(papers), 'eligible_papers': len(base), 'input_transfer_documents': len(transfer), 'core_numeric_candidates': int(z.core_numeric_candidate.sum()), 'core_robust_candidates': int(z.core_robust_candidate.sum()), 'emerging_numeric_candidates': int(z.emerging_numeric_candidate.sum()), 'emerging_robust_candidates': int(z.emerging_robust_candidate.sum()), 'potential_numeric_candidates': int(pot.potential_numeric_candidate.sum()), 'cutoff': '2026-06-30', 'scope': '冻结抽样语料的数值候选，非全量512万条记录结果', 'maturity_inferred_from_hotspots': False}
     dump(out / 'SUMMARY.json', summary)
     method = {'version': 'nmf500-sample-v1', 'paper_labels': 'fixed H model.transform on all splits; same transform_max_iter=200, tol=1e-4; no training W used', 'normalization': 'source-specific observed sample denominators; yearly shares; no extrapolated full-corpus counts', 'windows': {'core': ['2023-07-01', '2026-06-30'], 'recent': ['2025-07-01', '2026-06-30'], 'baseline': ['2022-07-01', '2025-06-30'], 'history': ['2021-07-01', '2026-06-30']}, 'core_thresholds': {'annual_mean_min': 60, 'recent_min': 50, 'quarter_activity_min': 5, 'each_year_min': 30, 'active_quarters_min': 9, 'yoy_min': .8}, 'emerging_thresholds': {**EMERGING_GATES, 'multiyear_ratio_min': 1.25, 'yoy_min': 1.15, 'growing_quarters_min': 3, 'historical_peak_min': 1.05, 'lower95_min': 1.05, 'BH_q_max': .05}, 'threshold_basis': 'Exploratory minimum observed sample support; frozen before examining rankings. Different from full-corpus 750-topic absolute-count gates.', 'citation': 'current snapshot cumulative citation, within publication-year sample percentile; not forward forecast', 'institutions': 'normalized observed names; sample breadth is not total institution count', 'potential': 'confidence-filtered cosine candidate association; no automatic policy task endorsement; patent/paper ratios use same temporal windows and separate source denominators', 'quality_limits': ['sample source selection and unequal within-year coverage', 'label ambiguity', 'policy domain shift', 'count-only screening intervals do not model serial dependence', 'shared trained model makes retrospective trends descriptive'], 'semantic_review': 'new NMF IDs have no inherited 750-topic review approvals'}
+    method.update(version='nmf500-sample-v0.2.1', paper_labels=_nmf.ASSIGNMENT_METHOD,
+                  transfer_review='All automatic links require semantic review; similarity_filter_passed is not calibrated accuracy',
+                  robustness='All numerical gates must pass all five filters; margin >= .05 is an uncalibrated sensitivity setting, and quarter quotas are capped at 2000')
     dump(out / 'METHOD.json', method)
     def table(family):
         f = z[z[f'{family}_numeric_candidate']].sort_values(f'{family}_score', ascending=False).head(15)
@@ -354,7 +383,7 @@ def build(out):
 
 截止2026-06-30；输入{len(papers):,}篇论文，清理后{len(base):,}篇；专利/政策共{len(transfer):,}条。新分类覆盖当前冻结样本。全部时间段统一使用固定NMF组件推断，增长按各期样本背景份额归一化。
 
-核心数值候选{summary['core_numeric_candidates']}个，三种数据过滤均通过{summary['core_robust_candidates']}个；新兴数值候选{summary['emerging_numeric_candidates']}个，方向稳健{summary['emerging_robust_candidates']}个；潜在跨来源数值候选{summary['potential_numeric_candidates']}个。候选均保留主题范围与证据待审阅状态。
+核心数值候选{summary['core_numeric_candidates']}个，五种数据过滤均通过{summary['core_robust_candidates']}个；新兴数值候选{summary['emerging_numeric_candidates']}个，五种完整门槛均通过{summary['emerging_robust_candidates']}个；潜在跨来源数值候选{summary['potential_numeric_candidates']}个。候选均保留主题范围与证据待审阅状态。
 
 ## 核心候选
 

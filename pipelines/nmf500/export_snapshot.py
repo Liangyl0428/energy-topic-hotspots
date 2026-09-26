@@ -9,12 +9,12 @@ REPO = Path(__file__).resolve().parents[2]
 
 
 def export():
-    source, dest = REPO/'outputs/nmf500', REPO/'assets/nmf500'
+    source, dest = REPO/'outputs/nmf500_v021', REPO/'assets/nmf500'
     dest.mkdir(parents=True, exist_ok=True)
     for path in sorted(source.iterdir()):
         if path.is_file() and path.suffix in {'.csv','.json','.md','.xlsx'}:
             shutil.copy2(path,dest/path.name)
-    cols = ['doc_id','source','date','topic_1_id','topic_1_cosine','top1_top2_margin','needs_review']
+    cols = ['doc_id','source','date','topic_1_id','topic_1_cosine','top1_top2_margin','needs_review','similarity_filter_passed']
     t = pd.read_parquet(source/'patent_policy_assignments.parquet',columns=cols)
     t['category_id'] = t.topic_1_id.map(lambda i: f'N{i+1:04d}')
     t.to_csv(dest/'transfer_scores.csv',index=False,encoding='utf-8-sig')

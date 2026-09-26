@@ -6,6 +6,10 @@ D=BASE/'data/multiyear';tax=pd.read_csv(BASE/'results/category_catalog.csv').set
 
 def calculate(scenario='main',end='2026Q2',**kw):
  q=pd.read_csv(D/(scenario+'_quarters.csv'));ctx=pd.read_csv(D/(scenario+'_'+end+'_context.csv')).set_index('category_id')
+ # Legacy SQL GROUP BY exports omit measured zero cells. Only this documented
+ # snapshot adapter densifies them; the public scoring API requires explicit zeros.
+ grid=pd.MultiIndex.from_product([tax.index,sorted(q.period.unique())],names=['category_id','period'])
+ q=q.set_index(['category_id','period']).reindex(grid,fill_value=0).reset_index()
  return score(tax,q,ctx,end=end,**kw)
 
 def build():

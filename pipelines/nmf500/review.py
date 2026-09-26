@@ -5,11 +5,13 @@ import json
 import pandas as pd
 
 from build import OUTPUT, csv, dump, safe_excel
+from review_contract import require_current_review, require_policy_review
 
 
 def review(out=OUTPUT):
-    decisions_path = Path(__file__).with_name('review_decisions.json')
+    decisions_path = Path(__file__).with_name('review_decisions_v021.json')
     decisions = json.loads(decisions_path.read_text())
+    require_current_review(decisions, out)
     metrics = pd.read_csv(out / 'hotspot_metrics.csv').set_index('category_id')
     potential = pd.read_csv(out / 'potential_metrics.csv').set_index('category_id')
     evidence = pd.read_csv(out / 'candidate_evidence.csv').fillna('')
@@ -17,6 +19,7 @@ def review(out=OUTPUT):
     policy_rows = []
     for record in decisions['policy_records']:
         doc = transfer.loc[record['doc_id']]
+        require_policy_review(record, doc.category_id, doc.body)
         anchor = record['anchor']
         start = str(doc.body).find(anchor)
         if start < 0:
@@ -26,7 +29,11 @@ def review(out=OUTPUT):
         policy_rows.append({**record, 'category_id': doc.category_id, 'title': doc.title, 'url': doc.url, 'recorded_date': str(doc.date.date()), 'quote_start': lo, 'quote_end': hi, 'quote': quote, 'quote_sha256': hashlib.sha256(quote.encode()).hexdigest(), 'body_sha256': hashlib.sha256(doc.body.encode()).hexdigest()})
     policies = pd.DataFrame(policy_rows)
     csv(policies, out / 'policy_evidence_review.csv')
-    families = policies[policies.accepted].groupby('category_id').family.nunique()
+    eligible_policy = policies.accepted & policies.recorded_date.between('2023-07-01','2026-06-30')
+    if 'reviewed_issue_date' in policies:
+        known_date = policies.reviewed_issue_date.fillna('')
+        eligible_policy &= known_date.eq('') | known_date.between('2023-07-01','2026-06-30')
+    families = policies[eligible_policy].groupby('category_id').family.nunique()
     potential['reviewed_policy_family_count'] = families.reindex(potential.index, fill_value=0)
     potential['potential_followup'] = potential.potential_numeric_candidate & potential.index.isin(decisions['potential_followup']) & potential.reviewed_policy_family_count.ge(2)
     potential['fully_verified_potential_hotspot'] = False
@@ -67,7 +74,7 @@ def review(out=OUTPUT):
         frame = tables[family]
         cols = ['category_id', 'review_display_name'] + (['potential_signal_score', 'reviewed_policy_family_count'] if family == 'potential' else [family + '_score', 'recent_papers', 'multiyear_share_ratio'])
         parts += [f'\n### {label}\n\n', frame[cols].to_markdown(index=False) + '\n']
-    parts += ['\n核心2个方向在摘要/日期过滤下未全部达标，因此只列条件性跟踪，不能宣称稳健核心热点。8个新兴方向的“新兴”仅指样本关注份额上升，不表示技术首次出现。3个潜在方向已核读相关政策任务片段并合并同计划政策，仍缺统一专利申请主体及全量同任务审阅，因此是应用线索，不是通过原任务级全部门槛的潜在热点。\n', '\n政策审阅排除了正文落款2006年的《电网运行规则》作为近期政策支持，并合并发改能源〔2024〕1803号的重复转载。完整引文、URL、哈希及政策组见policy_evidence_review.csv。\n']
+    parts += [f'\n本次保留核心条件跟踪{len(tables["core"])}个、新兴条件跟踪{len(tables["emerging"])}个、潜在应用线索{len(tables["potential"])}个。稳健标记要求通过全部五种过滤下的完整数值门槛；条件跟踪不等于稳健热点。新兴只表示样本份额增长；潜在线索仍缺申请主体多样性及全量同任务验证。\n', '\n政策按实际发布日期和政策组核查，旧文重发不能作为新增支持；完整引文、URL和哈希见policy_evidence_review.csv。\n']
     report_path = out / 'REPORT.md'
     body = report_path.read_text().split('\n## 样本范围核读后的跟踪方向')[0]
     report_path.write_text(body + ''.join(parts))

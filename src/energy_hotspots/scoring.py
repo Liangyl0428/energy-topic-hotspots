@@ -45,13 +45,21 @@ def windows(end='2026Q2'):
 def score(tax,q,context,end='2026Q2',core_years=3,baseline_years=3,omit_baseline=None,activity_quarter_min=25,active_year_min=150):
     """输入目录、季度计数及机构引用汇总；返回指标表、核心成分、新兴成分。"""
     if core_years not in [1,3,5] or baseline_years not in [2,3,4]:raise ValueError('Unsupported prespecified window')
+    if not len(tax) or tax.index.hasnans:raise ValueError('Empty or missing taxonomy IDs')
+    if not context.index.is_unique or not set(tax.index)<=set(context.index):raise ValueError('Incomplete or duplicate context IDs')
+    context_cols=['recent_institutions',f'core_institutions_{core_years}y','citation_cohort_percentile']+[f'year{i}_institutions' for i in range(1,baseline_years+1)]
+    cv=context.reindex(tax.index)[context_cols]
+    if not np.isfinite(cv).all().all() or (cv<0).any().any():raise ValueError('Context must be finite and nonnegative')
+    if cv.citation_cohort_percentile.gt(1).any():raise ValueError('Citation percentiles must be in [0,1]')
+    if not all(np.isfinite(v) and v>0 for v in [activity_quarter_min,active_year_min]):raise ValueError('Invalid activity thresholds')
     if not tax.index.is_unique or not set(q.category_id)<=set(tax.index):raise ValueError('Invalid taxonomy IDs')
     if q.duplicated(['category_id','period']).any():raise ValueError('Duplicate topic-quarter')
     if 'source' in q and not q.source.eq('paper').all():raise ValueError('Literature only')
     if not np.isfinite(q.papers).all() or (q.papers<0).any() or (q.papers%1!=0).any():raise ValueError('Nonnegative integer counts required')
     ws=windows(end);allq=sum(ws,[])
     if not set(allq)<=set(q.period):raise ValueError('Incomplete five-year quarterly coverage')
-    n=q.pivot(index='category_id',columns='period',values='papers').reindex(index=tax.index,columns=allq).fillna(0)
+    n=q.pivot(index='category_id',columns='period',values='papers').reindex(index=tax.index,columns=allq)
+    if n.isna().any().any():raise ValueError('Incomplete topic-quarter grid; explicit measured zeros required')
     den=n.sum();K=len(tax)
     if den.le(0).any():raise ValueError('Missing quarter background')
     sm=(n+.5)/(den+.5*K)
@@ -106,6 +114,7 @@ def score(tax,q,context,end='2026Q2',core_years=3,baseline_years=3,omit_baseline
 
 def gates(z,family,p=None):
     """逐条返回数值入选条件；调用者按行合并，并另行结合样本范围判断。"""
+    if family not in {'core','emerging'}:raise ValueError('Unknown hotspot family')
     p=p or {};scope=z.admissible_pool&z.direct_energy
     if family=='core':return pd.DataFrame({'scope':scope,'annual_volume':z.core_papers.ge(p.get('annual_volume',250)*z.core_years),'active_years':z.core_active_years.ge(np.ceil(p.get('year_fraction',1.)*z.core_years)),'persistence':z.core_active_quarters.ge(np.ceil(p.get('quarter_fraction',.75)*4*z.core_years)),'current_volume':z.recent_papers.ge(p.get('current_volume',250)),'current_share':z.share_growth_ratio.ge(p.get('current_share',.8))})
     out={'scope':scope,'volume':z.recent_papers.ge(p.get('volume',100)),'baseline':z.baseline_annual_mean_papers.ge(p.get('baseline',50)),'multiyear':z.multiyear_share_ratio.ge(p.get('multiyear',1.25)),'recent_growth':z.share_growth_ratio.ge(p.get('recent_growth',1.15)),'quarters':z.growing_quarters.ge(p.get('quarters',3)),'trend':z.three_year_log_share_slope.gt(p.get('trend',0)),'peak':z.historical_peak_ratio.ge(p.get('peak',1.05)),'lower95':z.share_ratio_lower95.gt(p.get('lower95',1.05)),'qvalue':z.growth_count_qvalue.lt(p.get('qvalue',.05))}

@@ -1,6 +1,6 @@
 {
-  "passed": 18,
-  "total": 18,
+  "passed": 19,
+  "total": 19,
   "checks": [
     {
       "check": "500_unique_topics",
@@ -35,7 +35,7 @@
       "passed": true
     },
     {
-      "check": "all_selected_new_emerging_preserve_filter_direction",
+      "check": "emerging_robust_requires_all_full_filter_gates",
       "passed": true
     },
     {
@@ -60,6 +60,10 @@
     },
     {
       "check": "transfer_unique_complete_and_finite",
+      "passed": true
+    },
+    {
+      "check": "similarity_filter_never_certifies_semantics",
       "passed": true
     },
     {

@@ -46,6 +46,24 @@ def test_patent_source_cannot_enter(inputs):
  tax,q,c=inputs;q['source']='paper';q.loc[0,'source']='patent'
  with pytest.raises(ValueError,match='Literature only'):score(tax,q,c)
 
+def test_one_missing_topic_quarter_is_not_a_measured_zero(inputs):
+ tax,q,c=inputs
+ q=q[~(q.category_id.eq('A')&q.period.eq('2024Q1'))]
+ with pytest.raises(ValueError,match='Incomplete topic-quarter'):score(tax,q,c)
+
+@pytest.mark.parametrize('mode',['missing_row','missing_value','infinity'])
+def test_incomplete_context_is_rejected(inputs,mode):
+ tax,q,c=inputs
+ c=c.astype(float)
+ if mode=='missing_row':c=c.drop('A')
+ else:c.loc['A','recent_institutions']=float('nan') if mode=='missing_value' else float('inf')
+ with pytest.raises(ValueError,match='[Cc]ontext'):score(tax,q,c)
+
+def test_unknown_hotspot_family_is_not_treated_as_emerging(inputs):
+ from energy_hotspots.scoring import gates
+ z,_,_=score(*inputs)
+ with pytest.raises(ValueError,match='family'):gates(z,'typo')
+
 def test_sample_activity_thresholds_do_not_change_counts_or_growth(inputs):
  tax,q,c=inputs
  q=q.copy();q['papers']=q.papers//10

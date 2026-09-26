@@ -1,6 +1,6 @@
 {
-  "version": "nmf500-sample-v1",
-  "paper_labels": "fixed H model.transform on all splits; same transform_max_iter=200, tol=1e-4; no training W used",
+  "version": "nmf500-sample-v0.2.1",
+  "paper_labels": "fixed-H-l2-contribution-v2",
   "normalization": "source-specific observed sample denominators; yearly shares; no extrapolated full-corpus counts",
   "windows": {
     "core": [
@@ -49,5 +49,7 @@
     "count-only screening intervals do not model serial dependence",
     "shared trained model makes retrospective trends descriptive"
   ],
-  "semantic_review": "new NMF IDs have no inherited 750-topic review approvals"
+  "semantic_review": "new NMF IDs have no inherited 750-topic review approvals",
+  "transfer_review": "All automatic links require semantic review; similarity_filter_passed is not calibrated accuracy",
+  "robustness": "All numerical gates must pass all five filters; margin >= .05 is an uncalibrated sensitivity setting, and quarter quotas are capped at 2000"
 }
