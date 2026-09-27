@@ -38,16 +38,16 @@ def validate(check_manifest=True):
         assert not re.search(r'\bsk-(?:proj-)?[A-Za-z0-9_-]{24,}',s),rel
         assert '/pyg'+'-vepfs/' not in s,rel
         if p.suffix=='.py':ast.parse(s)
-    snap=ROOT/'assets/snapshot_20260925/hotspots/results'
-    with (snap/'category_catalog.csv').open(encoding='utf-8-sig') as h:topics=list(csv.DictReader(h))
-    with (snap/'potential_unified_metrics.csv').open(encoding='utf-8-sig') as h:units=list(csv.DictReader(h))
-    assert len(topics)==750 and len({x['category_id'] for x in topics})==750
-    assert len(units)==4
+    snap=ROOT/'assets/full_nmf500'
+    with (snap/'topic_catalog.csv').open(encoding='utf-8-sig') as h:topics=list(csv.DictReader(h))
+    assert len(topics)==500 and {x['category_id'] for x in topics}=={f'F{i:04d}' for i in range(1,501)}
+    from check_current_release import validate as validate_current
+    validate_current(ROOT,require_tracked=False)
     manifest_file=ROOT/'provenance/FILE_MANIFEST.json'
     if check_manifest:
         expected={x['file']:x['sha256'] for x in json.loads(manifest_file.read_text())['files']}
         actual={p.relative_to(ROOT).as_posix():digest(p) for p in files if p!=manifest_file}
         assert actual==expected,'Release manifest mismatch; rebuild after edits'
-    return dict(files=len(files),bytes=sum(p.stat().st_size for p in files),topics=750,potential_units=4,checks_passed=True)
+    return dict(files=len(files),bytes=sum(p.stat().st_size for p in files),topics=500,checks_passed=True)
 
 if __name__=='__main__':print(json.dumps(validate(),ensure_ascii=False,indent=2))

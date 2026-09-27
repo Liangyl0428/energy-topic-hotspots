@@ -214,7 +214,7 @@ def run(source,inp,out,draws=1500):
         'input_sha256':{p.name:sha(p) for p in inp.glob('*.csv')}}
     (out/'PROTOCOL.json').write_text(json.dumps(protocol,ensure_ascii=False,indent=2)+'\n')
     (out/'REPORT.md').write_text('# 全量主题消融与灵敏度实验\n\n'+json.dumps(protocol,ensure_ascii=False,indent=2)+
-        '\n\n本次重新读取全部分类记录，使用全量数量门槛；不复用样本版实验结果或人工审核。'
+        '\n\n本次重新读取全部分类记录，使用全量数量门槛；主题范围和语义需独立审核。'
         '核心／新兴分析包括评分、门槛、权重、时间窗口和文本质量／贡献差距过滤。跨来源关联包括来源消融、余弦／间隔网格、共同日期窗口和政策文档留一。'
         '潜在关联仅为待核验线索，政策族独立性与申请人多样性未取得证据，不能声称已完成这两项检验。\n')
     marker={'passed':True,'classification_summary_sha256':complete['summary_sha256'],
