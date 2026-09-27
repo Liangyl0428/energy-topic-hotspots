@@ -16,7 +16,7 @@ def replay(output, experiments=False):
     out = Path(output).resolve()
     if out.exists() and any(out.iterdir()):
         raise FileExistsError(f'Output must be empty: {out}')
-    snapshot = root / 'assets/snapshot_20260925/hotspots'
+    snapshot = root / 'tests/fixtures/snapshot_20260925/hotspots'
     out.mkdir(parents=True, exist_ok=True)
     for name in ['results', 'data', 'evidence', 'review', 'reliability']:
         shutil.copytree(snapshot/name, out/name, dirs_exist_ok=True)

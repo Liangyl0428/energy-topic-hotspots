@@ -16,7 +16,7 @@
     "paper_margin_005_quarter_counts.csv": "2f2e58ac4cc472f3b5b10e2e6faa390777431e82024898de1c1ade5b8f612291",
     "PROTOCOL.json": "2c32b1b2b808b1694b32335204d4ef4bd934e549732d6a093c1ec7e2ce2b6349",
     "paper_margin_005_context.csv": "a5bb7c9cacd5e72bb072d7b977e45e9bda7483b5602e159b269adca5976dad1e",
-    "REPORT.md": "3da66367695d53f7226ad28bb25b2aa07562a329a65a9000d147fa7746c6cdbc",
+    "REPORT.md": "19ccbed90204f4096d0a233c4ab51b6ecef15cda055477e6d3ad1326e23e1fa0",
     "paper_margin_0025_quarter_counts.csv": "b7cd7bd0168497d0126893ac303004bcedcf48cd48a7d5fd9a98dd96ae19f2dc",
     "rank_intervals.csv": "7f48cf9054869982e57104e3eca8f09d165578ac04741182394e34ffe53c70c9",
     "policy_document_loo.csv": "3137653e37070a25b992549d202408d66775ea81f9843e1ec41f1c443045ada4",
@@ -24,5 +24,6 @@
     "weight_summary.csv": "b3e41115d278d6ae2d2a17265a9f12f8b6b4b19e3e7a19e70cef20c787309bdb"
   },
   "documentation_normalized": true,
-  "source_complete_sha256": "c261de455c905a918b51d4b7163d721ece59af06e3fb115f31154bcd5cc7917b"
+  "source_complete_sha256": "c261de455c905a918b51d4b7163d721ece59af06e3fb115f31154bcd5cc7917b",
+  "readable_report_refreshed": true
 }

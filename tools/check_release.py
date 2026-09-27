@@ -1,4 +1,4 @@
-"""Validate the portable 750-topic release and checksummed allowlisted files."""
+"""Validate current results, compatibility fixtures and release checksums."""
 from pathlib import Path
 import ast
 import csv
@@ -9,13 +9,13 @@ import re
 ROOT=Path(__file__).resolve().parents[1]
 EXCLUDED={'.git','.venv','work','outputs','data','models','dist','build','__pycache__','.pytest_cache','.ruff_cache'}
 BINARY={
- 'assets/snapshot_20260925/hotspots/evidence/potential_unified_candidates.parquet',
- 'assets/snapshot_20260925/hotspots/data/patent_metadata.parquet',
- 'assets/snapshot_20260925/hotspots/data/potential_unified_global_dedup.parquet',
- 'assets/snapshot_20260925/hotspots/750类核心新兴潜在热点分析.xlsx',
- 'assets/snapshot_20260925/hotspots/750类热点消融实验与灵敏度分析.xlsx',
- 'assets/nmf500/500主题核心新兴潜在热点.xlsx',
- 'assets/nmf500/500主题热点审阅结果.xlsx',
+ 'tests/fixtures/snapshot_20260925/hotspots/evidence/potential_unified_candidates.parquet',
+ 'tests/fixtures/snapshot_20260925/hotspots/data/patent_metadata.parquet',
+ 'tests/fixtures/snapshot_20260925/hotspots/data/potential_unified_global_dedup.parquet',
+ 'tests/fixtures/snapshot_20260925/hotspots/750类核心新兴潜在热点分析.xlsx',
+ 'tests/fixtures/snapshot_20260925/hotspots/750类热点消融实验与灵敏度分析.xlsx',
+ 'tests/fixtures/nmf500/500主题核心新兴潜在热点.xlsx',
+ 'tests/fixtures/nmf500/500主题热点审阅结果.xlsx',
 }
 
 def publishable_files():
@@ -32,7 +32,7 @@ def validate(check_manifest=True):
         rel=p.relative_to(ROOT).as_posix()
         assert not p.is_symlink(),rel
         assert p.stat().st_size<10*1024**2,rel
-        if rel in BINARY or (rel.startswith('assets/snapshot_20260925/hotspots/figures/') and p.suffix in {'.png','.pdf'}):continue
+        if rel in BINARY or (rel.startswith('tests/fixtures/snapshot_20260925/hotspots/figures/') and p.suffix in {'.png','.pdf'}):continue
         assert p.suffix in {'.py','.csv','.json','.md','.toml','.txt','.in','.yml'} or p.name in {'.gitignore','.gitattributes'},rel
         s=p.read_text()
         assert not re.search(r'\bsk-(?:proj-)?[A-Za-z0-9_-]{24,}',s),rel

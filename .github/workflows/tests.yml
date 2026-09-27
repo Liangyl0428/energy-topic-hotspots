@@ -1,4 +1,4 @@
-name: Offline multiyear 750-topic checks
+name: Full topic and compatibility regression checks
 on: [push, pull_request]
 permissions:
   contents: read
@@ -32,5 +32,5 @@ jobs:
           python-version: ${{ matrix.python }}
       - run: python -m pip install -e '.[dev]' tabulate ${{ matrix.dependencies }}
       - run: python -m pytest -q
-      - run: energy-hotspots replay --experiments --output work/ci750
+      - run: energy-hotspots replay --experiments --output work/ci-compatibility
       - run: python tools/check_release.py

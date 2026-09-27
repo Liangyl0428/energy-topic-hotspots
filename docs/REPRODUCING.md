@@ -13,3 +13,12 @@
     python tools/check_current_release.py
 
 紧凑结果在assets/full_nmf500；逐条分类及元数据数据库不随Git分发。
+
+## 仅重建报告和目录说明
+
+无需重跑模型即可执行：
+
+    python pipelines/full_nmf/report.py --input assets/full_nmf500/experiments
+    python tools/project_structure.py
+
+报告直接汇总已有 CSV/JSON；若修改了发布文件，提交前必须同步更新成果指纹与核心文件清单。

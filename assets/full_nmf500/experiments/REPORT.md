@@ -1,48 +1,84 @@
-# 全量主题消融与灵敏度实验
+# 热点识别：消融与灵敏度实验报告
 
-{
-  "full_population_records": 5119004,
-  "classification_summary_sha256": "67d7d140720a99a87ae46fcf171e34515c1629ae4a402aa116dc30b1e4683568",
-  "topics": 500,
-  "seed": 20260926,
-  "draws_per_family": 1500,
-  "families": [
-    "core",
-    "emerging",
-    "potential_association"
-  ],
-  "scenarios": 113,
-  "full_count_thresholds": true,
-  "baseline_replay_passed": true,
-  "sample_rows_or_quotas_used": false,
-  "data_filters_recompute_institutions_citations_and_denominators": true,
-  "semantic_approvals_inherited": false,
-  "potential_association_gates": {
-    "papers": 100,
-    "patents": 25,
-    "policies": 2,
-    "relative": 1.25
-  },
-  "potential_gates_calibrated": false,
-  "limits": [
-    "Descriptive fixed-model sensitivity; not refitting NMF or an independent temporal validation.",
-    "Intervals are perturbation ranges, not statistical confidence intervals. No semantic accuracy measured.",
-    "Potential associations are exploratory numeric leads, not verified same-task policy support or applicant diversity.",
-    "No independent policy-family annotations for the new taxonomy; document LOO is not family LOO.",
-    "Time-window tests hold the 2023-2025 citation cohort fixed; data-filter tests recompute that cohort.",
-    "TRL/CRL evidence remains bounded to reviewed objects; full classification does not create maturity evidence."
-  ],
-  "input_sha256": {
-    "core_components.csv": "36a65ae1b0562ca4269faf50f865a548503f6fc958795debdce1dba15d87846b",
-    "cross_source_signals.csv": "381554445aad30a6f530155729716051dbf1588d73cc233d595e56c7c669109e",
-    "quarter_counts.csv": "05ba1cd9fd5c52d0957485c742b927533a4c089efc8dea5bcfe6ac9701dc9fd2",
-    "transfer_source_summary.csv": "14e31af7f1b802fb97a1a1d5b0896c8dd6f7e2f77a1675f372221fd0b85d6eb3",
-    "coverage.csv": "232ad8e55e2fbf329455490291c629a8521fdd6110d1cf18e1f27194be519166",
-    "institution_citation_context.csv": "a45f21aebbc6ddf41b4c4d3638a682339ee708839bcd5dfcf13dbfdac97b8b53",
-    "topic_catalog.csv": "9e863bf16277d30ea67f06bfe792eb08fe5477d9581a62f7981889f1b9d97029",
-    "emerging_components.csv": "7dafafe2e5d522eb5e8cc36165e54ff7a404b5d538ef42fc02a5ac9e932d2d5d",
-    "hotspot_metrics.csv": "32ba11475142a7a0c48ecd41352d6627edbc6b5ceeebf83d0f344498e77fdce7"
-  }
-}
+## 结论
 
-本次重新读取全部分类记录，使用全量数量门槛；主题范围和语义需独立审核。核心／新兴分析包括评分、门槛、权重、时间窗口和文本质量／贡献差距过滤。跨来源关联包括来源消融、余弦／间隔网格、共同日期窗口和政策文档留一。潜在关联仅为待核验线索，政策族独立性与申请人多样性未取得证据，不能声称已完成这两项检验。
+小幅调整权重时排名总体稳定，但提高文本质量和分类差距门槛会明显改变候选名单。因此，权重稳定不等于分类可靠，更不等于候选已经确认为热点。跨来源关联尤其需要人工核验。
+
+| 分析对象 | 基准数值候选 | 已通过语义审核 |
+| --- | --- | --- |
+| 核心热点 | 287 | 0 |
+| 新兴热点 | 119 | 0 |
+| 跨来源潜在关联 | 3 | 0 |
+
+## 范围与方法
+
+分类底座为 5,119,004 条冻结记录、500 个主题。本次保存 113 个确定性情景，每类另有 1,500 次随机权重扰动，随机种子 20260926。使用完整分类结果，不重新训练 NMF，也不是独立时间外验证。有效日期和统计窗口会限制进入各项指标的论文数量。
+
+## 权重扰动：排名是否稳定
+
+权重乘以 0.8–1.2 的随机系数后重新归一化。排名相关系数（Spearman）越接近 1，整体排序越一致；前 20 名重合率衡量排名池前列是否稳定，不是已确认候选的比例。
+
+| 对象 | 最低排名相关 | 中位排名相关 | 最低前20重合率 | 中位前20重合率 |
+| --- | --- | --- | --- | --- |
+| 核心热点 | 0.996303 | 0.999596 | 90% | 100% |
+| 新兴热点 | 0.999139 | 0.999886 | 95% | 100% |
+| 跨来源潜在关联 | 0.992860 | 0.999389 | 85% | 95% |
+
+[逐主题排名范围](rank_intervals.csv) 的分位数表示参数扰动范围，不是统计置信区间。
+
+## 消融及门槛变化：候选数如何变化
+
+| 对象 | 实验类型 | 情景数 | 候选数范围 |
+| --- | --- | --- | --- |
+| 核心热点 | 基准 | 1 | 287–287 |
+| 核心热点 | 文本质量/分类差距过滤 | 5 | 114–287 |
+| 核心热点 | 取消准入门槛 | 5 | 287–379 |
+| 核心热点 | 删除评分分量 | 5 | 287–287 |
+| 核心热点 | 联合调整门槛 | 2 | 261–312 |
+| 核心热点 | 单项调整门槛 | 10 | 261–312 |
+| 核心热点 | 时间窗口 | 2 | 267–320 |
+| 新兴热点 | 基准 | 1 | 119–119 |
+| 新兴热点 | 文本质量/分类差距过滤 | 5 | 116–119 |
+| 新兴热点 | 取消准入门槛 | 9 | 119–128 |
+| 新兴热点 | 删除评分分量 | 5 | 119–119 |
+| 新兴热点 | 联合调整门槛 | 2 | 119–119 |
+| 新兴热点 | 单项调整门槛 | 18 | 107–126 |
+| 新兴热点 | 时间窗口 | 5 | 115–120 |
+| 跨来源潜在关联 | 共同日期窗口 | 2 | 3–3 |
+| 跨来源潜在关联 | 基准 | 1 | 3–3 |
+| 跨来源潜在关联 | 取消准入门槛 | 4 | 3–87 |
+| 跨来源潜在关联 | 删除评分分量 | 4 | 3–3 |
+| 跨来源潜在关联 | 移除来源 | 3 | 0–0 |
+| 跨来源潜在关联 | 单项调整门槛 | 8 | 2–4 |
+| 跨来源潜在关联 | 跨来源匹配过滤 | 16 | 0–3 |
+
+取消门槛后候选数增多只是条件放宽，不是算法变好。删除评分分量可能改变排序，即使候选总数不变。
+
+### 论文过滤的具体影响
+
+Jaccard 是两份候选名单的交集除以并集，越接近 1 越一致；只看候选总数可能掩盖成员替换。
+
+| 对象 | 过滤条件 | 候选数 | 保留基准候选 | 名单Jaccard | 前20重合率 |
+| --- | --- | --- | --- | --- | --- |
+| 核心热点 | 不额外过滤 | 287 | 287 | 1.000 | 100% |
+| 新兴热点 | 不额外过滤 | 119 | 119 | 1.000 | 100% |
+| 核心热点 | 排除仅标题文本 | 224 | 219 | 0.750 | 90% |
+| 新兴热点 | 排除仅标题文本 | 119 | 112 | 0.889 | 90% |
+| 核心热点 | 论文分类差距≥0.025 | 257 | 254 | 0.876 | 90% |
+| 新兴热点 | 论文分类差距≥0.025 | 119 | 114 | 0.919 | 90% |
+| 核心热点 | 论文分类差距≥0.05 | 214 | 207 | 0.704 | 70% |
+| 新兴热点 | 论文分类差距≥0.05 | 116 | 108 | 0.850 | 85% |
+| 核心热点 | 论文分类差距≥0.10 | 114 | 109 | 0.373 | 55% |
+| 新兴热点 | 论文分类差距≥0.10 | 118 | 90 | 0.612 | 75% |
+
+分类差距指第一与第二候选的贡献差距。提高门槛会排除分类边界模糊的论文，过滤后重新计算机构、引用和分母。新兴候选数量相近并不代表名单不变。
+
+## 跨来源关联：不能当作已证实的支持关系
+
+删除论文、专利或政策任一来源，会令潜在关联候选归零；这部分来自最低来源数量门槛，不能解释为独立因果证据。提高余弦或前两名相似度差距门槛也会减少候选。政策文档留一只模拟逐篇撤回，不是政策族独立性检验，也不能证明政策支持同一技术任务。
+
+## 使用边界与后续复核
+
+没有测量专家语义准确率，没有确认潜在关联的政策族独立性或申请人多样性。应优先复核低分类差距、资格随门槛改变及排名波动较大的主题。时间窗口实验固定引用队列，而质量过滤实验重新计算引用队列，不能混用解释。
+
+原始数据：[全部情景](scenarios.csv)、[随机扰动](weight_draws.csv)、[过滤后文献量](data_filter_counts.csv)、[政策逐篇撤回](policy_document_loo.csv)、[实验协议与输入指纹](PROTOCOL.json)。

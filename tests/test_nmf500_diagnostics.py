@@ -26,7 +26,7 @@ def test_tie_break_is_deterministic():
 
 
 def test_public_snapshot_replays_all_diagnostic_scenarios(tmp_path):
-    diagnostics.run(REPO/'assets/nmf500',tmp_path,draws=3)
+    diagnostics.run(REPO/'tests/fixtures/nmf500',tmp_path,draws=3)
     s=pd.read_csv(tmp_path/'scenarios.csv')
     assert len(s)==96
     weights=pd.read_csv(tmp_path/'weight_draws.csv')

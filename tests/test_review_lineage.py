@@ -22,7 +22,7 @@ def test_old_approvals_cannot_survive_changed_evidence(tmp_path):
 def test_released_review_is_bound_to_current_snapshot():
     import json
     decision = json.loads((ROOT / 'pipelines/nmf500/review_decisions_v021.json').read_text())
-    review.require_current_review(decision, ROOT / 'assets/nmf500')
+    review.require_current_review(decision, ROOT / 'tests/fixtures/nmf500')
 
 
 def test_policy_review_cannot_survive_changes_outside_displayed_excerpt():
@@ -38,7 +38,7 @@ def test_policy_review_cannot_survive_changes_outside_displayed_excerpt():
 
 def test_released_robustness_uses_every_filter_without_certifying_semantics():
     import pandas as pd
-    snapshot = ROOT / 'assets/nmf500'
+    snapshot = ROOT / 'tests/fixtures/nmf500'
     metrics = pd.read_csv(snapshot/'reviewed_hotspot_metrics.csv')
     for family in ['core', 'emerging']:
         columns = [c for c in metrics if c.endswith(f'_{family}_candidate')]

@@ -1,7 +1,7 @@
 """Frozen NMF500 diagnostics; no threshold tuning or automatic semantic approvals.
 
 Replay from the public snapshot: python pipelines/nmf500/experiments.py
---input assets/nmf500 --output /tmp/hotspot-experiments
+--input tests/fixtures/nmf500 --output /tmp/hotspot-experiments
 """
 from __future__ import annotations
 
@@ -218,7 +218,7 @@ def run(inp, output, draws=1500, seed=20260926):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--input',type=Path,default=REPO/'assets/nmf500')
+    parser.add_argument('--input',type=Path,default=REPO/'tests/fixtures/nmf500')
     parser.add_argument('--output',type=Path,default=REPO/'outputs/nmf500_v021/experiments')
     parser.add_argument('--draws',type=int,default=1500)
     args = parser.parse_args()

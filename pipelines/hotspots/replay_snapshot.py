@@ -3,7 +3,7 @@ from common import *
 import pandas as pd,numpy as np,subprocess
 from multiyear_build import build
 from potential_unified_metrics import load_records,policies,with_may
-reference=REPOSITORY/'assets/snapshot_20260925/hotspots'
+reference=REPOSITORY/'tests/fixtures/snapshot_20260925/hotspots'
 checks=[]
 
 def framecheck(name,a,b):

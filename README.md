@@ -25,3 +25,7 @@
 [方法与公式](docs/METHOD.md) · [字段说明](docs/DATA_SCHEMA.md) · [复现运行](docs/REPRODUCING.md) · [核心文件清单](docs/CORE_FILES.md)。
 
 完整重算需要工作区的逐条分类及论文元数据；Git提供核心源码和紧凑结果。分类总量与具体热点时间窗口的计数分开解释。
+
+## 目录导航
+
+[完整项目结构及每个文件用途](docs/PROJECT_STRUCTURE.md)。当前成果在 `assets/full_nmf500/`；`tests/fixtures/` 只用于回归测试。
