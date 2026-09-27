@@ -1,0 +1,26 @@
+{
+  "passed": true,
+  "classification_summary_sha256": "67d7d140720a99a87ae46fcf171e34515c1629ae4a402aa116dc30b1e4683568",
+  "files": {
+    "scenarios.csv": "dbd5d124c6134e0fbd5a9de9767f5e6a15dfaab3eb1c139e7d3f93c7132b35c0",
+    "paper_margin_010_quarter_counts.csv": "b6cfd160632f9dd249f62ea356fff83cb588fbf191b613e5700b76936a524b6d",
+    "weight_draws.csv": "c0f7bd5dfb6b4a4686f7e2642aeeb5e744509562717d894de279760ece7ecab2",
+    "paper_margin_0025_context.csv": "f02979d1e981ce47d0488dc19bdf5f4ab68f471b0096ab08d9c9f763f8eea3dc",
+    "exclude_title_only_context.csv": "3f522b764913c0c62d2d814685b1857a2dcc4b2a2492ad75ab63f849263b2138",
+    "paper_margin_010_context.csv": "52ae87160e48f6401f5d151e9d8164c17b4df1513ea1cde4941c92b4e724a47b",
+    "potential_association_baseline.csv": "dcf3316ea3a5531b8320224c3e03aaed950473310da29cb16e7e35ccc41df9a4",
+    "baseline_context.csv": "65c131073c15102cb12da251eacb57c08f958e7eb745d2ba9975260adab1563d",
+    "scenario_memberships.csv": "212919e7f5eff7042cfa589d0bec4cdb1091d2439c1f96158c3f4613d4c70000",
+    "baseline_quarter_counts.csv": "05ba1cd9fd5c52d0957485c742b927533a4c089efc8dea5bcfe6ac9701dc9fd2",
+    "data_filter_counts.csv": "5feb96f9a9da27e925da58179a3a86c2bad40cd1eb85075a60f0fae4d59d182b",
+    "paper_margin_005_quarter_counts.csv": "2f2e58ac4cc472f3b5b10e2e6faa390777431e82024898de1c1ade5b8f612291",
+    "PROTOCOL.json": "2c32b1b2b808b1694b32335204d4ef4bd934e549732d6a093c1ec7e2ce2b6349",
+    "paper_margin_005_context.csv": "a5bb7c9cacd5e72bb072d7b977e45e9bda7483b5602e159b269adca5976dad1e",
+    "REPORT.md": "28ca104ca887e80fee9beb8f79e9d310518ebef4af3b807acf52031313370a80",
+    "paper_margin_0025_quarter_counts.csv": "b7cd7bd0168497d0126893ac303004bcedcf48cd48a7d5fd9a98dd96ae19f2dc",
+    "rank_intervals.csv": "7f48cf9054869982e57104e3eca8f09d165578ac04741182394e34ffe53c70c9",
+    "policy_document_loo.csv": "3137653e37070a25b992549d202408d66775ea81f9843e1ec41f1c443045ada4",
+    "exclude_title_only_quarter_counts.csv": "f7c77dda44748c98e4e3c299958f3065be942763d616e685feff98c39b7a5f34",
+    "weight_summary.csv": "b3e41115d278d6ae2d2a17265a9f12f8b6b4b19e3e7a19e70cef20c787309bdb"
+  }
+}

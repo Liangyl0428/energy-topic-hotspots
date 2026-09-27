@@ -1,0 +1,12 @@
+{
+  "classification_input_records": 5119004,
+  "papers_used_for_hotspot_windows": 4740374,
+  "core_numeric_candidates": 287,
+  "emerging_numeric_candidates": 119,
+  "cutoff": "2026-06-30",
+  "classification_summary_sha256": "67d7d140720a99a87ae46fcf171e34515c1629ae4a402aa116dc30b1e4683568",
+  "full_count_thresholds": true,
+  "semantic_approvals_inherited": false,
+  "potential_hotspots_verified": false,
+  "training_used_future_years_relative_to_historical_windows": true
+}

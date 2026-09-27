@@ -1,0 +1,6 @@
+scenario,papers,quarter_papers
+baseline,4740374,1549640
+exclude_title_only,2931367,996233
+paper_margin_0025,3653121,1184768
+paper_margin_005,2838801,909931
+paper_margin_010,1773304,550697

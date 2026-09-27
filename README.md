@@ -1,5 +1,11 @@
 # Energy Topic Hotspots · 能源热点智能识别
 
+全量冻结快照已完成：4,831,088篇论文、281,295条专利、6,621条政策，共5,119,004条。查看[全量结果报告](assets/full_nmf500/REPORT.md)、[覆盖与校验记录](assets/full_nmf500/)。主题编号F0001–F0500；下方v0.2.1与750类为保留的历史结果，不能混用。
+
+本次交付版本为重新定义的 Git `v0.2.0`：全量 NMF500、全量专利／政策候选匹配、热点与有界 TRL/CRL 重评，以及消融／灵敏度实验。主题效果比较见[结果摘要](assets/full_nmf500/topic_evaluation/RESULTS.md)和[评测口径](docs/TOPIC_EVALUATION.md)。旧 `v0.2.0`/`v0.2.1` 标签已按要求移除，历史材料保留用于比较；不要用下方样本版链接作为本次全量结果入口。
+
+## 保留的历史样本与750类基线说明
+
 `v0.2.1` 已完成[严格审查与全样本重算](docs/V0.2.1_AUDIT.md)。
 [当前CSV、Excel和实验](assets/nmf500/)使用修正后的NMF贡献标签，保留6个核心条件跟踪、
 2个新兴条件跟踪及3个潜在应用线索；这些均不是已确认的稳健技术热点。
@@ -82,3 +88,11 @@ python tools/check_release.py
 
 仓库保留固定750主题历史目录，并提供NMF500样本版。二者ID、样本和数值门槛不能混用。
 附带数据足以完成约定范围的离线复算，不包含完整论文或专利数据库、向量和模型文件。
+
+
+<!-- FULL_EXPERIMENTS -->
+全量消融与灵敏度实验已重新计算并通过验证。[实验报告](assets/full_nmf500/experiments/REPORT.md)。具体范围与证据边界见[实验及发布流程](docs/FULL_EXPERIMENTS.md)。
+
+
+<!-- TOPIC_EVALUATION -->
+本次全量版与历史主题版本、其他方法的[统一口径效果对比](assets/full_nmf500/topic_evaluation/REPORT.md)已完成；[评测口径及局限](docs/TOPIC_EVALUATION.md)。这是回溯聚类质量诊断，不是人工语义准确率或独立留出验证。
