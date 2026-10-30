@@ -1,0 +1,25 @@
+name: tests
+
+on: [push, pull_request]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.10", "3.11", "3.12"]
+    name: python-${{ matrix.python }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: python -m pip install -e '.[dev]'
+      - run: python -m pytest -q
+      # 计数与语料不随仓库分发，这里只校验"代码可加载 + 配置自洽"，
+      # 全量 rebuild 需要外部语料，不在 CI 中执行。
+      - run: python -c "from energy_hotspots.term_hotspots.hotspot_rules import load_rules; from energy_hotspots.term_hotspots.tech_terms import load_terms; print(len(load_terms()), 'terms;', load_rules()['version'])"

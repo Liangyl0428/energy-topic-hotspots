@@ -1,0 +1,16 @@
+技术中文官方名称,技术英文官方名称,别称/简称
+逆变器,Inverter,
+无功功率,Reactive power,
+有功功率,Active power,
+并网逆变器,Grid-connected inverter,并网系统
+协调控制,Coordinated control,
+并网,Grid integration,电网接入
+模糊控制,Fuzzy control,
+重复控制,Repetitive control,
+神经网络控制,Neural network control,
+故障穿越,Fault ride-through,FRT；故障穿越能力
+低电压穿越,Low-voltage ride-through,LVRT；低电压穿越能力
+构网型逆变器,Grid-forming inverter,GFM；构网型变流器
+跟网型逆变器,Grid-following inverter,GFL；跟网型变流器
+虚拟惯量,Virtual inertia,VI；虚拟同步惯量
+虚拟同步机,Virtual synchronous machine,VSM；虚拟同步发电机；VSG

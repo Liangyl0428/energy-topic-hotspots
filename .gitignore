@@ -1,0 +1,24 @@
+# 语料与运行产物不入库
+/.venv/
+/work/
+/data/
+/outputs/
+/dist/
+/build/
+/.env
+/.env.*
+*.egg-info/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.DS_Store
+
+# 外部语料可能是 duckdb/parquet，防止误提交
+*.sqlite*
+*.duckdb*
+*.parquet
+*.log
+
+# 本地覆盖配置
+/config/local.json

@@ -1,0 +1,52 @@
+{
+  "_note": "判定门槛。所有增长/规模指标都是『份额（文档频率）』口径或候选域内分位，唯一的绝对计数是统计下限（防止极小样本进榜）。修改后必须同步 docs/METHOD.md，二者不一致视为 bug。",
+  "_background_df_max_note": "背景词（领域本身而非热点）：近一年文档频率 ≥ 该值。取 2.5% 的依据：近一年语料约 41.8 万篇，2.5% ≈ 1.05 万篇，即『每 40 篇能源论文就有一篇提到它』已属领域通用语。实测：电池 6.77%、可再生能源 5.44%、电极 4.04%、电力系统 3.64%、一氧化碳 3.51%、储能 3.42%、锂离子电池 3.05%。",
+  "background_df_max": 0.025,
+  "_off_domain_lift_min_note": "能源语境 lift = P(锚点|该词命中) / P(锚点)。实测基准率 0.4085，lift 上限 1/base = 2.45；储能 2.42、钠离子电池 2.36、锂硫电池 2.24、光伏技术 2.21 vs 光催化剂 0.40、单晶 0.63、储氢 0.77、合金 0.84、一氧化碳 0.96。注意：词典中有 46 个词条同时是锚点（电力系统、制氢、储能…），它们 lift 恒为 2.45（自锚定），该值不携带信息，也永不会被判跨域。",
+  "off_domain_lift_min": 0.85,
+  "cross_domain_df_min": 0.004,
+  "_cross_domain_df_min_note": "『跨域泛化』要求 lift 低 且 df_3y ≥ 0.4%（三年约 4,000 篇）。只看 lift 会把材料侧能源词误判：锂金属电池(0.52%/0.39)、锂硫电池(0.49%/0.62)、锂金属负极(0.17%/0.56)——电池材料论文不写电网/发电，锚点天然覆盖不足。把 DF 门槛设在 0.4%，是因为『泛化』本身意味着被广泛使用；窄口径词的 lift 只能说明锚点覆盖不足。敏感度：DF 门槛 0.2%/0.3%/0.4%/0.6% 分别得到 cross_domain 95/71/54/33 条。",
+  "core": {
+    "_note": "核心热点 = 规模在候选域前列 + 分布稳 + 不衰退。规模用『候选域内分位』而不是硬编码篇数，避免用硬编码篇数凑出固定条数。",
+    "hits_3y_min": 150.0,
+    "_hits_3y_min_note": "三年 150 篇 ≈ 每季度 12.5 篇，低于此值时季度稳定性与斜率都不可靠。",
+    "scale_pct_min": 0.9,
+    "_scale_pct_min_note": "在候选域（非背景词、非跨域泛化词、有命中）内按近三年命中数排到前 10%。",
+    "df_recent_min": 0.0008,
+    "_df_recent_min_note": "近一年文档频率 ≥ 0.08%，约 330 篇；与 hits_3y_min 互为量级校验。",
+    "yoy_min": 0.9,
+    "_yoy_min_note": "份额同比不低于 0.90，即允许 10% 相对萎缩，但不接受明显退潮。",
+    "stability_min": 0.8,
+    "_stability_min_note": "12 个季度中至少 10 个季度的命中数 ≥ 自身季度中位数的一半。用『与自身中位数比』而非绝对阈值，使大小词条可比。"
+  },
+  "emerging": {
+    "_note": "新兴热点 = 份额在涨，且涨得比语料快。所有比率都是份额比率，语料膨胀已被约掉（用原始计数会白送约 24%/年的增长）。",
+    "hits_recent_min": 120.0,
+    "_hits_recent_min_note": "近一年至少 120 篇，避免把 5→12 的随机波动判成新兴。",
+    "yoy_min": 1.3,
+    "_yoy_min_note": "份额同比 ≥ 1.30。",
+    "vs_3y_min": 1.2,
+    "_vs_3y_min_note": "近一年份额 ≥ 近三年份额的 1.20 倍，保证是『近期加速』而非一直很高。",
+    "slope_min": 0.0,
+    "_slope_min_note": "12 个季度对数份额回归斜率 > 0，要求趋势一致而非两点跳动。"
+  },
+  "potential": {
+    "_note": "潜在热点 = 论文侧尚未成为核心/新兴，但专利或政策侧出现加速的跨源线索。类别互斥：已被判为 emerging/core 的不再重复计入。",
+    "hits_3y_min": 40.0,
+    "yoy_min": 0.9,
+    "_yoy_min_note": "论文侧不衰退即可，不要求论文自己在涨——涨得快的会先被判成 emerging。",
+    "patents_recent_min": 20.0,
+    "_patents_recent_min_note": "近两年专利 ≥ 20 件。",
+    "patent_growth_min": 1.25,
+    "_patent_growth_min_note": "近两年专利数 / 前两年专利数 ≥ 1.25（+1 平滑）。",
+    "patent_growth_vs_paper": true,
+    "_patent_growth_vs_paper_note": "要求专利增速（两年比率，年化后）不慢于论文份额年比 yoy，即真正的『产业侧先于学术侧』；否则几乎所有成熟词条都会入选（否则电池/储能/电力系统都会混进 potential）。",
+    "policies_recent_min": 10.0,
+    "_policies_recent_min_note": "政策语料只有 6,621 条，低于 10 条的计数没有判别力。",
+    "policy_growth_min": 1.2
+  },
+  "shortlist_size": 50,
+  "_shortlist_size_note": "发布配额，不是判定门槛：每类按类别内分数取前 N 条标记 in_shortlist，pass_* 与 hotspot_class 不受影响，全量合格名单仍完整保存在 terms_report.csv。设为 0 表示不限额。改这个值只影响对外展示的条数，不改变任何一个词条的判定。",
+  "use_anchor_lift": false,
+  "_use_anchor_lift_note": "是否启用锚点 lift 判定跨域词。默认 false —— 让方法只剩一个手工参数（background_df_max）；energy_lift 仍照常计算输出，作为诊断列。改为 true 会启用 config/energy_anchors.json，代价见 METHOD 限制清单（自锚定、材料侧覆盖偏差）。"
+}

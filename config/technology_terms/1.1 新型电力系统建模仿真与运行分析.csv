@@ -1,0 +1,119 @@
+技术中文官方名称,技术英文官方名称,别称/简称
+能效,Energy efficiency,
+电力系统,Power system,power grid; 电网; Electric power system
+控制系统,Control system,
+配电网,Distribution network,
+微电网,Microgrid,MG
+负荷预测,Load forecasting,
+能量管理,Energy management,
+电压稳定性,Voltage stability,
+节能,Energy saving,
+分布式发电,Distributed generation,DG
+暂态稳定性,Transient stability,
+状态估计,State estimation,
+经济调度,Economic dispatch,ED
+机组组合,Unit commitment,UC
+实时仿真,Real-time simulation,实时数字仿真；Real-time digital simulation；RTDS
+最优潮流,Optimal power flow,OPF
+预测控制,Predictive control,
+强化学习,Reinforcement learning,
+电压控制,Voltage control,
+联合仿真,Co-simulation,
+能量管理系统,Energy management system,EMS
+风电功率预测,Wind power forecasting,
+供电恢复,Service restoration,Restoration
+短期负荷预测,Short-term load forecasting,STLF
+模型预测控制,Model predictive control,MPC
+电力系统稳定性,Power system stability,
+分布式能源,Distributed energy resource,DER
+检修计划,Maintenance scheduling,
+嵌入式系统,Embedded system,
+动态仿真,Dynamic simulation,
+时间序列预测,Time series forecasting,
+特征选择,Feature selection,
+能量分析,Energy analysis,
+主动配电网,Active distribution network,
+负荷切除,Load shedding,Load-shedding control
+预测性维护,Predictive maintenance,
+负荷曲线,Load profile,
+辅助服务,Ancillary services,ancillary service
+电价预测,Electricity price forecasting,
+概率预测,Probabilistic forecasting,
+潮流计算,Power flow,Load flow
+电力系统可靠性,Power system reliability,
+极限学习机,Extreme learning machine,ELM
+统一潮流控制器,Unified power flow controller,UPFC
+迁移学习,Transfer learning,
+失效模式,Failure mode,
+相量测量装置,Phasor measurement unit,PMU
+负荷管理,Load management,
+预想事故分析,Contingency analysis,
+电力系统模型,Power system model,
+鲁棒控制,Robust control,
+小干扰稳定性,Small-signal stability,
+硬件在环,Hardware-in-the-loop,HIL；硬件在环仿真
+数据预处理,Data preprocessing,
+配电网重构,Distribution network reconfiguration,DNR；网络重构
+梯度提升,Gradient boosting,
+指数平滑,Exponential smoothing,
+Benders分解,Benders decomposition,
+自回归积分滑动平均模型,Autoregressive integrated moving average,ARIMA
+状态检修,Condition-based maintenance,
+静止无功补偿器,Static var compensator,SVC
+电力系统韧性,Power system resilience,
+家庭能源管理系统,Home energy management system,HEMS
+建筑能源管理,Building energy management,
+非侵入式负荷监测,Non-intrusive load monitoring,NILM
+自回归模型,Autoregressive model,AR
+数据驱动模型,Data-driven model,
+电磁暂态仿真,Electromagnetic transient simulation,
+不确定性量化,Uncertainty quantification,
+需求预测,Demand forecast,
+降阶模型,Reduced order model,ROM
+拉格朗日松弛,Lagrangian relaxation,
+静止同步补偿器,Static synchronous compensator,STATCOM
+一致性算法,Consensus algorithm,
+平均无故障时间,Mean time between failures,MTBF
+区间预测,Interval forecasting,
+需求侧灵活性,Demand-side flexibility,
+建筑能耗模拟,Building energy simulation,
+失效模式与影响分析,Failure mode and effects analysis,FMEA
+分层控制,Hierarchical control,
+自动电压调节器,Automatic voltage regulator,AVR
+前馈控制,Feedforward control,
+贝叶斯网络,Bayesian network,
+低压配电网,Low voltage distribution network,
+聚类分析,Clustering analysis,
+智能逆变器,Smart inverter,
+静止同步串联补偿器,Static synchronous series compensator,SSSC
+隐马尔可夫模型,Hidden Markov model,HMM
+机会约束规划,Chance-constrained programming,
+观测器设计,Observer design,
+电力系统调度,Power system scheduling,
+极点配置,Pole placement,
+有载分接开关,On-load tap changer,OLTC
+物理信息神经网络,Physics-informed neural network,PINN
+尖峰负荷,Peak load,
+输电阻塞,Transmission congestion,
+混合整数规划,Mixed-integer programming,
+二阶锥规划,Second-order cone programming,SOCP
+线性二次型调节器,Linear quadratic regulator,LQR
+安全约束最优潮流,Security-constrained optimal power flow,SCOPF
+串级控制,Cascade control,
+内模控制,Internal model control,
+柔性交流输电系统,Flexible AC transmission system,FACTS
+半正定规划,Semidefinite programming,SDP
+晶闸管控制电抗器,Thyristor controlled reactor,TCR
+可靠性框图,Reliability block diagram,
+风电机组状态监测,Wind turbine condition monitoring,
+N-1安全准则,N-1 security criterion,
+灰箱模型,Grey box model,
+步进式电压调节器,Step voltage regulator,SVR；有载调压器
+列生成,Column generation,
+先进配电管理系统,Advanced distribution management system,ADMS
+卷积特征提取,Convolutional feature extraction,
+自愈电网,Self-healing grid,
+黑启动,Black start,黑启动能力；Black-start capability
+机组恢复,Unit restoration,机组启动恢复
+状态空间模型,State space model,状态空间法
+电力系统仿真,Power system simulation,电力系统动态模拟

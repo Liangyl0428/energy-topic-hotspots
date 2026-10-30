@@ -1,0 +1,52 @@
+技术中文官方名称,技术英文官方名称,别称/简称
+智能电网,Smart grid,SG
+输电线路,Transmission line,
+电力线通信,Power line communication,PLC
+异常检测,Anomaly detection,
+传感器,Sensor,
+信号处理,Signal processing,
+串扰,Crosstalk,
+网络安全,Cybersecurity,
+信息物理系统,Cyber-physical system,CPS
+参数估计,Parameter estimation,
+功率控制,Power control,
+入侵检测,Intrusion detection,
+网络攻击,Cyber attack,
+电流互感器,Current transformer,CT
+电压互感器,Voltage transformer,VT; potential transformer
+数字信号处理,Digital signal processing,DSP
+光纤,Optical fiber,
+多智能体系统,Multi-agent system,MAS
+配电,Power distribution,
+联邦学习,Federated learning,
+云计算,Cloud computing,
+数字孪生,Digital twin,
+丢包,Packet loss,
+边缘计算,Edge computing,
+视在功率,Apparent power,
+分布式控制,Distributed control,
+虚假数据注入攻击,False data injection attack,FDIA
+数字信号处理器,Digital signal processor,
+物联网,Internet of Things,IoT
+杂散电容,Stray capacitance,
+现场可编程门阵列,Field programmable gate array,FPGA
+数据采集与监视控制系统,Supervisory control and data acquisition,SCADA
+采样值,Sampled value,SV
+GOOSE报文,Generic object oriented substation event,GOOSE
+可编程逻辑控制器,Programmable logic controller,PLC
+无人机系统,Unmanned aircraft system,UAS
+高级计量架构,Advanced metering infrastructure,AMI；智能计量设施
+电力调节器,Power conditioner,PCS
+通信时延,Communication delay,
+区块链,Blockchain,
+光纤传感器,Fiber optic sensor,FOS；光纤传感
+大数据,Big data,电力大数据
+集成学习,Ensemble learning,
+电子式电流互感器,Electronic current transformer,ECT
+光学电流互感器,Optical current transformer,OCT
+广域测量系统,Wide area measurement system,WAMS
+数字化变电站,Digital substation,智能变电站
+合并单元,Merging unit,MU
+远程终端单元,Remote terminal unit,RTU
+电力系统自动化,Power system automation,
+IEC 61850标准,IEC 61850,变电站通信标准

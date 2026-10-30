@@ -1,0 +1,140 @@
+技术中文官方名称,技术英文官方名称,别称/简称
+变流器,Converter,功率变换器；电力电子变换器；Power converter
+负荷频率控制,Load frequency control,LFC
+击穿电压,Breakdown voltage,
+直流-直流变换器,DC-DC converter,DC/DC变换器
+频率调节,Frequency regulation,
+二极管,Diode,
+升压变换器,Boost converter,step-up converter
+电机转子,Rotor,转子（电机）
+电感器,Inductor,
+纹波,Ripple,
+感应电动机,Induction motor,异步电动机
+开关频率,Switching frequency,
+电容器,Capacitor,
+晶体管,Transistor,
+PID控制器,PID controller,
+电动机,Electric motor,
+多电平逆变器,Multilevel inverter,MLI；多电平逆变器拓扑
+定子,Stator,
+频率稳定性,Frequency stability,
+同步电动机,Synchronous motor,
+电磁干扰,Electromagnetic interference,EMI
+降压变换器,Buck converter,step-down converter
+谐振变换器,Resonant converter,
+碳化硅,Silicon carbide,SiC
+系统惯量,Inertia,惯量
+永磁体,Permanent magnet,
+等效电路模型,Equivalent circuit model,ECM
+信号完整性,Signal integrity,
+自动发电控制,Automatic generation control,AGC
+占空比,Duty cycle,工作循环
+电流控制,Current control,
+开关磁阻电动机,Switched reluctance motor,SRM
+电磁兼容,Electromagnetic compatibility,EMC; 电磁兼容性
+PI控制器,PI controller,比例积分控制器；比例积分控制
+电力电子技术,Power electronics,
+功率模块,Power module,
+滤波器设计,Filter design,
+滑模控制,Sliding mode control,SMC
+同步发电机,Synchronous generator,
+EMI滤波器,EMI filter,
+电机驱动,Motor drive,电机驱动系统；驱动系统
+开关损耗,Switching loss,
+短路,Short circuit,
+肖特基二极管,Schottky diode,
+最优控制,Optimal control,
+屏蔽效能,Shielding effectiveness,
+暂态响应,Transient response,
+矩阵变换器,Matrix converter,
+软开关,Soft switching,
+升降压变换器,Buck-boost converter,
+功率半导体器件,Power semiconductor device,电力半导体器件
+降噪,Noise reduction,
+辐射发射,Radiated emission,
+导通损耗,Conduction loss,
+永磁电动机,Permanent magnet motor,永磁式电动机
+反激变换器,Flyback converter,
+交直流变换器,AC-DC converter,AC-DC变换器；整流器（实现）
+电压源逆变器,Voltage source inverter,VSI
+电压调节器,Voltage regulator,电压调整器
+直接转矩控制,Direct torque control,DTC
+无刷直流电动机,Brushless DC motor,BLDC
+磁芯,Magnetic core,
+二次控制,Secondary control,
+功率晶体管,Power transistor,
+传导发射,Conducted emission,
+脉宽调制,Pulse-width modulation,PWM
+自适应控制,Adaptive control,
+电磁干扰抑制,EMI suppression,
+铁损,Core loss,
+全桥变换器,Full-bridge converter,
+共模噪声,Common-mode noise,
+正激变换器,Forward converter,
+涡流损耗,Eddy current loss,
+磁性材料,Magnetic material,
+闭环控制,Closed-loop control,
+三相逆变器,Three-phase inverter,
+级联多电平逆变器,Cascaded multilevel inverter,
+Ćuk变换器,Ćuk converter,
+隔离型直流-直流变换器,Isolated DC-DC converter,
+开关暂态,Switching transient,
+混响室,Reverberation chamber,
+一次调频,Primary frequency control,
+氮化镓功率器件,GaN power device,
+高频变压器,High-frequency transformer,
+直线电动机,Linear motor,
+零电流开关,Zero current switching,ZCS
+绝缘栅双极型晶体管,Insulated-gate bipolar transistor,IGBT
+二次调频,Secondary frequency control,
+金属氧化物半导体场效应晶体管,Metal-oxide-semiconductor field-effect transistor,MOSFET
+半桥变换器,Half-bridge converter,
+Zeta变换器,Zeta converter,
+碳化硅功率模块,SiC power module,
+容错控制,Fault-tolerant control,
+开关电容,Switched capacitor,
+电磁屏蔽,Electromagnetic shielding,
+分散控制,Decentralized control,
+磁致伸缩,Magnetostriction,
+非线性控制,Nonlinear control,
+高电子迁移率晶体管,High electron mobility transistor,HEMT
+磁场定向控制,Field-oriented control,FOC; vector control
+固态变压器,Solid-state transformer,SST；PET；智能变压器；电力电子变压器
+微波暗室,Anechoic chamber,
+交错并联变换器,Interleaved converter,
+推挽变换器,Push-pull converter,
+宽禁带半导体,Wide-bandgap semiconductor,WBG；第三代半导体
+变频器,Variable frequency drive,VFD
+周波变换器,Cycloconverter,
+近场扫描,Near-field scanning,
+双极型晶体管,Bipolar junction transistor,BJT; 双极结型晶体管
+双有源桥变换器,Dual active bridge,DAB
+软磁材料,Soft magnetic material,
+T型逆变器,T-type inverter,
+氮化镓,Gallium nitride,GaN
+状态反馈,State feedback,
+电流源逆变器,Current source inverter,CSI
+无差拍控制,Deadbeat control,
+等效串联电阻,Equivalent series resistance,ESR
+可靠性测试,Reliability testing,
+磁滞损耗,Hysteresis loss,
+正弦脉宽调制,Sinusoidal pulse width modulation,SPWM
+中点钳位型逆变器,Neutral-point-clamped inverter,NPC；三电平NPC逆变器
+级联H桥,Cascaded H-bridge,CHB
+双脉冲测试,Double pulse test,
+二极管整流桥,Diode bridge,
+增益调度,Gain scheduling,
+差模噪声,Differential-mode noise,
+开环控制,Open-loop control,
+直接驱动,Direct drive,
+模块化换流器,Modular converter,
+栅极驱动器,Gate driver,
+飞跨电容逆变器,Flying capacitor inverter,
+门极可关断晶闸管,Gate turn-off thyristor,GTO
+结型场效应晶体管,Junction field effect transistor,JFET
+H∞控制,H∞ control,H-infinity control；H∞鲁棒控制
+倍压器,Voltage multiplier,
+集成门极换流晶闸管,Integrated gate commutated thyristor,IGCT
+低频减载,Underfrequency load shedding,UFLS；低频减负荷
+滞环控制,Hysteresis control,滞环电流控制
+软启动器,Soft starter,

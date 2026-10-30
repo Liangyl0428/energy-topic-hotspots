@@ -1,0 +1,65 @@
+技术中文官方名称,技术英文官方名称,别称/简称
+故障检测,Fault detection,
+电能质量,Power quality,PQ
+智能电表,Smart meter,智能电能表
+断路器,Circuit breaker,CB；开关电器
+故障定位,Fault location,
+谐波畸变,Harmonic distortion,
+继电器,Relay,
+窃电,Electricity theft,窃电检测
+电压暂降,Voltage sag,
+谐波,Harmonic,
+接地,Grounding,接地设计
+有源电力滤波器,Active power filter,APF
+差动保护,Differential protection,
+无功补偿,Reactive power compensation,无功补偿装置；RPC
+电能表,Energy meter,
+电能质量扰动,Power quality disturbance,
+孤岛检测,Islanding detection,
+距离保护,Distance protection,
+总谐波畸变率,Total harmonic distortion,THD
+下垂控制,Droop control,频率下垂；电压下垂
+防雷保护,Lightning protection,
+线路保护,Line protection,
+谐波补偿,Harmonic compensation,
+避雷器,Surge arrester,
+功率因数校正,Power factor correction,PFC
+熔断器,Fuse,
+电压不平衡,Voltage unbalance,
+继电保护装置,Protective relay,protection relay
+无源滤波器,Passive filter,
+电容器组,Capacitor bank,
+电弧闪光,Arc flash,
+电力电子器件,Power electronic device,
+过电流保护,Overcurrent protection,
+电压暂升,Voltage swell,
+谐波滤波器,Harmonic filter,
+LCL滤波器,LCL filter,
+电力系统保护,Power system protection,
+变压器保护,Transformer protection,
+方向过流继电器,Directional overcurrent relay,
+电压闪变,Voltage flicker,
+过电压保护,Overvoltage protection,
+非检测区,Non-detection zone,NDZ
+重合器,Recloser,
+消弧线圈,Arc suppression coil,
+谐波谐振,Harmonic resonance,
+母线保护,Busbar protection,
+时域反射法,Time-domain reflectometry,TDR
+防孤岛保护,Anti-islanding protection,防孤岛
+单相接地故障,Single-phase earth fault,
+一次控制,Primary control,
+公共连接点,Point of common coupling,PCC
+电缆故障定位,Cable fault location,
+非技术性损失,Non-technical loss,
+电涌保护器,Surge protection device,SPD
+发电机保护,Generator protection,
+主动式孤岛检测,Active islanding detection,
+真空灭弧室,Vacuum interrupter,
+被动式孤岛检测,Passive islanding detection,
+三次控制,Tertiary control,
+故障检测与隔离,Fault detection and isolation,FDI
+电能质量调节器,Power quality conditioner,
+静态转换开关,Static transfer switch,STS
+间谐波,Interharmonics,Interharmonic
+中性点接地,Neutral grounding,中性点接地方式
