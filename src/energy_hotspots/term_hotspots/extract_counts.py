@@ -51,7 +51,7 @@ OUT = Path(os.environ.get("ENERGY_TERMS_OUT", REPO / "outputs/terms"))
 
 # ---- 论文窗口（与 METHOD.md 同步冻结）------------------------------------
 QUARTERS = [f"{y}Q{q}" for y in range(2021, 2027) for q in range(1, 5)][2:22]  # 2021Q3..2026Q2
-PATENT_YEARS = ("2021", "2022", "2023", "2024", "2025")
+PATENT_YEARS = ("2021", "2022", "2023", "2024", "2025", "2026")
 WORKERS = int(os.environ.get("ENERGY_WORKERS", "0")) or min(48, (os.cpu_count() or 8))
 
 

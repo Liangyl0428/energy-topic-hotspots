@@ -26,7 +26,7 @@ PYTHONPATH=src python -m energy_hotspots.term_hotspots report --print-list
 # 单条复核（分位在全词典上算，与批量结果一致）
 PYTHONPATH=src python -m energy_hotspots.term_hotspots find --term 固态电池
 
-# 全量重扫（并行，约 3 分钟：175 万篇论文 + 44.5 万件专利 + 6,621 条政策）—— 需外部语料
+# 全量重扫（并行，约 3 分钟：175 万篇论文 + 53.8 万件专利（2021–2026）+ 6,621 条政策）—— 需外部语料
 PYTHONPATH=src python -m energy_hotspots.term_hotspots rebuild
 
 # 测试 / 生成研究报告

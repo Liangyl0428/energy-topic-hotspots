@@ -38,7 +38,7 @@ src/energy_hotspots/term_hotspots/cli.py            find / report / rebuild
 | 语料 | 匹配文本 | 时间口径 |
 |---|---|---|
 | 论文 | `clean_title + clean_abstract`（`is_retracted = 0`） | 由 `publication_date` 现算季度（不用 `works.quarter`，实测 1.7 万行与 `publication_date` 不一致） |
-| 专利 | `title + abstract` | `publication_date` 年份 2021–2025 |
+| 专利 | `title + abstract` | `publication_date` 年份 2021–2026（2026 仅约 1–5 月完整，且收录口径与往年不同，见 §8） |
 | 政策 | `title + text` 全文 | `publication_date`，缺则 `issue_date` |
 
 ## 3. 指标
@@ -140,7 +140,7 @@ python tools/make_report.py                                      # 生成研究�
    `掺杂`（8）和 `光催化`（70.0）。`制氢`/`微电网` 与 `掺杂`/`合金` 在统计上
    同属"能源论文里到处出现"，区分它们需要语义信息。
 6. **专利与政策覆盖期不同。** 政策 6,621 条（2000–2026，其中 2013 年后 5,889 条、
-   61 条无日期），专利 2021–2025，潜在热点的跨源判断受此限制。
+   61 条无日期），专利 2021–2026，其中 2026 仅覆盖约 1–5 月、收录口径与 2021–2025 不同，**只入覆盖与逐年计数、不参与专利增速判定**；潜在热点的跨源判断仍以 2021–2025 完整年度为准。
 7. **人工复核可复现但带主观性。** 规则写在 `manual_review.json`，换一个人复核会得到
    略有差异的名单。
 8. **日期修复是期望值。** year-only 文档按季度均摊，单篇真实季度不可恢复；
