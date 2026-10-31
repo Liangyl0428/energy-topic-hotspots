@@ -34,7 +34,7 @@ PYTHONPATH=src python -m pytest tests/term_hotspots -q
 python tools/make_report.py
 ```
 
-> 测试共 38 条：`test_extract_counts.py` 的 5 条需要 `duckdb`（由 `.[dev]` 一并安装），
+> 测试共 39 条：`test_extract_counts.py` 的 6 条需要 `duckdb`（由 `.[dev]` 一并安装），
 > 若未安装可加 `--ignore=tests/term_hotspots/test_extract_counts.py` 跑其余 33 条。
 
 ## 数据位置
@@ -78,7 +78,7 @@ python tools/make_report.py
 | 路径 | 内容 |
 |---|---|
 | `src/energy_hotspots/term_hotspots/` | `tech_terms.py` 词典、`xmatcher.py` 匹配器、`extract_counts.py` 计数、`hotspot_rules.py` 判定、`cli.py` 入口 |
-| `tests/term_hotspots/` | 单元测试（38 条；`test_extract_counts.py` 的 5 条需 duckdb） |
+| `tests/term_hotspots/` | 单元测试（39 条；`test_extract_counts.py` 的 6 条需 duckdb） |
 | `tools/make_report.py` | 由算法产物 + 人工复核清单生成研究报告 |
 | `tools/finalize_report.py` | `report` 的兼容入口 |
 | `docs/METHOD.md` | 方法、门槛、产物、限制 |

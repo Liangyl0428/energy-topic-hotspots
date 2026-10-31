@@ -61,7 +61,9 @@ _AC_CS: Aho | None = None       # 缩略语自动机（大小写敏感）
 _TERMS: list = []               # pid -> TechTerm
 _ANCH: Aho | None = None
 _CON = None
-_PATENT_OWNED: set = set()
+# 公开号 -> 拥有它的文件（sorted(files) 中首次出现者）。同一专利同时出现在聚合表
+# 与 IPC 分表/_ops 分表时，只有拥有文件的那一行可以计数，其余文件一律跳过。
+_PATENT_OWNER: dict[str, str] = {}
 
 
 def build_automaton(terms):
@@ -247,6 +249,7 @@ def _init_patent(_=None):
 
 def _scan_patent_file(path):
     stat = defaultdict(float)
+    seen_here: set[str] = set()
     try:
         for chunk in pd.read_csv(path, chunksize=40_000, dtype=str, on_bad_lines="skip"):
             if not {"publication_number", "publication_date", "title"}.issubset(chunk.columns):
@@ -259,11 +262,18 @@ def _scan_patent_file(path):
                 year = (pubdate or "")[:4]
                 if year not in PATENT_YEARS:
                     continue
-                if pnumber and pnumber not in _PATENT_OWNED:
-                    continue
+                # 只有“拥有”该公开号的文件可以计数；同一文件内的重复行也只计一次。
+                # 空公开号无法去重，保留原有行为（计入），避免静默丢数据。
+                if pnumber:
+                    if _PATENT_OWNER.get(pnumber) != path:
+                        continue
+                    if pnumber in seen_here:
+                        continue
                 text = ((title or "") + " \n " + (abstract or "")) if abstract else (title or "")
                 if not text.strip():
                     continue
+                if pnumber:
+                    seen_here.add(pnumber)
                 for pid in _match_pids(text):
                     stat[(_TERMS[pid].key, year)] += 1
     except Exception as exc:  # 单文件失败不应中断全量
@@ -272,22 +282,27 @@ def _scan_patent_file(path):
 
 
 def scan_patents(term_keys=None, workers=None, dedup_by_number=True):
-    """按 publication_number 全局去重（同一专利可能同时出现在聚合表与 IPC 分表）。"""
-    global _PATENT_OWNED
+    """按 publication_number 全局去重（同一专利可能同时出现在聚合表与 IPC 分表）。
+
+    sorted(files) 中首次出现的文件拥有该公开号；同文件内重复行由 `seen_here` 再去一次。
+    这样聚合表（2021_2023 / 2024_2025）优先，IPC 分表与 *_ops 表不会重复计入。
+    """
+    global _PATENT_OWNER
     terms = _load_filtered(term_keys)
     _build_globals(terms)
 
     files = sorted(glob.glob(str(PATENT_DIR / "*.csv")))
-    owned: set = set()
+    owners: dict[str, str] = {}
     for f in files:  # 排序靠前者优先拥有（聚合表在前，字段更全）
         try:
             col = pd.read_csv(f, usecols=["publication_number"], dtype=str, on_bad_lines="skip")
         except Exception:
             continue
-        nums = col["publication_number"].fillna("")
-        owned.update(x for x in nums if x)
-    _PATENT_OWNED = owned
-    print(f"patents: {len(files)} 个文件, {len(owned):,} 个唯一公开号", file=sys.stderr, flush=True)
+        for pnumber in col["publication_number"].fillna(""):
+            if pnumber and pnumber not in owners:
+                owners[pnumber] = f
+    _PATENT_OWNER = owners
+    print(f"patents: {len(files)} 个文件, {len(owners):,} 个唯一公开号", file=sys.stderr, flush=True)
 
     counts = {t.key: defaultdict(float) for t in terms}
     t0 = time.time()

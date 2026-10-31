@@ -43,3 +43,28 @@ def test_window_quarters_shape():
     assert QUARTERS[0] == "2021Q3"
     assert QUARTERS[-1] == "2026Q2"
     assert len(QUARTERS) == 20
+
+
+def test_patent_scan_dedups_by_publication_number(tmp_path, monkeypatch):
+    """同一公开号出现两次（同文件或跨文件）只能计一次。"""
+    from energy_hotspots.term_hotspots import extract_counts as ec
+
+    terms = ec.load_terms()
+    ec._build_globals(terms)
+    term = next(t for t in terms if t.zh == "固态电池")
+    pub = "CNTEST0001A"
+    path = tmp_path / "patents.csv"
+    with path.open("w", encoding="utf-8", newline="") as fh:
+        import csv as _csv
+        w = _csv.writer(fh)
+        w.writerow(["publication_number", "publication_date", "title", "abstract"])
+        for _ in range(2):
+            w.writerow([pub, "2025-06-01", "固态电池 test", ""])
+
+    monkeypatch.setattr(ec, "_PATENT_OWNER", {pub: str(path)})
+    stat = ec._scan_patent_file(str(path))
+    assert stat[(term.key, "2025")] == 1.0
+
+    # 非拥有文件里的同一公开号必须跳过
+    monkeypatch.setattr(ec, "_PATENT_OWNER", {pub: "/some/other/file.csv"})
+    assert ec._scan_patent_file(str(path)) == {}
