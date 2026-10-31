@@ -36,6 +36,9 @@ python tools/make_report.py
 
 > 测试共 39 条：`test_extract_counts.py` 的 6 条需要 `duckdb`（由 `.[dev]` 一并安装），
 > 若未安装可加 `--ignore=tests/term_hotspots/test_extract_counts.py` 跑其余 33 条。
+>
+> `rebuild` 依赖 `multiprocessing` 的 `fork`（POSIX：Linux / macOS）；Windows 没有 fork，
+> 请在 WSL / Linux 运行。`report` / `find` 不依赖 fork，任何平台都可跑。
 
 ## 数据位置
 

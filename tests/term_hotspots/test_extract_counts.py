@@ -14,8 +14,8 @@ def test_real_date_lands_in_its_quarter():
 def test_year_only_placeholder_is_spread():
     """1 月 1 日是 year-only 占位，不是真实的 1 月 1 日。
 
-    实测 2024 年有 49,779 篇落在 2024-01-01（正常单日约 900 篇），
-    直接把它们塞进 Q1 会造成 Q1 约为其它季度 3.2 倍的假尖峰。
+    实测 2024-01-01 单日 52,276 篇（正常单日约 900 篇），
+    直接归 Q1 会把 Q1 抬到其它季度均值的 1.68 倍（均摊后 0.93 倍）。
     """
     yq = {2024: ["2024Q1", "2024Q2", "2024Q3", "2024Q4"]}
     w = _repaired_weights(dt.date(2024, 1, 1), yq)
