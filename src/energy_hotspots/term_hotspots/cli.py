@@ -38,13 +38,30 @@ def _fmt(v):
 
 
 def _out_dir():
-    from .extract_counts import OUT
-    return OUT
+    """报表输出目录。
+
+    不 import extract_counts：那个模块为了扫描语料在顶层 import duckdb/pandas，
+    而 `report` 只需要读 CSV。共享环境里这两个包不一定装得全（实测 duckdb 缺失、
+    pandas 与 numpy ABI 不匹配），报表重算不该被它们拖死。
+    取值口径与 extract_counts.OUT 保持一致（ENERGY_TERMS_OUT → <repo>/outputs/terms）。
+    """
+    import os
+    repo = Path(__file__).resolve().parents[3]
+    return Path(os.environ.get("ENERGY_TERMS_OUT", repo / "outputs/terms"))
+
+
+def _read_csv(path):
+    """标准库读取（不依赖 pandas）：返回 list[dict]。BOM 由 utf-8-sig 处理。"""
+    with open(path, encoding="utf-8-sig", newline="") as fh:
+        return list(csv.DictReader(fh))
 
 
 def _load_counts():
-    """读取计数产物；缺任何一件都直接报错，避免用半套数据算出错误结论。"""
-    import pandas as pd
+    """读取计数产物；缺任何一件都直接报错，避免用半套数据算出错误结论。
+
+    只用标准库 csv：报表重算不需要 pandas，而共享环境里 pandas/numpy 的
+    ABI 组合并不总是可用（实测 `report` 曾因 numpy.dtype size changed 直接崩）。
+    """
     out = _out_dir()
     need = ["papers_by_quarter.csv", "corpus_totals.csv", "patents_by_year.csv",
             "policies_by_year.csv", "citations_by_term.csv"]
@@ -53,44 +70,43 @@ def _load_counts():
         raise SystemExit(
             f"缺少计数产物 {missing}（期望目录 {out}）。先运行 `rebuild`，"
             f"或用 ENERGY_TERMS_OUT 指向已有输出目录。")
-    papers = pd.read_csv(out / "papers_by_quarter.csv")
-    cites_path = out / "citations_by_term.csv"
-    totals = pd.read_csv(out / "corpus_totals.csv").set_index("quarter")
-    doc_totals = totals["docs"].to_dict()
-    doc_anch = totals["docs_anchored"].to_dict()
-    papers_q = {}
-    papers_qa = {}
+    totals = {}
+    anch_total = {}
+    for r in _read_csv(out / "corpus_totals.csv"):
+        totals[r["quarter"]] = float(r["docs"])
+        anch_total[r["quarter"]] = float(r.get("docs_anchored") or 0.0)
+    papers_q, papers_qa = {}, {}
+    for r in _read_csv(out / "papers_by_quarter.csv"):
+        papers_q.setdefault(r["term_id"], {})[r["quarter"]] = float(r["papers"])
+        papers_qa.setdefault(r["term_id"], {})[r["quarter"]] = float(r.get("papers_anch") or 0.0)
     cited = {}
-    for r in papers.itertuples():
-        papers_q.setdefault(r.term_id, {})[r.quarter] = float(r.papers)
-        papers_qa.setdefault(r.term_id, {})[r.quarter] = float(getattr(r, "papers_anch", 0.0))
+    cites_path = out / "citations_by_term.csv"
     if cites_path.exists():
-        for r in pd.read_csv(cites_path).itertuples():
-            cited[r.term_id] = (float(r.cited_sum), int(r.cited_n))
+        for r in _read_csv(cites_path):
+            cited[r["term_id"]] = (float(r["cited_sum"]), int(float(r["cited_n"])))
     patents = _year_table(out / "patents_by_year.csv", "patents")
     policies = _year_table(out / "policies_by_year.csv", "policies")
-    return papers_q, papers_qa, cited, patents, policies, doc_totals, doc_anch
+    return papers_q, papers_qa, cited, patents, policies, totals, anch_total
 
 
 def _year_table(path, col):
-    import pandas as pd
     if not Path(path).exists():
         return {}
-    df = pd.read_csv(path, on_bad_lines="skip")
-    if not {"term_id", "year", col}.issubset(df.columns):
-        return {}
     out = {}
-    for r in df.itertuples():
+    for r in _read_csv(path):
+        if "term_id" not in r or "year" not in r or col not in r:
+            return {}
         try:
-            y = str(int(float(r.year)))
+            y = str(int(float(r["year"])))
         except (TypeError, ValueError):
             continue
-        out.setdefault(r.term_id, {})[y] = float(getattr(r, col))
+        out.setdefault(r["term_id"], {})[y] = float(r[col])
     return out
 
 
-def build_results(rules=None):
-    """对全词典计算指标分位与判定（唯一入口，find 与 report 共用）。"""
+def build_results(rules=None, with_counts=False):
+    """对全词典计算指标分位与判定（唯一入口，find / report 共用）。
+    """
     from .hotspot_rules import compute_metrics, assign_percentiles, classify, load_rules
     rules = rules or load_rules()
     papers_q, papers_qa, cited, patents, policies, doc_totals, doc_anch = _load_counts()
@@ -104,6 +120,8 @@ def build_results(rules=None):
         results[t.key] = m
     assign_percentiles(results)
     classify(results, rules)
+    if with_counts:
+        return results, rules, (papers_q, doc_totals)
     return results, rules
 
 

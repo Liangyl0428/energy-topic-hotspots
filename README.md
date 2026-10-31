@@ -7,7 +7,6 @@
 判定口径全部是**份额（文档频率）**，不是原始篇数——语料本身年均增长约 24%，用原始计数算增长
 会让所有词条自动"新兴"。方法与全部门槛见 [docs/METHOD.md](docs/METHOD.md)，
 方法说明与三类热点名单见 [docs/研究报告.md](docs/研究报告.md)，
-瓶颈与颠覆性方向分析见 [docs/电网瓶颈与颠覆性方向.md](docs/电网瓶颈与颠覆性方向.md)。
 
 ## 快速上手
 
@@ -26,6 +25,8 @@ PYTHONPATH=src python -m energy_hotspots.term_hotspots find --term 固态电池
 # 测试 / 生成研究报告
 PYTHONPATH=src python -m pytest tests/term_hotspots -q
 python tools/make_report.py
+# 报告数字对账：把 docs/ 报告表格里的数字逐格回溯到 CSV（CI 可用）
+python tools/verify_report_claims.py
 ```
 
 ## 数据位置
@@ -69,10 +70,10 @@ python tools/make_report.py
 | 路径 | 内容 |
 |---|---|
 | `src/energy_hotspots/term_hotspots/` | `tech_terms.py` 词典、`xmatcher.py` 匹配器、`extract_counts.py` 计数、`hotspot_rules.py` 判定、`cli.py` 入口 |
-| `tests/term_hotspots/` | 单元测试（34 条） |
+| `tests/term_hotspots/` | 单元测试（36 条；`test_extract_counts.py` 需 duckdb） |
 | `tools/make_report.py` | 由算法产物 + 人工复核清单生成研究报告 |
 | `tools/finalize_report.py` | `report` 的兼容入口 |
+| `tools/verify_report_claims.py` | 报告数字对账：表格数字逐格回溯到 CSV，失败退出码 1 |
 | `docs/METHOD.md` | 方法、门槛、产物、限制 |
 | `docs/研究报告.md`、`docs/reviewed_hotspots.csv` | 研究报告与复核名单 |
-| `docs/电网瓶颈与颠覆性方向.md` | 关键是瓶颈与潜在颠覆性方向分析（基于同一批数据） |
 | `outputs/terms/` | 计数产物与算法报表（`terms_report.csv` 全量、`shortlist.csv` 每类前 50） |

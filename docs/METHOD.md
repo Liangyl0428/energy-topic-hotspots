@@ -113,6 +113,7 @@ PYTHONPATH=src python -m energy_hotspots.term_hotspots report    # 只重算报�
 PYTHONPATH=src python -m energy_hotspots.term_hotspots find --term 固态电池
 PYTHONPATH=src python -m pytest tests/term_hotspots -q
 python tools/make_report.py                                      # 生成研究报告
+python tools/verify_report_claims.py                             # 报告数字逐格回溯 CSV
 ```
 
 环境变量：`ENERGY_CORPUS_DB`、`ENERGY_PATENT_DIR`、`ENERGY_POLICY_JSONL`、
