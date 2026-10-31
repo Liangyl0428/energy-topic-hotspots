@@ -85,7 +85,8 @@ def main():
     n_window = float(totals["docs"].sum())
     anchor_share = float(totals["docs_anchored"].sum()) / n_window if n_window else 0.0
     q_first, q_last = totals.index[0], totals.index[-1]
-    years = (int(q_last[:4]) - int(q_first[:4])) + (int(q_last[-1]) - int(q_first[-1])) / 4.0
+    years = ((int(q_last[:4]) - int(q_first[:4])) * 4
+             + (int(q_last[-1]) - int(q_first[-1])) + 1) / 4.0
     first_docs, last_docs = float(totals.loc[q_first, "docs"]), float(totals.loc[q_last, "docs"])
     cagr = (last_docs / first_docs) ** (1 / years) - 1 if years > 0 and first_docs else 0.0
     n_algo = {c: int((rep.hotspot_class == c).sum()) for c in CLASS_LABEL}
@@ -118,16 +119,17 @@ def main():
     A(f"- **DF（文档频率）**＝命中篇数 ÷ 同窗口语料篇数。近一年语料 {n_recent:,.0f} 篇，"
       f"近三年 {n_3y:,.0f} 篇。所有增长指标都在这个份额口径上算——语料本身从 {q_first} 的 "
       f"{first_docs / 1e4:.1f} 万篇/季涨到 {q_last} 的 {last_docs / 1e4:.1f} 万篇/季"
-      f"（{years:.2f} 年年化约 {cagr * 100:.0f}%），用原始篇数算增长等于白送每个词条同样的增速。\n"
+      f"（{years:.0f} 年年化约 {cagr * 100:.0f}%），用原始篇数算增长等于白送每个词条同样的增速。\n"
       "- **份额同比（yoy）**＝近一年 DF ÷ 上一年 DF。\n"
       "- **季度斜率**＝近三年 12 个季度 log(DF) 的最小二乘斜率。\n"
       "- **稳定性**＝12 个季度中命中数 ≥ 自身中位数一半的季度占比（与自身比，大小词条可比）。\n"
-      "- **专利/政策**＝近两年 vs 前两年的数量与增速。\n")
+      "- **专利**＝近两年 vs 前两年（2024–2025 / 2022–2023）的数量与增速；"
+      "**政策**＝2024–2026 vs 2021–2023（只作诊断）。\n")
     A("### 1.4 三类门槛\n")
     A("| 类别 | 判定 |\n|---|---|\n"
       "| 核心热点 | 三年命中 ≥ 150 且 规模在候选域前 10% 且 近一年 DF ≥ 0.08% 且 份额同比 ≥ 0.90 且 稳定性 ≥ 0.80 |\n"
       "| 新兴热点 | 近一年命中 ≥ 120 且 份额同比 ≥ 1.30 且 近一年/近三年 ≥ 1.20 且 季度斜率 > 0 |\n"
-      "| 潜在热点 | 三年命中 ≥ 40 且 份额同比 ≥ 0.90 且〔专利近两年 ≥ 20 且增速 ≥ max(1.25, yoy²) 或 政策近两年 ≥ 10 且增速 ≥ 1.20〕|\n"
+      "| 潜在热点 | 三年命中 ≥ 40 且 份额同比 ≥ 0.90 且〔专利近两年 ≥ 20 且增速 ≥ max(1.25, yoy²) 或 政策 2024–2026 ≥ 10 且增速 ≥ 1.20〕|\n"
       "\n另有一条排除规则：近一年 DF ≥ 2.5%（约 10,600 篇）的词条判为**领域通用语**"
       "（电池 6.77%、可再生能源 5.44%、电极 4.04%、一氧化碳 3.51%、储能 3.42%），不计入热点。\n")
     A("### 1.5 发布配额与人工复核\n")

@@ -10,6 +10,8 @@
 !/outputs/terms/run_meta.json
 # 子方向聚合已移出本仓库（见 grid-bottleneck-report），遗留文件不入库
 /outputs/terms/subtopic_report.csv
+# find 的临时导出（单条/批量复核），不入库
+/outputs/terms/terms_report_find.csv
 /dist/
 /build/
 /.env

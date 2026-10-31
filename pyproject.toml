@@ -8,10 +8,19 @@ version = "1.0.0"
 description = "词条级能源技术热点识别：份额口径的核心/新兴/潜在热点 + 跨域与背景词剥离"
 readme = "README.md"
 requires-python = ">=3.10"
-dependencies = ["numpy>=1.26,<3", "pandas>=2.2,<4", "pyarrow>=18,<26", "duckdb>=1.1,<2"]
+dependencies = []
 
 [project.optional-dependencies]
-dev = ["pytest>=8,<10", "build>=1.2,<2"]
+# report / find 零三方依赖；只有全量重扫（rebuild）与 5 条计数测试需要下面这些。
+rebuild = ["numpy>=1.26,<3", "pandas>=2.2,<4", "pyarrow>=18,<26", "duckdb>=1.1,<2"]
+dev = [
+  "numpy>=1.26,<3",
+  "pandas>=2.2,<4",
+  "pyarrow>=18,<26",
+  "duckdb>=1.1,<2",
+  "pytest>=8,<10",
+  "build>=1.2,<2",
+]
 
 [project.scripts]
 term-hotspots = "energy_hotspots.term_hotspots.cli:main"

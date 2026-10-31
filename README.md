@@ -4,7 +4,7 @@
 算法用其中文官方名、英文官方名与别称/简称对三类语料做全文匹配，给出
 **核心 / 新兴 / 潜在**三类热点。
 
-判定口径全部是**份额（文档频率）**，不是原始篇数——语料本身近一年同比约 +27%、五年年化约 +15%，用原始计数算增长
+判定口径全部是**份额（文档频率）**，不是原始篇数——语料本身近一年同比约 +27.5%、五年年化约 +14%，用原始计数算增长
 会让所有词条自动"新兴"。方法与全部门槛见 [docs/METHOD.md](docs/METHOD.md)，
 方法说明与三类热点名单见 [docs/研究报告.md](docs/研究报告.md)，
 
@@ -18,7 +18,8 @@
 只有换语料才需要 `rebuild`。
 
 ```bash
-python -m pip install -e '.[dev]'
+python -m pip install -e '.[dev]'      # 含 numpy/pandas/pyarrow/duckdb，仅供 rebuild 与测试
+# 只跑 report / find 时零三方依赖：python -m pip install -e .
 
 # 只重算报表（不扫语料）；--print-list 打印三类名单，--shortlist N 改发布条数
 PYTHONPATH=src python -m energy_hotspots.term_hotspots report --print-list
@@ -26,7 +27,7 @@ PYTHONPATH=src python -m energy_hotspots.term_hotspots report --print-list
 # 单条复核（分位在全词典上算，与批量结果一致）
 PYTHONPATH=src python -m energy_hotspots.term_hotspots find --term 固态电池
 
-# 全量重扫（并行，约 3 分钟：175 万篇论文 + 44.5 万件专利 + 7 千条政策）—— 需外部语料
+# 全量重扫（并行，约 3 分钟：175 万篇论文 + 44.5 万件专利 + 6,621 条政策）—— 需外部语料
 PYTHONPATH=src python -m energy_hotspots.term_hotspots rebuild
 
 # 测试 / 生成研究报告
@@ -34,7 +35,7 @@ PYTHONPATH=src python -m pytest tests/term_hotspots -q
 python tools/make_report.py
 ```
 
-> 测试共 38 条：`test_extract_counts.py` 的 5 条需要 `duckdb`（已含在 `.[dev]` 里），
+> 测试共 38 条：`test_extract_counts.py` 的 5 条需要 `duckdb`（由 `.[dev]` 一并安装），
 > 若未安装可加 `--ignore=tests/term_hotspots/test_extract_counts.py` 跑其余 33 条。
 
 ## 数据位置

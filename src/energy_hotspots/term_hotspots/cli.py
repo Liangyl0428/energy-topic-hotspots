@@ -149,8 +149,8 @@ def report_term(v):
         f"份额同比(yoy) {v['yoy']:.3f}   近一年/近三年 {v['vs_3y']:.3f}   季度斜率 {v['slope']:+.4f}",
         f"季度稳定性 {v['stability']:.2f}   能源语境 lift {v['energy_lift']:.2f}   篇均被引 {v['citation_mean']:.1f}",
         f"专利: 近两年 {v['patents_recent']:.0f} / 前两年 {v['patents_base']:.0f}"
-        f"（{v['patent_growth']:.2f}×）   政策: 近两年 {v['policies_recent']:.0f}"
-        f" / 前两年 {v['policies_base']:.0f}（{v['policy_growth']:.2f}×）",
+        f"（{v['patent_growth']:.2f}×）   政策: 2024–2026 {v['policies_recent']:.0f}"
+        f" / 2021–2023 {v['policies_base']:.0f}（{v['policy_growth']:.2f}×）",
         "",
         f"门槛: core={'✓' if v['pass_core'] else '×'}  emerging={'✓' if v['pass_emerging'] else '×'}"
         f"  potential={'✓' if v['pass_potential'] else '×'}"
@@ -169,7 +169,10 @@ def run_find(term=None, terms_file=None, limit=None, out_csv=None, rules_path=No
         zhs = [term]
     else:
         raise SystemExit("请用 --term 或 --terms-file 提供技术中文官方名称")
-    keys = [must_term_by_zh(z).key for z in zhs]
+    try:
+        keys = [must_term_by_zh(z).key for z in zhs]
+    except KeyError as exc:
+        raise SystemExit(str(exc.args[0]) if exc.args else str(exc))
     if limit:
         keys = keys[:int(limit)]
     rules = load_rules(rules_path)

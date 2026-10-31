@@ -66,7 +66,7 @@ def find_by_zh(zhs: Iterable[str], dictionary: Path = DEFAULT_DICTIONARY) -> Lis
     by_zh = {t.zh: t for t in load_terms(dictionary)}
     missing = [z for z in zhs if z not in by_zh]
     if missing:
-        raise KeyError(f"词典中不存在中文名称（严格匹配）：{missing}；请用 README.md 列出的名称")
+        raise KeyError(f"词典中不存在中文名称（严格匹配）：{missing}；请用 config/technology_terms/*.csv 的「技术中文官方名称」")
     return [by_zh[z] for z in zhs]
 
 def must_term_by_zh(zh: str, dictionary: Path = DEFAULT_DICTIONARY) -> TechTerm:
