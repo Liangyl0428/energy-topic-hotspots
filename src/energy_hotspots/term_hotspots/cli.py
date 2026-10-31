@@ -170,6 +170,8 @@ def run_find(term=None, terms_file=None, limit=None, out_csv=None, rules_path=No
     else:
         raise SystemExit("请用 --term 或 --terms-file 提供技术中文官方名称")
     keys = [must_term_by_zh(z).key for z in zhs]
+    if limit:
+        keys = keys[:int(limit)]
     rules = load_rules(rules_path)
     if shortlist is not None:
         rules["shortlist_size"] = int(shortlist)
@@ -223,7 +225,7 @@ def run_report(out_csv=None, rules_path=None, shortlist=None, print_list=False, 
     return path
 
 
-def run_rebuild(**kw):
+def run_rebuild(rules_path=None, **kw):
     from .extract_counts import (scan_papers, scan_patents, scan_policies, write_outputs,
                                  QUARTERS)
     print(f"[rebuild] 论文/专利/政策 全量重扫", flush=True)
@@ -232,7 +234,7 @@ def run_rebuild(**kw):
     policies = scan_policies()
     out = write_outputs(counts, anch, csum, cn, patents, policies, qt, qa, docs)
     print(f"计数产物: {out}", flush=True)
-    run_report()
+    run_report(rules_path=rules_path)
 
 
 def main():

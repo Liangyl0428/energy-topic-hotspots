@@ -4,7 +4,7 @@
 算法用其中文官方名、英文官方名与别称/简称对三类语料做全文匹配，给出
 **核心 / 新兴 / 潜在**三类热点。
 
-判定口径全部是**份额（文档频率）**，不是原始篇数——语料本身年均增长约 24%，用原始计数算增长
+判定口径全部是**份额（文档频率）**，不是原始篇数——语料本身近一年同比约 +27%、五年年化约 +15%，用原始计数算增长
 会让所有词条自动"新兴"。方法与全部门槛见 [docs/METHOD.md](docs/METHOD.md)，
 方法说明与三类热点名单见 [docs/研究报告.md](docs/研究报告.md)，
 
@@ -34,8 +34,8 @@ PYTHONPATH=src python -m pytest tests/term_hotspots -q
 python tools/make_report.py
 ```
 
-> 测试共 34 条：`test_extract_counts.py` 的 5 条需要 `duckdb`（已含在 `.[dev]` 里），
-> 若未安装可加 `--ignore=tests/term_hotspots/test_extract_counts.py` 跑其余 29 条。
+> 测试共 38 条：`test_extract_counts.py` 的 5 条需要 `duckdb`（已含在 `.[dev]` 里），
+> 若未安装可加 `--ignore=tests/term_hotspots/test_extract_counts.py` 跑其余 33 条。
 
 ## 数据位置
 
@@ -78,7 +78,7 @@ python tools/make_report.py
 | 路径 | 内容 |
 |---|---|
 | `src/energy_hotspots/term_hotspots/` | `tech_terms.py` 词典、`xmatcher.py` 匹配器、`extract_counts.py` 计数、`hotspot_rules.py` 判定、`cli.py` 入口 |
-| `tests/term_hotspots/` | 单元测试（34 条；`test_extract_counts.py` 的 5 条需 duckdb） |
+| `tests/term_hotspots/` | 单元测试（38 条；`test_extract_counts.py` 的 5 条需 duckdb） |
 | `tools/make_report.py` | 由算法产物 + 人工复核清单生成研究报告 |
 | `tools/finalize_report.py` | `report` 的兼容入口 |
 | `docs/METHOD.md` | 方法、门槛、产物、限制 |

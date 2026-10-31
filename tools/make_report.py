@@ -28,6 +28,10 @@ CLASS_DESC = {
     "potential": "论文侧未起势，但专利增速不慢于论文、或政策侧加速",
 }
 
+# 政策全文语料行数（data/policy/政策全文.jsonl）。原始语料不入库，
+# 所以这个数不能从 outputs/ 复算；改语料时必须同步这里与 docs/METHOD.md。
+POLICY_DOCS = 6_621
+
 
 def fmt_pct(x):
     return f"{x * 100:.2f}%"
@@ -77,14 +81,22 @@ def main():
 
     n_recent = totals.loc[["2025Q3", "2025Q4", "2026Q1", "2026Q2"], "docs"].sum()
     n_3y = totals.loc[[q for q in totals.index if q >= "2023Q3"], "docs"].sum()
+    n_scan = int(meta["docs_scanned"])
+    n_window = float(totals["docs"].sum())
+    anchor_share = float(totals["docs_anchored"].sum()) / n_window if n_window else 0.0
+    q_first, q_last = totals.index[0], totals.index[-1]
+    years = (int(q_last[:4]) - int(q_first[:4])) + (int(q_last[-1]) - int(q_first[-1])) / 4.0
+    first_docs, last_docs = float(totals.loc[q_first, "docs"]), float(totals.loc[q_last, "docs"])
+    cagr = (last_docs / first_docs) ** (1 / years) - 1 if years > 0 and first_docs else 0.0
     n_algo = {c: int((rep.hotspot_class == c).sum()) for c in CLASS_LABEL}
     n_review = {c: len(picked[c]) for c in CLASS_LABEL}
 
     L = []
     A = L.append
     A("# 能源技术热点研究报告\n")
-    A(f"**数据截止**：{meta['built_at'][:10]}　**语料**：{meta['docs_scanned']:,} 篇论文"
-      f"（2021-07 ~ 2026-06）+ 44.5 万件专利（2021–2025）+ 7,070 条政策（2013–2026）\n")
+    A(f"**数据截止**：{meta['built_at'][:10]}　**语料**：扫描 {n_scan:,} 篇论文"
+      f"（2021-01 ~ 2026-12），纳入 20 个季度分析的是 {n_window:,.0f} 篇（2021-07 ~ 2026-06）"
+      f"；另有 44.5 万件专利（2021–2025）+ {POLICY_DOCS:,} 条政策（2013–2026）\n")
     A("**一句话结论**：在一个 1,811 条的能源技术词条词典上，用份额口径的规模/增速/稳定性指标"
       "筛出候选热点，再人工剔除属性词、指标词、表征手段和通用材料，最终得到"
       f"核心 {n_review['core']} 条、新兴 {n_review['emerging']} 条、潜在 {n_review['potential']} 条。\n")
@@ -104,8 +116,9 @@ def main():
       "| 专利去重 | 按公开号全局去重 | 同一专利同时出现在聚合表与 IPC 分表 |\n")
     A("### 1.3 指标\n")
     A(f"- **DF（文档频率）**＝命中篇数 ÷ 同窗口语料篇数。近一年语料 {n_recent:,.0f} 篇，"
-      f"近三年 {n_3y:,.0f} 篇。所有增长指标都在这个份额口径上算——语料本身从 2021Q3 的 5.4 万篇/季涨到 "
-      "2026Q1 的 15 万篇/季，用原始篇数算增长等于白送每个词条 24%/年。\n"
+      f"近三年 {n_3y:,.0f} 篇。所有增长指标都在这个份额口径上算——语料本身从 {q_first} 的 "
+      f"{first_docs / 1e4:.1f} 万篇/季涨到 {q_last} 的 {last_docs / 1e4:.1f} 万篇/季"
+      f"（{years:.2f} 年年化约 {cagr * 100:.0f}%），用原始篇数算增长等于白送每个词条同样的增速。\n"
       "- **份额同比（yoy）**＝近一年 DF ÷ 上一年 DF。\n"
       "- **季度斜率**＝近三年 12 个季度 log(DF) 的最小二乘斜率。\n"
       "- **稳定性**＝12 个季度中命中数 ≥ 自身中位数一半的季度占比（与自身比，大小词条可比）。\n"
@@ -135,15 +148,15 @@ def main():
 
     A("## 五、方法局限\n")
     A("1. **词条热度 ≠ 技术突破**。统计只能说明“在被索引的文献/专利/政策里被讨论得多”，"
-      "不能说明技术成熟度或产业价值。\n"
-      "2. **语料不是严格的能源全库**。该快照 175 万篇中只有 34% 能匹配到能源锚点词，"
-      "域外噪声仍在，只能靠 DF 阈值压制。\n"
-      "3. **领域通用语只能挡最明显的一批**。2.5% 的阈值只排除 19 条（电池、储能、电力系统等），"
+      "不能说明技术成熟度或产业价值。\n")
+    A(f"2. **语料不是严格的能源全库**。纳入分析的 {n_window / 1e4:.1f} 万篇中约 "
+      f"{anchor_share * 100:.0f}% 能匹配到能源锚点词，域外噪声仍在，只能靠 DF 阈值压制。\n")
+    A("3. **领域通用语只能挡最明显的一批**。2.5% 的阈值只排除 19 条（电池、储能、电力系统等），"
       "`掺杂`（2.36%）、`能效`（2.16%）这类刚过线的词仍留在候选池里，需要人工复核。\n"
       "4. **新兴类含通用使能技术**。数字孪生、网络安全、联邦学习 的份额确实在涨（这是测出来的事实），"
       "但“算不算能源技术热点”是领域判断，本报告按“能源场景下的技术方向”保留，"
-      "并把纯算法类（联邦学习、强化学习、滑模控制）剔除了。\n"
-      "5. **专利与政策的覆盖期不同**。政策仅 7,070 条，专利 2021–2025，"
+      "并把纯算法类（联邦学习、强化学习、滑模控制）剔除了。\n")
+    A(f"5. **专利与政策的覆盖期不同**。政策仅 {POLICY_DOCS:,} 条，专利 2021–2025，"
       "潜在热点的跨源判断受此限制。\n"
       "6. **人工复核可复现但带主观性**。剔除规则写在 `config/manual_review.json` 的 "
       "`protocol` 与 `exclude_types` 里，逐条决策可查；换一个人复核会得到略有差异的名单。\n")

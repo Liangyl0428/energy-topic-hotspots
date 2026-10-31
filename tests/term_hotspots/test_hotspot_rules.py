@@ -1,9 +1,36 @@
 """判定层回归测试：份额口径、无静默截断、互斥分类、背景词/域外词。"""
+import json
 import math
+from pathlib import Path
 
 from energy_hotspots.term_hotspots.hotspot_rules import (
-    CORE_Q, RECENT_Q, PREV_Q, BASELINE_Q, HISTORY_Q,
+    BASELINE_Q, CORE_Q, DEFAULT_RULES, HISTORY_Q, PREV_Q, RECENT_Q,
     assign_percentiles, classify, compute_metrics, load_rules, summarize)
+
+
+def test_default_rules_match_config():
+    """DEFAULT_RULES 必须与 config/hotspot_rules.json 的非注释键逐项一致。
+
+    config 缺失时（wheel 安装、只拷 src）会静默退回 DEFAULT_RULES；两套门槛不同，
+    等于同一份代码在两种安装方式下给出两套判定。
+    """
+    cfg = json.loads((Path(__file__).resolve().parents[2] / "config" / "hotspot_rules.json")
+                     .read_text(encoding="utf-8"))
+    for section in ("core", "emerging", "potential"):
+        for key, value in cfg[section].items():
+            if key.startswith("_"):
+                continue
+            assert DEFAULT_RULES[section].get(key) == value, f"{section}.{key} 默认值与 config 不一致"
+    for key in ("version", "background_df_max", "off_domain_lift_min", "cross_domain_df_min",
+                "shortlist_size", "use_anchor_lift"):
+        assert DEFAULT_RULES.get(key) == cfg.get(key), f"{key} 默认值与 config 不一致"
+
+
+def test_windows_match_method():
+    """窗口是结论的一部分：METHOD.md §1 的季度数必须与代码一致。"""
+    assert [len(HISTORY_Q), len(CORE_Q), len(RECENT_Q), len(PREV_Q), len(BASELINE_Q)] == [20, 12, 4, 4, 8]
+    assert BASELINE_Q[0] == "2021Q3" and BASELINE_Q[-1] == "2023Q2"
+    assert BASELINE_Q[-1] < CORE_Q[0]
 
 
 def flat_totals(n_per_q=100_000.0):
@@ -24,7 +51,7 @@ def test_empty_has_no_class():
 
 
 def test_corpus_growth_alone_does_not_create_emerging():
-    """语料自身涨 24% 时，若用原始计数比较，所有词条都会自动『新兴』。
+    """语料自身增长时，若用原始计数比较，所有词条都会自动『新兴』。
 
     这里词条命中数按语料同比例增长（份额不变），必须判定为『份额零增长』。
     """

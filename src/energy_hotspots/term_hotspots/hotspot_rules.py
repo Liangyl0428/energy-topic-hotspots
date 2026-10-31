@@ -5,8 +5,9 @@
 设计要点：
 
 1. **增长率用份额口径。** 所有增长、斜率、规模都在"占当期语料份额"上计算。
-   语料本身从 2021Q3 的 54,196 篇/季涨到 2026Q1 的 149,752 篇/季，年均 +24%；
-   若直接用原始计数相比，每个词条都会白得 24%/年的增长，"任何词条都是新兴"。
+   语料本身从 2021Q3 的 6.2 万篇/季涨到 2026Q2 的 11.9 万篇/季（五年年化约 +15%，
+   近一年同比 +27.5%）；若直接用原始计数相比，每个词条都会白得同样的增长，
+   "任何词条都是新兴"。
 2. **判定不截断。** 入选完全由门槛决定；`shortlist_size` 只标记对外展示哪几条，
    全量合格名单始终保留在报表里。
 3. **领域通用语与跨域泛化词不是热点。** 近期文档频率 ≥ `background_df_max` 的词条
@@ -47,34 +48,41 @@ HISTORY_Q = window_quarters(2021, 3, 2026, 2)   # 2021-07-01 .. 2026-06-30
 CORE_Q = window_quarters(2023, 3, 2026, 2)      # 近三年
 RECENT_Q = window_quarters(2025, 3, 2026, 2)    # 近一年
 PREV_Q = window_quarters(2024, 3, 2025, 2)      # 上一年
-BASELINE_Q = window_quarters(2022, 3, 2025, 2)  # 背景期三年
+BASELINE_Q = window_quarters(2021, 3, 2023, 2)  # 背景期：core 之前两年（2021-07 .. 2023-06，8 季）
 
 EPS = 0.5  # 与 METHOD.md 的平滑项一致，避免极小量词条比率爆炸
 
 
+# 默认门槛。**必须与 config/hotspot_rules.json 完全一致**（tests/test_hotspot_rules.py
+# 有守卫）：config 缺失时（wheel 安装、只拷 src）会静默退回这里，两套值不同等于换了一套判据。
 DEFAULT_RULES = {
     "version": "v2",
     "background_df_max": 0.025,
     "off_domain_lift_min": 0.85,
+    "cross_domain_df_min": 0.004,
+    "shortlist_size": 50,
+    "use_anchor_lift": False,
     "core": {
         "hits_3y_min": 150.0,
-        "df_recent_min": 0.0004,
-        "yoy_min": 0.85,
-        "stability_min": 0.75,
+        "scale_pct_min": 0.9,
+        "df_recent_min": 0.0008,
+        "yoy_min": 0.9,
+        "stability_min": 0.8,
     },
     "emerging": {
-        "hits_recent_min": 60.0,
+        "hits_recent_min": 120.0,
         "yoy_min": 1.30,
-        "vs_3y_min": 1.15,
+        "vs_3y_min": 1.20,
         "slope_min": 0.0,
     },
     "potential": {
         "hits_3y_min": 40.0,
         "yoy_min": 0.90,
-        "patents_recent_min": 10.0,
+        "patents_recent_min": 20.0,
         "patent_growth_min": 1.25,
-        "policies_recent_min": 3.0,
-        "policy_growth_min": 1.0,
+        "patent_growth_vs_paper": True,
+        "policies_recent_min": 10.0,
+        "policy_growth_min": 1.20,
     },
 }
 

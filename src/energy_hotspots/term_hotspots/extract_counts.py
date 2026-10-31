@@ -401,8 +401,8 @@ def write_outputs(paper_counts, paper_anch, cited_sum, cited_n, patent_counts,
             w.writerow([t.key, t.zh, t.en, ";".join(t.aliases), t.subtopic])
 
     meta = {
+        "version": "v3.0",
         "built_at": time.strftime("%Y-%m-%dT%H:%M:%S"),
-        "corpus_db": str(CORPUS_DB),
         "docs_scanned": docs_seen,
         "terms": len(terms),
         "counting": {
@@ -413,6 +413,8 @@ def write_outputs(paper_counts, paper_anch, cited_sum, cited_n, patent_counts,
             "acronym_case_sensitive": True,
             "year_only_date_repair": "spread over observed quarters",
         },
+        # 原始语料路径不外发：run_meta.json 随仓库分发，写绝对路径会泄露内部目录结构
+        "corpus_note": "原始语料路径不外发（内部路径，与结论无关）",
     }
     (OUT / "run_meta.json").write_text(json.dumps(meta, ensure_ascii=False, indent=2), encoding="utf-8")
     return OUT

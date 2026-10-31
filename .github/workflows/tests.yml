@@ -20,8 +20,8 @@ jobs:
           python-version: ${{ matrix.python }}
       - run: python -m pip install -e '.[dev]'
       - run: python -m pytest -q
-      # 计数与语料不随仓库分发，这里只校验"代码可加载 + 配置自洽"，
-      # 全量 rebuild 需要外部语料，不在 CI 中执行。
+      # 计数产物随仓库提供（outputs/terms），但全量 rebuild 需要外部语料，不在 CI 中执行。
+      # 这里校验"代码可加载 + 配置与 DEFAULT_RULES 自洽"（后者由 pytest 守卫）。
       - name: 配置与词典自洽
         run: python -c "from energy_hotspots.term_hotspots.hotspot_rules import load_rules; from energy_hotspots.term_hotspots.tech_terms import load_terms; r=load_rules(); print(len(load_terms()), 'terms;', r['version'])"
       - name: report 可直接重算（仓库自带计数产物）
