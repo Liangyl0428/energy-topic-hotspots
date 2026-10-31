@@ -113,8 +113,11 @@ PYTHONPATH=src python -m energy_hotspots.term_hotspots report    # 只重算报�
 PYTHONPATH=src python -m energy_hotspots.term_hotspots find --term 固态电池
 PYTHONPATH=src python -m pytest tests/term_hotspots -q
 python tools/make_report.py                                      # 生成研究报告
-python tools/verify_report_claims.py                             # 报告数字逐格回溯 CSV
 ```
+
+`outputs/terms/` 下的计数与判定产物**随仓库提供**（`subtopic_report.csv` 除外，子方向聚合已迁至
+[grid-bottleneck-report](https://github.com/Liangyl0428/grid-bottleneck-report)），所以 `report` 可直接重跑；
+报告数字对账用该仓库的 `grid-bottleneck verify`。
 
 环境变量：`ENERGY_CORPUS_DB`、`ENERGY_PATENT_DIR`、`ENERGY_POLICY_JSONL`、
 `ENERGY_TERMS_OUT`（默认 `outputs/terms`）、`ENERGY_ANCHORS`、`ENERGY_WORKERS`。

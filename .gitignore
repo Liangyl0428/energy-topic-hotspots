@@ -1,8 +1,15 @@
-# 语料与运行产物不入库
+# 语料与运行产物不入库；但 outputs/terms 的紧凑计数与判定产物随仓库提供（report/find 可直接跑）
 /.venv/
 /work/
 /data/
-/outputs/
+# 只放行 outputs/terms 下的紧凑 CSV 与 run_meta.json；原始语料与逐篇导出仍不入库
+/outputs/*
+!/outputs/terms
+/outputs/terms/*
+!/outputs/terms/*.csv
+!/outputs/terms/run_meta.json
+# 子方向聚合已移出本仓库（见 grid-bottleneck-report），遗留文件不入库
+/outputs/terms/subtopic_report.csv
 /dist/
 /build/
 /.env

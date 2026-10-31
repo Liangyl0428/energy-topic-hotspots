@@ -39,7 +39,14 @@ def _norm_alias_cell(cell: str) -> tuple:
 
 def load_terms(dictionary: Path = DEFAULT_DICTIONARY) -> List[TechTerm]:
     dictionary = Path(dictionary)
+    if not dictionary.is_dir():
+        raise FileNotFoundError(
+            f"词典目录不存在：{dictionary}。本仓库自带 config/technology_terms/，"\
+            "请在源码根目录运行或使用 `pip install -e .`；非 editable 安装不会携带 config。"
+        )
     files = sorted(dictionary.glob("*.csv"), key=lambda p: [float(x) for x in p.name.split(" ")[0].split(".")])
+    if not files:
+        raise FileNotFoundError(f"词典目录中没有 CSV：{dictionary}")
     out: List[TechTerm] = []
     zh_seen = set()
     for f in files:

@@ -8,13 +8,17 @@
 会让所有词条自动"新兴"。方法与全部门槛见 [docs/METHOD.md](docs/METHOD.md)，
 方法说明与三类热点名单见 [docs/研究报告.md](docs/研究报告.md)，
 
+> **范围说明**：本仓库只负责**词条级**的发现与判定。**电网瓶颈与颠覆性方向分析已迁出**，
+> 见 [grid-bottleneck-report](https://github.com/Liangyl0428/grid-bottleneck-report)；
+> 本仓库 git 历史里的旧版报告（v1，5 个瓶颈）已废弃，结论以该仓库的 v2（3 个瓶颈）为准。
+
 ## 快速上手
+
+仓库随附 `outputs/terms/` 的紧凑计数产物（约 5.9 MB），因此 `report` / `find` **克隆后即可运行**；
+只有换语料才需要 `rebuild`。
 
 ```bash
 python -m pip install -e '.[dev]'
-
-# 全量重扫（并行，约 3 分钟：175 万篇论文 + 44.5 万件专利 + 7 千条政策）
-PYTHONPATH=src python -m energy_hotspots.term_hotspots rebuild
 
 # 只重算报表（不扫语料）；--print-list 打印三类名单，--shortlist N 改发布条数
 PYTHONPATH=src python -m energy_hotspots.term_hotspots report --print-list
@@ -22,12 +26,16 @@ PYTHONPATH=src python -m energy_hotspots.term_hotspots report --print-list
 # 单条复核（分位在全词典上算，与批量结果一致）
 PYTHONPATH=src python -m energy_hotspots.term_hotspots find --term 固态电池
 
+# 全量重扫（并行，约 3 分钟：175 万篇论文 + 44.5 万件专利 + 7 千条政策）—— 需外部语料
+PYTHONPATH=src python -m energy_hotspots.term_hotspots rebuild
+
 # 测试 / 生成研究报告
 PYTHONPATH=src python -m pytest tests/term_hotspots -q
 python tools/make_report.py
-# 报告数字对账：把 docs/ 报告表格里的数字逐格回溯到 CSV（CI 可用）
-python tools/verify_report_claims.py
 ```
+
+> 测试共 34 条：`test_extract_counts.py` 的 5 条需要 `duckdb`（已含在 `.[dev]` 里），
+> 若未安装可加 `--ignore=tests/term_hotspots/test_extract_counts.py` 跑其余 29 条。
 
 ## 数据位置
 
@@ -70,10 +78,13 @@ python tools/verify_report_claims.py
 | 路径 | 内容 |
 |---|---|
 | `src/energy_hotspots/term_hotspots/` | `tech_terms.py` 词典、`xmatcher.py` 匹配器、`extract_counts.py` 计数、`hotspot_rules.py` 判定、`cli.py` 入口 |
-| `tests/term_hotspots/` | 单元测试（36 条；`test_extract_counts.py` 需 duckdb） |
+| `tests/term_hotspots/` | 单元测试（34 条；`test_extract_counts.py` 的 5 条需 duckdb） |
 | `tools/make_report.py` | 由算法产物 + 人工复核清单生成研究报告 |
 | `tools/finalize_report.py` | `report` 的兼容入口 |
-| `tools/verify_report_claims.py` | 报告数字对账：表格数字逐格回溯到 CSV，失败退出码 1 |
 | `docs/METHOD.md` | 方法、门槛、产物、限制 |
-| `docs/研究报告.md`、`docs/reviewed_hotspots.csv` | 研究报告与复核名单 |
-| `outputs/terms/` | 计数产物与算法报表（`terms_report.csv` 全量、`shortlist.csv` 每类前 50） |
+| `docs/研究报告.md`、`docs/reviewed_hotspots.csv` | 研究报告与复核名单（CSV 带 UTF-8 BOM，程序读取请用 `encoding='utf-8-sig'`） |
+| `outputs/terms/` | **随仓库提供**的紧凑产物：季度/年度计数、`corpus_totals.csv`、`dict_snapshot.csv`、`run_meta.json`、`terms_report.csv`（1,811 条全量判定）、`shortlist.csv`（每类前 50） |
+| `config/hotspot_rules.json` 的 `version` | 判据版本（当前 `v2`）；与 `docs/METHOD.md` 同步，CI 做自洽检查 |
+
+报告里的数字要对账，请用下游仓库的 `grid-bottleneck verify`（它自带同源快照，逐格回溯 92 个数字）。
+

@@ -53,6 +53,7 @@ EPS = 0.5  # 与 METHOD.md 的平滑项一致，避免极小量词条比率爆�
 
 
 DEFAULT_RULES = {
+    "version": "v2",
     "background_df_max": 0.025,
     "off_domain_lift_min": 0.85,
     "core": {

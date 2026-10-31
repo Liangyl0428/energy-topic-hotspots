@@ -13,6 +13,16 @@ def test_subtopic_parse():
         assert "." in t.subtopic_id
         assert t.subtopic_name
 
+def test_missing_dictionary_raises(tmp_path):
+    with pytest.raises(FileNotFoundError):
+        load_terms(tmp_path / "no_such_dir")
+
+def test_empty_dictionary_raises(tmp_path):
+    empty = tmp_path / "empty"
+    empty.mkdir()
+    with pytest.raises(FileNotFoundError):
+        load_terms(empty)
+
 def test_find_by_zh_strict():
     terms = find_by_zh(["锂离子电池"])
     assert len(terms) == 1
