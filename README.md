@@ -9,8 +9,7 @@
 方法说明与三类热点名单见 [docs/研究报告.md](docs/研究报告.md)，
 
 > **范围说明**：本仓库只负责**词条级**的发现与判定。**电网瓶颈与颠覆性方向分析已迁出**，
-> 见 [grid-bottleneck-report](https://github.com/Liangyl0428/grid-bottleneck-report)；
-> 本仓库 git 历史里的旧版报告（v1，5 个瓶颈）已废弃，结论以该仓库的 v2（3 个瓶颈）为准。
+> 见 [grid-bottleneck-report](https://github.com/Liangyl0428/grid-bottleneck-report)。
 
 ## 快速上手
 
