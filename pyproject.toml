@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "energy-topic-hotspots"
-version = "1.0.3"
+version = "1.0.4"
 description = "词条级能源技术热点识别：份额口径的核心/新兴/潜在热点 + 跨域与背景词剥离"
 readme = "README.md"
 requires-python = ">=3.10"
